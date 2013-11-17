@@ -33,7 +33,7 @@ public class Wc1CampaignReader {
   }
 
   private void extractSecondBlock(Wc1CampData result, byte[] buffer) {
-    //90 bytes
+    //90 bytes per series
 
     //10 bytes series data
     Wc1SeriesSlot series = new Wc1SeriesSlot();
@@ -45,9 +45,9 @@ public class Wc1CampaignReader {
     series.setVictoryDestination(buffer[6]);
     series.setVictoryShip(buffer[7]);
     series.setLossDestination(buffer[8]);
-    series.setLossShip(buffer[10]);
+    series.setLossShip(buffer[9]);
 
-    //mission-data, 20 per mission-slot
+    //mission-data, 20 bytes per mission-slot
 
   }
 
@@ -59,6 +59,7 @@ public class Wc1CampaignReader {
       missionSlots.add(extractMissionSlot(buffer, bufferIndex));
       bufferIndex += 2;
     }
+    result.setMissionSlots(missionSlots);
   }
 
   private Wc1MissionSlot extractMissionSlot(byte[] buffer, int firstOffset) {
