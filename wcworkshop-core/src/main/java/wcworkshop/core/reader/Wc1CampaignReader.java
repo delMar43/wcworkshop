@@ -37,8 +37,7 @@ public class Wc1CampaignReader {
 
     //10 bytes series data
     Wc1SeriesSlot series = new Wc1SeriesSlot();
-    series.setWingman(buffer[0]);
-    series.setUnknown(buffer[1]);
+    series.setWingman(readerHelper.getShort(new byte[] { buffer[0], buffer[1] }));
     series.setNrOfMissions(buffer[2]);
     series.setVictoryPoints(readerHelper.getShort(new byte[] { buffer[3], buffer[4] }));
     series.setMissionTreeLevel(buffer[5]);
@@ -48,7 +47,15 @@ public class Wc1CampaignReader {
     series.setLossShip(buffer[9]);
 
     //mission-data, 20 bytes per mission-slot
+    List<Wc1MissionSlot> missionSlots = new ArrayList<>();
+    for (int missionIndex = 0; missionIndex < series.getNrOfMissions(); ++missionIndex) {
+      Wc1MissionSlot slot = new Wc1MissionSlot();
+      slot.setMedal(readerHelper.getShort(new byte[] { buffer[10], buffer[11] }));
+      slot.setMedalKillPoints(readerHelper.getShort(new byte[] { buffer[12], buffer[13] }));
+      slot.setObjectiveVictoryPoints(Arrays.copyOfRange(buffer, buffer[14], buffer[29]));
 
+      missionSlots.add(slot);
+    }
   }
 
   private void extractThirdBlock(Wc1CampData result, byte[] buffer) {

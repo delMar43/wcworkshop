@@ -2,8 +2,7 @@ package wcworkshop.core.data;
 
 public class Wc1SeriesSlot {
 
-  private byte wingman;
-  private byte unknown;
+  private short wingman;
   private byte nrOfMissions;
   private short victoryPoints;
   private byte missionTreeLevel;
@@ -12,20 +11,12 @@ public class Wc1SeriesSlot {
   private byte lossDestination;
   private byte lossShip;
 
-  public byte getWingman() {
+  public short getWingman() {
     return wingman;
   }
 
-  public void setWingman(byte wingman) {
+  public void setWingman(short wingman) {
     this.wingman = wingman;
-  }
-
-  public byte getUnknown() {
-    return unknown;
-  }
-
-  public void setUnknown(byte unknown) {
-    this.unknown = unknown;
   }
 
   public byte getNrOfMissions() {

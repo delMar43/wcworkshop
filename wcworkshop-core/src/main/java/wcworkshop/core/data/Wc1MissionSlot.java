@@ -10,6 +10,9 @@ public class Wc1MissionSlot {
 
   private byte leftSeat;
   private byte rightSeat;
+  private short medal;
+  private short medalKillPoints;
+  private byte[] objectiveVictoryPoints;
 
   public Wc1CutsceneScreen getShotglassCutscene() {
     return shotglassCutscene;
@@ -65,5 +68,29 @@ public class Wc1MissionSlot {
 
   public void setRightSeat(byte rightSeat) {
     this.rightSeat = rightSeat;
+  }
+
+  public short getMedal() {
+    return medal;
+  }
+
+  public void setMedal(short medal) {
+    this.medal = medal;
+  }
+
+  public short getMedalKillPoints() {
+    return medalKillPoints;
+  }
+
+  public void setMedalKillPoints(short medalKillPoints) {
+    this.medalKillPoints = medalKillPoints;
+  }
+
+  public byte[] getObjectiveVictoryPoints() {
+    return objectiveVictoryPoints;
+  }
+
+  public void setObjectiveVictoryPoints(byte[] objectiveVictoryPoints) {
+    this.objectiveVictoryPoints = objectiveVictoryPoints;
   }
 }
