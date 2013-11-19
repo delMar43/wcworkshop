@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import wcworkshop.core.data.Wc1CampData;
+import wcworkshop.core.data.Wc1CampPilot;
 import wcworkshop.core.data.Wc1MissionSlot;
 import wcworkshop.core.data.Wc1SeriesSlot;
 
@@ -99,10 +100,13 @@ public class Wc1CampaignReader {
     System.out.println("third block starts at " + result.getBlockOffset(2));
 
     int bufferIndex = 0;
+    int counter = 0;
     for (Wc1SeriesSlot series : result.getSeriesSlots()) {
       for (int missionIndex = 0; missionIndex < MAX_MISSIONS_PER_SLOT; ++missionIndex) {
         Wc1MissionSlot missionSlot = series.getMissionSlot(missionIndex);
         extractMissionSlot(missionSlot, buffer, bufferIndex);
+        System.out.println(" Mission " + ++counter + " left seat: " + Wc1CampPilot.getByValue(missionSlot.getLeftSeat()) + ", right seat: "
+            + Wc1CampPilot.getByValue(missionSlot.getRightSeat()));
         bufferIndex += 2;
       }
     }
