@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import wcworkshop.core.data.Wc1BriefingData;
-import wcworkshop.core.data.Wc1CutsceneScreen;
+import wcworkshop.core.data.Wc1Cutscene;
+import wcworkshop.core.data.Wc1CutsceneLine;
 import wcworkshop.core.data.Wc1Data;
 import wcworkshop.core.data.Wc1MissionSlot;
 
@@ -23,9 +24,9 @@ public class Wc1BriefingReader {
     result.setBuffer(buffer);
     readerHelper.extractFilesize(result, buffer);
     readerHelper.extractBlockOffsets(result, buffer);
-    extractFuneralBlock(result, buffer);
-    extractHalcyonBlock(result, buffer);
-    extractMedalCeremonyBlock(result, buffer);
+    //    extractFuneralBlock(result, buffer);
+    //    extractHalcyonBlock(result, buffer);
+    //    extractMedalCeremonyBlock(result, buffer);
     extractMissionBlocks(result, buffer);
 
     return result;
@@ -33,7 +34,23 @@ public class Wc1BriefingReader {
 
   private void extractFuneralBlock(Wc1BriefingData data, byte[] buffer) {
     byte[] funeralBuffer = extractBlock(data, buffer, 0);
-    System.out.println("funeralBuffer has " + funeralBuffer.length + " bytes: " + Arrays.toString(funeralBuffer));
+    List<Integer> offsets = readerHelper.extractSecondaryTable(funeralBuffer);
+    System.out.println("funeralBuffer has " + funeralBuffer.length + " bytes. offsets: " + Arrays.toString(offsets.toArray()));
+
+    int blockIndex = 0;
+    for (Integer startOffset : offsets) {
+      int endOffset;
+      if (blockIndex + 1 < offsets.size()) {
+        endOffset = offsets.get(blockIndex + 1);
+      } else {
+        endOffset = funeralBuffer.length;
+      }
+      System.out.println("     from " + startOffset + " to " + endOffset);
+
+      byte[] block = Arrays.copyOfRange(funeralBuffer, startOffset, endOffset);
+      System.out.println("  " + new String(block));
+      ++blockIndex;
+    }
   }
 
   private byte[] extractBlock(Wc1Data data, byte[] buffer, int offsetIndex) {
@@ -77,42 +94,71 @@ public class Wc1BriefingReader {
 
     List<Integer> secondaryTable = readerHelper.extractSecondaryTable(missionBuffer);
 
+    System.out.println("Briefing");
     result.setBriefingCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 0)); //briefing
+    System.out.println("Debriefing");
     result.setDebriefingCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 2)); //debriefing
+    System.out.println("Shotglass");
     result.setShotglassCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 4)); //shotglass
+    System.out.println("Left Bar Seat");
     result.setLeftCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 6)); //right bar seat
+    System.out.println("Right Bar Seat");
     result.setRightCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 8)); //left bar seat
 
     return result;
   }
 
-  private Wc1CutsceneScreen extractCutscene(byte[] missionBuffer, List<Integer> secondaryTable, byte firstOffset) {
-    Wc1CutsceneScreen screen = new Wc1CutsceneScreen();
+  private Wc1Cutscene extractCutscene(byte[] missionBuffer, List<Integer> secondaryTable, byte firstOffset) {
+    Wc1Cutscene scene = new Wc1Cutscene();
 
     byte[] entryBuffer = extractEntryBuffer(missionBuffer, secondaryTable, firstOffset);
-    screen.setForeground(entryBuffer[0]);
-    screen.setTextColor(entryBuffer[1]);
-    screen.setBackground(entryBuffer[2]);
-    screen.setUnknown1(entryBuffer[3]);
-    screen.setUnknown2(entryBuffer[4]);
-    screen.setConditionOffset(readerHelper.getShort(new byte[] { entryBuffer[5], entryBuffer[6] }));
-    screen.setTextOffset(readerHelper.getShort(new byte[] { entryBuffer[7], entryBuffer[8] }));
-    screen.setPhoneticOffset(readerHelper.getShort(new byte[] { entryBuffer[9], entryBuffer[10] }));
-    screen.setTalkOffset(readerHelper.getShort(new byte[] { entryBuffer[11], entryBuffer[12] }));
+    scene.setForeground(entryBuffer[0]);
+    scene.setTextColor(entryBuffer[1]);
+    scene.setBackground(entryBuffer[2]);
+    scene.setUnknown1(entryBuffer[3]);
+    scene.setUnknown2(entryBuffer[4]);
+    scene.setConditionOffset(readerHelper.getShort(new byte[] { entryBuffer[5], entryBuffer[6] }));
+    scene.setFirstLineOffset(readerHelper.getShort(new byte[] { entryBuffer[7], entryBuffer[8] }));
+    scene.setFirstLinePhoneticOffset(readerHelper.getShort(new byte[] { entryBuffer[9], entryBuffer[10] }));
+    scene.setTalkOffset(readerHelper.getShort(new byte[] { entryBuffer[11], entryBuffer[12] }));
 
     entryBuffer = extractEntryBuffer(missionBuffer, secondaryTable, firstOffset + 1);
-    if (entryBuffer.length > screen.getTextOffset()) {
-      screen.setCondition(new String(Arrays.copyOfRange(entryBuffer, screen.getConditionOffset(), screen.getTextOffset())));
-      screen.setText(new String(Arrays.copyOfRange(entryBuffer, screen.getTextOffset(), screen.getPhoneticOffset())));
-      screen.setPhonetic(new String(Arrays.copyOfRange(entryBuffer, screen.getPhoneticOffset(), screen.getTalkOffset())));
-      screen.setTalk(new String(Arrays.copyOfRange(entryBuffer, screen.getTalkOffset(), entryBuffer.length)));
+    if (entryBuffer.length > scene.getFirstLineOffset()) {
+      scene.setCondition(Arrays.copyOfRange(entryBuffer, scene.getConditionOffset(), scene.getFirstLineOffset()));
+      scene.setFirstLine(new String(Arrays.copyOfRange(entryBuffer, scene.getFirstLineOffset(), scene.getFirstLinePhoneticOffset() - 1)));
+      scene.setFirstLinePhonetic(new String(Arrays.copyOfRange(entryBuffer, scene.getFirstLinePhoneticOffset(), scene.getTalkOffset())));
+      String talk = new String(Arrays.copyOfRange(entryBuffer, scene.getTalkOffset(), entryBuffer.length));
+      List<Wc1CutsceneLine> cutsceneLines = extractCutsceneLines(talk);
+      scene.setCutsceneLines(cutsceneLines);
     }
 
-    System.out.println("FG: " + screen.getForeground() + ", TC: " + screen.getTextColor() + ", BG: " + screen.getBackground()
-        + ", Condition: " + screen.getCondition() + ", Headline: " + screen.getText() + ", Text: " + screen.getTalk() + ", Phonetic: "
-        + screen.getPhonetic());
+    System.out.println(scene.toString());
 
-    return screen;
+    return scene;
+  }
+
+  private List<Wc1CutsceneLine> extractCutsceneLines(String source) {
+    List<Wc1CutsceneLine> result = new ArrayList<>();
+
+    String[] parts = source.split("\0");
+    for (int partIndex = 0; partIndex < parts.length; partIndex += 4) {
+      Wc1CutsceneLine line = new Wc1CutsceneLine();
+
+      line.setFacialExpressions(parts[partIndex]);
+      if (partIndex + 1 < parts.length) {
+        line.setCommands(parts[partIndex + 1].getBytes());
+      }
+      if (partIndex + 2 < parts.length) {
+        line.setText(parts[partIndex + 2]);
+      }
+      if (partIndex + 3 < parts.length) {
+        line.setPhonetic(parts[partIndex + 3]);
+      }
+
+      result.add(line);
+    }
+
+    return result;
   }
 
   private byte[] extractEntryBuffer(byte[] missionBuffer, List<Integer> secondaryTable, int offsetIndex) {

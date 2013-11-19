@@ -13,7 +13,7 @@ public class Wc1BriefingDataReaderTest {
 
   @Test
   public void readFile() {
-    String path = "D:/spiele/Wing Commander 1 and 2/WC/GAMEDAT/BRIEFING.000";
+    String path = "D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/BRIEFING.002";
     Wc1BriefingData briefingData = reader.readBriefingFile(path);
     System.out.println("Filesize: " + briefingData.getFilesize());
     Object[] array = briefingData.getBlockOffsets().toArray();

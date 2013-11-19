@@ -65,9 +65,13 @@ public class ReaderHelper {
     int offset = 0;
     do {
       byte[] bytes = Arrays.copyOfRange(buffer, offset, offset + 4);
-      bytes[3] = 0; //always 01 in wc1 file, unknown
+      //      if (bytes[3] == 1) { //01 in wc1 means compressed, e0 means uncompressed
+      //        throw new RuntimeException(
+      //            "This file contains compressed data. Not yet able to uncompress it. Please use uncompressed data (eg wc1 kilrathi sage pc gamer coverdisk version available for download at wcnews.com)");
+      //      }
+      bytes[3] = 0;
       int blockOffset = getInteger(bytes);
-      System.out.println("   " + blockOffset);
+      //      System.out.println("   " + blockOffset);
       blockOffsets.add(blockOffset);
       offset += 4;
     } while (offset < blockOffsets.get(0));

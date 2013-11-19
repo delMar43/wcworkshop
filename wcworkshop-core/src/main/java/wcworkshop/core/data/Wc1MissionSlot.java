@@ -1,11 +1,11 @@
 package wcworkshop.core.data;
 
 public class Wc1MissionSlot {
-  private Wc1CutsceneScreen shotglassCutscene;
-  private Wc1CutsceneScreen leftCutscene;
-  private Wc1CutsceneScreen rightCutscene;
-  private Wc1CutsceneScreen briefingCutscene;
-  private Wc1CutsceneScreen debriefingCutscene;
+  private Wc1Cutscene shotglassCutscene;
+  private Wc1Cutscene leftCutscene;
+  private Wc1Cutscene rightCutscene;
+  private Wc1Cutscene briefingCutscene;
+  private Wc1Cutscene debriefingCutscene;
 
   private byte leftSeat;
   private byte rightSeat;
@@ -13,43 +13,43 @@ public class Wc1MissionSlot {
   private short medalKillPoints;
   private byte[] objectiveVictoryPoints;
 
-  public Wc1CutsceneScreen getShotglassCutscene() {
+  public Wc1Cutscene getShotglassCutscene() {
     return shotglassCutscene;
   }
 
-  public void setShotglassCutscene(Wc1CutsceneScreen shotglassCutscene) {
+  public void setShotglassCutscene(Wc1Cutscene shotglassCutscene) {
     this.shotglassCutscene = shotglassCutscene;
   }
 
-  public Wc1CutsceneScreen getLeftCutscene() {
+  public Wc1Cutscene getLeftCutscene() {
     return leftCutscene;
   }
 
-  public void setLeftCutscene(Wc1CutsceneScreen leftCutscene) {
+  public void setLeftCutscene(Wc1Cutscene leftCutscene) {
     this.leftCutscene = leftCutscene;
   }
 
-  public Wc1CutsceneScreen getRightCutscene() {
+  public Wc1Cutscene getRightCutscene() {
     return rightCutscene;
   }
 
-  public void setRightCutscene(Wc1CutsceneScreen rightCutscene) {
+  public void setRightCutscene(Wc1Cutscene rightCutscene) {
     this.rightCutscene = rightCutscene;
   }
 
-  public Wc1CutsceneScreen getBriefingCutscene() {
+  public Wc1Cutscene getBriefingCutscene() {
     return briefingCutscene;
   }
 
-  public void setBriefingCutscene(Wc1CutsceneScreen briefingCutscene) {
+  public void setBriefingCutscene(Wc1Cutscene briefingCutscene) {
     this.briefingCutscene = briefingCutscene;
   }
 
-  public Wc1CutsceneScreen getDebriefingCutscene() {
+  public Wc1Cutscene getDebriefingCutscene() {
     return debriefingCutscene;
   }
 
-  public void setDebriefingCutscene(Wc1CutsceneScreen debriefingCutscene) {
+  public void setDebriefingCutscene(Wc1Cutscene debriefingCutscene) {
     this.debriefingCutscene = debriefingCutscene;
   }
 
