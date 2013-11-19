@@ -13,7 +13,7 @@ public class Wc1CampReaderTest {
 
   @Test
   public void readFile() {
-    String path = "D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/CAMP.000";
+    String path = "D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/CAMP.002";
     Wc1CampData camp = reader.readCampaignFile(path);
     System.out.println("Filesize: " + camp.getFilesize());
     System.out.println("Block offsets: " + Arrays.toString(camp.getBlockOffsets().toArray()));

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import wcworkshop.core.data.Wc1CampData;
+import wcworkshop.core.data.Wc1CampMedal;
 import wcworkshop.core.data.Wc1CampPilot;
 import wcworkshop.core.data.Wc1MissionSlot;
 import wcworkshop.core.data.Wc1SeriesSlot;
@@ -54,7 +55,7 @@ public class Wc1CampaignReader {
     int startIndex = 0;
     int counter = 0;
     do {
-      System.out.println("Series " + (++counter));
+      System.out.print("Series " + (++counter) + ": ");
       seriesSlots.add(extractSeriesAndMissions(Arrays.copyOfRange(buffer, startIndex, startIndex + 90)));
       startIndex += 90;
       System.out.println("-----");
@@ -74,6 +75,7 @@ public class Wc1CampaignReader {
     series.setVictoryShip(buffer[7]);
     series.setLossDestination(buffer[8]);
     series.setLossShip(buffer[9]);
+    System.out.println(series.toString());
 
     // mission-data, 20 bytes per mission-slot
     List<Wc1MissionSlot> missionSlots = new ArrayList<>();
@@ -85,8 +87,8 @@ public class Wc1CampaignReader {
       slot.setMedalKillPoints(readerHelper.getShort(new byte[] { buffer[offset + 2], buffer[offset + 3] }));
       slot.setObjectiveVictoryPoints(Arrays.copyOfRange(buffer, offset + 4, offset + 20));
 
-      System.out.println("medal: " + slot.getMedal() + ", medal killpoints: " + slot.getMedalKillPoints() + ", victoryPoints: "
-          + Arrays.toString(slot.getObjectiveVictoryPoints()));
+      System.out.println("medal: " + Wc1CampMedal.getByValue(slot.getMedal()) + ", medal killpoints: " + slot.getMedalKillPoints()
+          + ", victoryPoints: " + Arrays.toString(slot.getObjectiveVictoryPoints()));
 
       missionSlots.add(slot);
     }

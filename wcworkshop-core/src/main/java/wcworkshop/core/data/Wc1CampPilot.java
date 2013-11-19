@@ -10,13 +10,19 @@ public enum Wc1CampPilot {
   ANGEL((byte) 4),
   PALADIN((byte) 5),
   MANIAC((byte) 6),
-  KNIGHT((byte) 7);
+  KNIGHT((byte) 7),
+  UNKNOWN_11((byte)11),
+  UNKNOWN_12((byte)12);
   //@formatter:on
 
   private byte value;
 
   private Wc1CampPilot(byte value) {
     this.value = value;
+  }
+
+  public static Wc1CampPilot getByValue(short value) {
+    return getByValue((byte) value);
   }
 
   public static Wc1CampPilot getByValue(byte value) {
@@ -27,16 +33,4 @@ public enum Wc1CampPilot {
     }
     throw new RuntimeException("Pilot not found: " + value);
   }
-
-  /*
-  -1: Empty
-  0 : Spirit
-  1 : Hunter
-  2 : Bossman/Jazz
-  3 : Iceman
-  4 : Angel
-  5 : Paladin/Doomsday
-  6 : Maniac
-  7 : Knight
-   */
 }

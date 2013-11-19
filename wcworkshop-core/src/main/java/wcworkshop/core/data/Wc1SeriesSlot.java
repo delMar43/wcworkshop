@@ -22,6 +22,13 @@ public class Wc1SeriesSlot {
     return missionSlots.get(missionIndex);
   }
 
+  @Override
+  public String toString() {
+    return "Wingman: " + Wc1CampPilot.getByValue(wingman) + ", nrOfMissions: " + nrOfMissions + ", victoryPoints: " + victoryPoints
+        + ", missionTreeLevel: " + missionTreeLevel + ", victoryDestination: " + victoryDestination + ", victoryShip: "
+        + Wc1CampShip.getByValue(victoryShip) + ", lossDestination: " + lossDestination + ", lossShip: " + Wc1CampShip.getByValue(lossShip);
+  }
+
   public short getWingman() {
     return wingman;
   }
