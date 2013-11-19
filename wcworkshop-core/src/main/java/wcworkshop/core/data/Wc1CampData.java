@@ -9,8 +9,18 @@ public class Wc1CampData implements Wc1Data {
 
   private int filesize;
   private List<Integer> blockOffsets = new ArrayList<>();
-  private Collection<Wc1MissionSlot> missionSlots;
   private Collection<Wc1SeriesSlot> seriesSlots;
+  private List<byte[]> firstBlock;
+
+  public int getNrSeries() {
+    int result;
+    if (seriesSlots != null) {
+      result = seriesSlots.size();
+    } else {
+      result = 0;
+    }
+    return result;
+  }
 
   @Override
   public int getBlockOffset(int blockIndex) {
@@ -42,14 +52,6 @@ public class Wc1CampData implements Wc1Data {
     this.blockOffsets = blockOffsets;
   }
 
-  public Collection<Wc1MissionSlot> getMissionSlots() {
-    return missionSlots;
-  }
-
-  public void setMissionSlots(Collection<Wc1MissionSlot> missionSlots) {
-    this.missionSlots = missionSlots;
-  }
-
   public Collection<Wc1SeriesSlot> getSeriesSlots() {
     return seriesSlots;
   }
@@ -58,8 +60,11 @@ public class Wc1CampData implements Wc1Data {
     this.seriesSlots = seriesSlots;
   }
 
-  public static Wc1CampData getEmpty() {
-    return EMPTY;
+  public List<byte[]> getFirstBlock() {
+    return firstBlock;
   }
 
+  public void setFirstBlock(List<byte[]> firstBlock) {
+    this.firstBlock = firstBlock;
+  }
 }

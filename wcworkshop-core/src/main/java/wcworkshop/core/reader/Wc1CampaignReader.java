@@ -10,6 +10,8 @@ import wcworkshop.core.data.Wc1SeriesSlot;
 
 public class Wc1CampaignReader {
 
+  private static final byte MAX_MISSIONS_PER_SLOT = 4;
+
   private ReaderHelper readerHelper = ReaderHelper.getInstance();
 
   public Wc1CampData readCampaignFile(String path) {
@@ -28,14 +30,40 @@ public class Wc1CampaignReader {
     return result;
   }
 
-  private void extractFirstBlock(Wc1CampData result, byte[] buffer) {
-    //TODO only unknown data. store it somehow
+  private void extractFirstBlock(Wc1CampData data, byte[] buffer) {
+    System.out.println("first block starts at " + data.getBlockOffset(0));
+
+    List<byte[]> firstBlock = new ArrayList<>();
+    int blockSize = 8;
+    int counter = 0;
+    for (int index = 0; index < buffer.length; index += blockSize) {
+      byte[] byteArray = Arrays.copyOfRange(buffer, index, index + blockSize);
+      System.out.println(++counter + ": " + Arrays.toString(byteArray));
+      firstBlock.add(byteArray);
+    }
+    data.setFirstBlock(firstBlock);
   }
 
   private void extractSecondBlock(Wc1CampData result, byte[] buffer) {
-    //90 bytes per series
+    System.out.println("second block starts at " + result.getBlockOffset(1) + " and is " + buffer.length + " bytes long");
+    // 90 bytes per series
 
-    //10 bytes series data
+    List<Wc1SeriesSlot> seriesSlots = new ArrayList<>();
+
+    int startIndex = 0;
+    int counter = 0;
+    do {
+      System.out.println("Series " + (++counter));
+      seriesSlots.add(extractSeriesAndMissions(Arrays.copyOfRange(buffer, startIndex, startIndex + 90)));
+      startIndex += 90;
+      System.out.println("-----");
+    } while (startIndex <= buffer.length - 90);
+
+    result.setSeriesSlots(seriesSlots);
+  }
+
+  private Wc1SeriesSlot extractSeriesAndMissions(byte[] buffer) {
+    // 10 bytes series data
     Wc1SeriesSlot series = new Wc1SeriesSlot();
     series.setWingman(readerHelper.getShort(new byte[] { buffer[0], buffer[1] }));
     series.setNrOfMissions(buffer[2]);
@@ -46,34 +74,43 @@ public class Wc1CampaignReader {
     series.setLossDestination(buffer[8]);
     series.setLossShip(buffer[9]);
 
-    //mission-data, 20 bytes per mission-slot
+    // mission-data, 20 bytes per mission-slot
     List<Wc1MissionSlot> missionSlots = new ArrayList<>();
-    for (int missionIndex = 0; missionIndex < series.getNrOfMissions(); ++missionIndex) {
+    for (int missionIndex = 0; missionIndex < MAX_MISSIONS_PER_SLOT; ++missionIndex) {
+      System.out.print(" Mission " + (missionIndex + 1) + ": ");
+      int offset = missionIndex * 20 + 10;
       Wc1MissionSlot slot = new Wc1MissionSlot();
-      slot.setMedal(readerHelper.getShort(new byte[] { buffer[10], buffer[11] }));
-      slot.setMedalKillPoints(readerHelper.getShort(new byte[] { buffer[12], buffer[13] }));
-      slot.setObjectiveVictoryPoints(Arrays.copyOfRange(buffer, buffer[14], buffer[29]));
+      slot.setMedal(readerHelper.getShort(new byte[] { buffer[offset], buffer[offset + 1] }));
+      slot.setMedalKillPoints(readerHelper.getShort(new byte[] { buffer[offset + 2], buffer[offset + 3] }));
+      slot.setObjectiveVictoryPoints(Arrays.copyOfRange(buffer, offset + 4, offset + 20));
+
+      System.out.println("medal: " + slot.getMedal() + ", medal killpoints: " + slot.getMedalKillPoints() + ", victoryPoints: "
+          + Arrays.toString(slot.getObjectiveVictoryPoints()));
 
       missionSlots.add(slot);
     }
+
+    series.setMissionSlots(missionSlots);
+
+    return series;
   }
 
   private void extractThirdBlock(Wc1CampData result, byte[] buffer) {
-    //13 blocks, 8 bytes each
-    List<Wc1MissionSlot> missionSlots = new ArrayList<>();
+    System.out.println("third block starts at " + result.getBlockOffset(2));
+
     int bufferIndex = 0;
-    while (bufferIndex < buffer.length) {
-      missionSlots.add(extractMissionSlot(buffer, bufferIndex));
-      bufferIndex += 2;
+    for (Wc1SeriesSlot series : result.getSeriesSlots()) {
+      for (int missionIndex = 0; missionIndex < MAX_MISSIONS_PER_SLOT; ++missionIndex) {
+        Wc1MissionSlot missionSlot = series.getMissionSlot(missionIndex);
+        extractMissionSlot(missionSlot, buffer, bufferIndex);
+        bufferIndex += 2;
+      }
     }
-    result.setMissionSlots(missionSlots);
   }
 
-  private Wc1MissionSlot extractMissionSlot(byte[] buffer, int firstOffset) {
-    Wc1MissionSlot missionSlot = new Wc1MissionSlot();
-    missionSlot.setLeftSeat(buffer[firstOffset]);
-    missionSlot.setRightSeat(buffer[firstOffset + 1]);
-    return missionSlot;
+  private void extractMissionSlot(Wc1MissionSlot data, byte[] buffer, int firstOffset) {
+    data.setLeftSeat(buffer[firstOffset]);
+    data.setRightSeat(buffer[firstOffset + 1]);
   }
 
 }

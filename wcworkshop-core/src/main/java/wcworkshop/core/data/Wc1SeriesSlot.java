@@ -1,5 +1,7 @@
 package wcworkshop.core.data;
 
+import java.util.List;
+
 public class Wc1SeriesSlot {
 
   private short wingman;
@@ -10,6 +12,15 @@ public class Wc1SeriesSlot {
   private byte victoryShip;
   private byte lossDestination;
   private byte lossShip;
+
+  private List<Wc1MissionSlot> missionSlots;
+
+  public Wc1MissionSlot getMissionSlot(int missionIndex) {
+    if (missionSlots == null || missionIndex > 3) {
+      return null;
+    }
+    return missionSlots.get(missionIndex);
+  }
 
   public short getWingman() {
     return wingman;
@@ -73,6 +84,14 @@ public class Wc1SeriesSlot {
 
   public void setLossShip(byte lossShip) {
     this.lossShip = lossShip;
+  }
+
+  public List<Wc1MissionSlot> getMissionSlots() {
+    return missionSlots;
+  }
+
+  public void setMissionSlots(List<Wc1MissionSlot> missionSlots) {
+    this.missionSlots = missionSlots;
   }
 
 }

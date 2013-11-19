@@ -1,7 +1,6 @@
 package wcworkshop.core.data;
 
 public class Wc1MissionSlot {
-
   private Wc1CutsceneScreen shotglassCutscene;
   private Wc1CutsceneScreen leftCutscene;
   private Wc1CutsceneScreen rightCutscene;
