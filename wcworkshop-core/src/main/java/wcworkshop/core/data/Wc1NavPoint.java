@@ -6,6 +6,8 @@ public class Wc1NavPoint {
 
   private String id;
   private boolean visible;
+  private int xPos;
+  private int yPos;
   private List<Short> shipsToLoad;
   private List<Wc1NavPointManipulation> navPointManipulations;
 
@@ -21,8 +23,9 @@ public class Wc1NavPoint {
         sb.append(npm.toString());
       }
     }
+    String result = " " + id + (visible ? " " : " (invisible) ") + xPos + "/" + yPos;
+
     boolean hasShipsToLoad = shipsToLoad != null && shipsToLoad.size() > 0;
-    String result = " " + id + (visible ? " " : " (invisible)");
     if (hasNavPointManipulations) {
       result += "\r\n navPoint manipulations: " + sb.toString();
     }
@@ -49,6 +52,22 @@ public class Wc1NavPoint {
 
   public void setVisible(boolean visible) {
     this.visible = visible;
+  }
+
+  public int getxPos() {
+    return xPos;
+  }
+
+  public void setxPos(int xPos) {
+    this.xPos = xPos;
+  }
+
+  public int getyPos() {
+    return yPos;
+  }
+
+  public void setyPos(int yPos) {
+    this.yPos = yPos;
   }
 
   public List<Short> getShipsToLoad() {

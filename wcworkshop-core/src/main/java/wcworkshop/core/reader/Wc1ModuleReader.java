@@ -52,7 +52,7 @@ public class Wc1ModuleReader {
 
   private void extractBlock2(Wc1ModuleData data, byte[] buffer) {
 
-    //nav points start at 0x1340, chunk length=0x4d (77 dez)
+    //nav points start at relative 0x1340, chunk length=0x4d (77 dez)
     int offset = 0x1340;
     int chunkSize = 77;
     int counter = 0;
@@ -64,6 +64,11 @@ public class Wc1ModuleReader {
       String id = new String(Arrays.copyOfRange(buffer, index, index + 30));
       navPoint.setId(id.substring(0, id.indexOf("\0")));
       navPoint.setVisible(!id.startsWith("."));
+
+      byte[] xBytes = Arrays.copyOfRange(buffer, index + 32, index + 34);
+      byte[] yBytes = Arrays.copyOfRange(buffer, index + 36, index + 38);
+      navPoint.setxPos(readerHelper.getShort(xBytes));
+      navPoint.setyPos(readerHelper.getShort(yBytes));
 
       List<Wc1NavPointManipulation> navManList = new ArrayList<>();
       for (int i = 0; i < 8; i += 2) {
