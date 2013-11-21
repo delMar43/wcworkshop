@@ -6,6 +6,7 @@ import java.util.List;
 
 import wcworkshop.core.data.Wc1ModuleData;
 import wcworkshop.core.data.Wc1NavPoint;
+import wcworkshop.core.data.Wc1NavPointInfo;
 import wcworkshop.core.data.Wc1NavPointManipulation;
 
 public class Wc1ModuleReader {
@@ -22,14 +23,17 @@ public class Wc1ModuleReader {
     readerHelper.extractFilesize(result, buffer);
     readerHelper.extractBlockOffsets(result, buffer);
 
-    // System.out.println("Block 1:");
-    // extractBlock1(result, Arrays.copyOfRange(buffer, result.getBlockOffset(1), result.getBlockOffset(2)));
+    System.out.println("Block 1:");
+    extractBlock1(result, Arrays.copyOfRange(buffer, result.getBlockOffset(1), result.getBlockOffset(2)));
 
     System.out.println("Block 2:");
     extractBlock2(result, Arrays.copyOfRange(buffer, result.getBlockOffset(1), result.getBlockOffset(2)));
 
     System.out.println("Block 3:");
     extractThirdBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(2), result.getBlockOffset(3)), result.getBlockOffset(2));
+
+    //    System.out.println("Block 4:");
+    //    extractSizedBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(3), result.getBlockOffset(4)), result.getBlockOffset(3));
 
     System.out.println("Block 5:");
     extractSizedBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(4), result.getBlockOffset(5)), result.getBlockOffset(4), 40);
@@ -46,7 +50,7 @@ public class Wc1ModuleReader {
   private void extractBlock1(Wc1ModuleData result, byte[] buffer) {
     int chunkLength = 0x30;
     for (int index = 0; index < buffer.length; index += chunkLength) {
-
+      System.out.println(index + ": " + readerHelper.byteArrayToHexString(Arrays.copyOfRange(buffer, index, index + chunkLength)));
     }
   }
 
@@ -59,6 +63,7 @@ public class Wc1ModuleReader {
     int offset = 0x1340;
     int chunkSize = 77;
     int counter = 0;
+    int prevIndex = offset;
     for (int index = offset; index < buffer.length; index += chunkSize) {
       Wc1NavPoint navPoint = new Wc1NavPoint();
       if (buffer[index] == (byte) 0x0) {
@@ -100,12 +105,16 @@ public class Wc1ModuleReader {
       }
       navPoint.setShipsToLoad(shipsToLoad);
 
-      System.out.println("0x" + Integer.toHexString(index).toUpperCase() + " - " + ++counter + navPoint.toString());
+      System.out.println((index - prevIndex) + " " + index + " 0x" + Integer.toHexString(index).toUpperCase() + " - " + ++counter
+          + navPoint.toString());
+      prevIndex = index;
     }
   }
 
   private void extractThirdBlock(Wc1ModuleData result, byte[] copyOfRange, int blockOffset) {
     int start = 0x1000;
+
+    Wc1NavPointInfo info = new Wc1NavPointInfo();
 
   }
 
@@ -114,7 +123,8 @@ public class Wc1ModuleReader {
       int absOffset = startOffset + index;
       String raw = new String(Arrays.copyOfRange(buffer, index, index + chunkSize));
       raw = raw.substring(0, raw.indexOf("\0"));
-      System.out.println("0x" + Integer.toHexString(index).toUpperCase() + " 0x" + Integer.toHexString(absOffset).toUpperCase() + " " + raw);
+      System.out
+          .println("0x" + Integer.toHexString(index).toUpperCase() + " 0x" + Integer.toHexString(absOffset).toUpperCase() + " " + raw);
     }
   }
 

@@ -79,6 +79,17 @@ public class ReaderHelper {
     return blockOffsets;
   }
 
+  public String byteArrayToHexString(byte[] input) {
+    if (input == null) {
+      return "";
+    }
+    StringBuilder result = new StringBuilder();
+    for (byte b : input) {
+      result.append("0x" + Integer.toHexString(b) + " ");
+    }
+    return result.toString();
+  }
+
   public static ReaderHelper getInstance() {
     return INSTANCE;
   }
