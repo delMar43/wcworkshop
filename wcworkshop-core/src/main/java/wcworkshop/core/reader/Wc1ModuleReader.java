@@ -22,8 +22,8 @@ public class Wc1ModuleReader {
     readerHelper.extractFilesize(result, buffer);
     readerHelper.extractBlockOffsets(result, buffer);
 
-    //    System.out.println("Block 1:");
-    //    extractBlock1(result, Arrays.copyOfRange(buffer, result.getBlockOffset(1), result.getBlockOffset(2)));
+    // System.out.println("Block 1:");
+    // extractBlock1(result, Arrays.copyOfRange(buffer, result.getBlockOffset(1), result.getBlockOffset(2)));
 
     System.out.println("Block 2:");
     extractBlock2(result, Arrays.copyOfRange(buffer, result.getBlockOffset(1), result.getBlockOffset(2)));
@@ -50,9 +50,12 @@ public class Wc1ModuleReader {
     }
   }
 
+  /**
+   * contains nav point data
+   */
   private void extractBlock2(Wc1ModuleData data, byte[] buffer) {
 
-    //nav points start at relative 0x1340, chunk length=0x4d (77 dez)
+    // nav points start at relative 0x1340, chunk length=0x4d (77 dez)
     int offset = 0x1340;
     int chunkSize = 77;
     int counter = 0;
@@ -64,11 +67,15 @@ public class Wc1ModuleReader {
       String id = new String(Arrays.copyOfRange(buffer, index, index + 30));
       navPoint.setId(id.substring(0, id.indexOf("\0")));
       navPoint.setVisible(!id.startsWith("."));
+      navPoint.setUnknown1(readerHelper.getShort(Arrays.copyOfRange(buffer, index + 30, index + 32)));
 
       byte[] xBytes = Arrays.copyOfRange(buffer, index + 32, index + 34);
-      byte[] yBytes = Arrays.copyOfRange(buffer, index + 36, index + 38);
       navPoint.setxPos(readerHelper.getShort(xBytes));
+      navPoint.setUnknown2(readerHelper.getShort(new byte[] { buffer[index + 34], buffer[index + 35] }));
+      byte[] yBytes = Arrays.copyOfRange(buffer, index + 36, index + 38);
       navPoint.setyPos(readerHelper.getShort(yBytes));
+      navPoint.setInSystemJumpPoint(buffer[index + 38]);
+      navPoint.setIsJumpPoint(buffer[index + 39]);
 
       List<Wc1NavPointManipulation> navManList = new ArrayList<>();
       for (int i = 0; i < 8; i += 2) {
@@ -107,8 +114,7 @@ public class Wc1ModuleReader {
       int absOffset = startOffset + index;
       String raw = new String(Arrays.copyOfRange(buffer, index, index + chunkSize));
       raw = raw.substring(0, raw.indexOf("\0"));
-      System.out
-          .println("0x" + Integer.toHexString(index).toUpperCase() + " 0x" + Integer.toHexString(absOffset).toUpperCase() + " " + raw);
+      System.out.println("0x" + Integer.toHexString(index).toUpperCase() + " 0x" + Integer.toHexString(absOffset).toUpperCase() + " " + raw);
     }
   }
 
