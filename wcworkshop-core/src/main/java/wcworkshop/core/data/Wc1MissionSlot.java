@@ -1,14 +1,15 @@
 package wcworkshop.core.data;
 
 public class Wc1MissionSlot {
+  public static final Wc1MissionSlot EMPTY = new Wc1MissionSlot();
+
   private Wc1Cutscene shotglassCutscene;
   private Wc1Cutscene leftCutscene;
   private Wc1Cutscene rightCutscene;
   private Wc1Cutscene briefingCutscene;
   private Wc1Cutscene debriefingCutscene;
 
-  private byte leftSeat;
-  private byte rightSeat;
+  private Wc1ConversationPartners conversationPartners;
   private short medal;
   private short medalKillPoints;
   private byte[] objectiveVictoryPoints;
@@ -53,20 +54,12 @@ public class Wc1MissionSlot {
     this.debriefingCutscene = debriefingCutscene;
   }
 
-  public byte getLeftSeat() {
-    return leftSeat;
+  public Wc1ConversationPartners getConversationPartners() {
+    return conversationPartners;
   }
 
-  public void setLeftSeat(byte leftSeat) {
-    this.leftSeat = leftSeat;
-  }
-
-  public byte getRightSeat() {
-    return rightSeat;
-  }
-
-  public void setRightSeat(byte rightSeat) {
-    this.rightSeat = rightSeat;
+  public void setConversationPartners(Wc1ConversationPartners conversationPartners) {
+    this.conversationPartners = conversationPartners;
   }
 
   public short getMedal() {

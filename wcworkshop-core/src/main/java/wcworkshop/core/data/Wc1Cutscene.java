@@ -22,8 +22,8 @@ public class Wc1Cutscene {
   @Override
   public String toString() {
     return " FG: " + hex(foreground) + " | TC: " + hex(textColor) + " | BG: " + hex(background) + " | unknown1: " + hex(unknown1)
-        + " | unknown2: " + hex(unknown2) + " | Condition: " + byteArrayToHexString(condition) + " | first line: " + firstLine
-        + " | lines: " + cutsceneLinesText();
+        + " | unknown2: " + hex(unknown2) + " \n Condition: " + byteArrayToHexString(condition) + " | first line: " + firstLine
+        + "| lines:\r\n" + cutsceneLinesText();
   }
 
   private String byteArrayToHexString(byte[] input) {

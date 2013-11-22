@@ -11,8 +11,6 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
-import wcworkshop.core.data.Wc1Data;
-
 public class ReaderHelper {
   private static final ReaderHelper INSTANCE = new ReaderHelper();
 
@@ -33,10 +31,10 @@ public class ReaderHelper {
     return buffer;
   }
 
-  public void extractFilesize(Wc1Data data, byte[] buffer) {
+  public int extractFilesize(byte[] buffer) {
     byte[] bytes = Arrays.copyOfRange(buffer, 0, 4);
     int filesize = getInteger(bytes);
-    data.setFilesize(filesize);
+    return filesize;
   }
 
   public int getInteger(byte[] bytes) {
@@ -47,7 +45,7 @@ public class ReaderHelper {
     return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
   }
 
-  public void extractBlockOffsets(Wc1Data data, byte[] buffer) {
+  public List<Integer> extractBlockOffsets(byte[] buffer) {
     List<Integer> blockOffsets = new ArrayList<>();
     int offset = 4;
     do {
@@ -57,7 +55,7 @@ public class ReaderHelper {
       offset += 4;
     } while (offset < blockOffsets.get(0));
 
-    data.setBlockOffsets(blockOffsets);
+    return blockOffsets;
   }
 
   public List<Integer> extractSecondaryTable(byte[] buffer) {

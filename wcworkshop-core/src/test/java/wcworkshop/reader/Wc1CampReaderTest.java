@@ -1,7 +1,5 @@
 package wcworkshop.reader;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import wcworkshop.core.data.Wc1CampData;
@@ -15,7 +13,5 @@ public class Wc1CampReaderTest {
   public void readFile() {
     String path = "D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/CAMP.002";
     Wc1CampData camp = reader.readCampaignFile(path);
-    System.out.println("Filesize: " + camp.getFilesize());
-    System.out.println("Block offsets: " + Arrays.toString(camp.getBlockOffsets().toArray()));
   }
 }

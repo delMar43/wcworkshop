@@ -1,16 +1,30 @@
 package wcworkshop.core.data;
 
+import java.util.List;
+
 public class Wc1CutsceneLine {
 
   private String facialExpressions;
-  private byte[] commands;
+  private List<Wc1CutsceneCommand> commands;
+  private byte[] commandBytes;
   private String text;
   private String phonetic;
 
   @Override
   public String toString() {
-    return " Commands: " + byteArrayToHexString(commands) + " | Text: " + text + " | Phonetic: " + phonetic + " | Facial expressions: "
-        + facialExpressions + "\r\n";
+    return " Commands: " + /*commands() + " | " +*/byteArrayToHexString(commandBytes) + " | Text: " + text + " | Phonetic: " + phonetic
+        + " | Facial expressions: " + facialExpressions + "\r\n";
+  }
+
+  private String commands() {
+    if (commands == null) {
+      return "";
+    }
+    StringBuilder sb = new StringBuilder();
+    for (Wc1CutsceneCommand command : commands) {
+      sb.append(command.toString());
+    }
+    return sb.toString();
   }
 
   private String byteArrayToHexString(byte[] input) {
@@ -32,11 +46,11 @@ public class Wc1CutsceneLine {
     this.facialExpressions = facialExpressions;
   }
 
-  public byte[] getCommands() {
+  public List<Wc1CutsceneCommand> getCommands() {
     return commands;
   }
 
-  public void setCommands(byte[] commands) {
+  public void setCommands(List<Wc1CutsceneCommand> commands) {
     this.commands = commands;
   }
 
@@ -56,4 +70,11 @@ public class Wc1CutsceneLine {
     this.phonetic = phonetic;
   }
 
+  public byte[] getCommandBytes() {
+    return commandBytes;
+  }
+
+  public void setCommandBytes(byte[] commandBytes) {
+    this.commandBytes = commandBytes;
+  }
 }

@@ -1,12 +1,23 @@
 package wcworkshop.core.data;
 
+import java.util.Collections;
 import java.util.List;
 
-public interface Wc1Data {
+public class Wc1Data {
 
-  void setFilesize(int filesize);
+  private List<Wc1SeriesSlot> seriesSlots;
 
-  void setBlockOffsets(List<Integer> offsets);
+  public List<Wc1SeriesSlot> getSeriesSlots() {
+    List<Wc1SeriesSlot> result;
+    if (seriesSlots != null) {
+      result = Collections.unmodifiableList(seriesSlots);
+    } else {
+      result = Collections.EMPTY_LIST;
+    }
+    return result;
+  }
 
-  int getBlockOffset(int offsetIndex);
+  public void setSeriesSlots(List<Wc1SeriesSlot> seriesSlots) {
+    this.seriesSlots = seriesSlots;
+  }
 }

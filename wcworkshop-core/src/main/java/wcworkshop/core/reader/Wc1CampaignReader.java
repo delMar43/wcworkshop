@@ -6,11 +6,12 @@ import java.util.List;
 
 import wcworkshop.core.data.Wc1CampData;
 import wcworkshop.core.data.Wc1CampMedal;
-import wcworkshop.core.data.Wc1CampPilot;
+import wcworkshop.core.data.Wc1ConversationPartners;
 import wcworkshop.core.data.Wc1MissionSlot;
 import wcworkshop.core.data.Wc1SeriesSlot;
 
 public class Wc1CampaignReader {
+  private static final Wc1CampaignReader instance = new Wc1CampaignReader();
 
   private static final byte MAX_MISSIONS_PER_SLOT = 4;
 
@@ -23,17 +24,17 @@ public class Wc1CampaignReader {
     }
 
     Wc1CampData result = new Wc1CampData();
-    readerHelper.extractFilesize(result, buffer);
-    readerHelper.extractBlockOffsets(result, buffer);
-    extractFirstBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(0), result.getBlockOffset(1)));
-    extractSecondBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(1), result.getBlockOffset(2)));
-    extractThirdBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(2), result.getFilesize()));
+    int filesize = readerHelper.extractFilesize(buffer);
+    List<Integer> blockOffsets = readerHelper.extractBlockOffsets(buffer);
+    result.setFirstBlock(extractFirstBlock(Arrays.copyOfRange(buffer, blockOffsets.get(0), blockOffsets.get(1)), blockOffsets));
+    result.setSeriesSlots(extractSecondBlock(Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)), blockOffsets));
+    result.setConversationPartners(extractThirdBlock(buffer, blockOffsets, filesize));
 
     return result;
   }
 
-  private void extractFirstBlock(Wc1CampData data, byte[] buffer) {
-    System.out.println("first block starts at " + data.getBlockOffset(0));
+  private List<byte[]> extractFirstBlock(byte[] buffer, List<Integer> blockOffsets) {
+    System.out.println("first block starts at " + blockOffsets.get(0));
 
     List<byte[]> firstBlock = new ArrayList<>();
     int blockSize = 8;
@@ -43,11 +44,11 @@ public class Wc1CampaignReader {
       System.out.println(++counter + ": " + Arrays.toString(byteArray));
       firstBlock.add(byteArray);
     }
-    data.setFirstBlock(firstBlock);
+    return firstBlock;
   }
 
-  private void extractSecondBlock(Wc1CampData result, byte[] buffer) {
-    System.out.println("second block starts at " + result.getBlockOffset(1) + " and is " + buffer.length + " bytes long");
+  private List<Wc1SeriesSlot> extractSecondBlock(byte[] buffer, List<Integer> blockOffsets) {
+    System.out.println("second block starts at " + blockOffsets.get(1) + " and is " + buffer.length + " bytes long");
     // 90 bytes per series
 
     List<Wc1SeriesSlot> seriesSlots = new ArrayList<>();
@@ -61,7 +62,7 @@ public class Wc1CampaignReader {
       System.out.println("-----");
     } while (startIndex <= buffer.length - 90);
 
-    result.setSeriesSlots(seriesSlots);
+    return seriesSlots;
   }
 
   private Wc1SeriesSlot extractSeriesAndMissions(byte[] buffer) {
@@ -98,25 +99,24 @@ public class Wc1CampaignReader {
     return series;
   }
 
-  private void extractThirdBlock(Wc1CampData result, byte[] buffer) {
-    System.out.println("third block starts at " + result.getBlockOffset(2));
+  private List<Wc1ConversationPartners> extractThirdBlock(byte[] allData, List<Integer> blockOffsets, int filesize) {
+    byte[] buffer = Arrays.copyOfRange(allData, blockOffsets.get(2), filesize);
 
+    List<Wc1ConversationPartners> result = new ArrayList<>();
     int bufferIndex = 0;
-    int counter = 0;
-    for (Wc1SeriesSlot series : result.getSeriesSlots()) {
-      for (int missionIndex = 0; missionIndex < MAX_MISSIONS_PER_SLOT; ++missionIndex) {
-        Wc1MissionSlot missionSlot = series.getMissionSlot(missionIndex);
-        extractMissionSlot(missionSlot, buffer, bufferIndex);
-        System.out.println(" Mission " + ++counter + " left seat: " + Wc1CampPilot.getByValue(missionSlot.getLeftSeat()) + ", right seat: "
-            + Wc1CampPilot.getByValue(missionSlot.getRightSeat()));
-        bufferIndex += 2;
-      }
+    while (bufferIndex + 1 < buffer.length) {
+      Wc1ConversationPartners partners = extractConversationPartners(buffer, bufferIndex);
+      result.add(partners);
+      bufferIndex += 2;
     }
+    return result;
   }
 
-  private void extractMissionSlot(Wc1MissionSlot data, byte[] buffer, int firstOffset) {
-    data.setLeftSeat(buffer[firstOffset]);
-    data.setRightSeat(buffer[firstOffset + 1]);
+  private Wc1ConversationPartners extractConversationPartners(byte[] buffer, int firstOffset) {
+    return new Wc1ConversationPartners(buffer[firstOffset], buffer[firstOffset + 1]);
   }
 
+  public static Wc1CampaignReader getInstance() {
+    return instance;
+  }
 }
