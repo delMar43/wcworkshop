@@ -3,3 +3,7 @@ body {
   font-size: 12px;
 }
 
+ul.tree {
+  padding-left: 0px;
+  list-style-type: none;
+}
