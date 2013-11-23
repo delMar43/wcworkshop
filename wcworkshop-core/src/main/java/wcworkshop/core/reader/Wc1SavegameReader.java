@@ -3,19 +3,21 @@ package wcworkshop.core.reader;
 import wcworkshop.core.data.Wc1Savegame;
 
 public class Wc1SavegameReader {
-  private static final short OFFSET_NAME = 0;
+  private static final short OFFSET_NAME = 0; //size=16
 
+  private static final short OFFSET_PILOT0_NAME = 18; //size=13
+  private static final short OFFSET_PILOT0_CALLSIGN = 32; //size=13
   private static final short OFFSET_PILOT0_RANK = 48;//short
   private static final short OFFSET_PILOT0_SORTIES = 50;//short
   private static final short OFFSET_PILOT0_KILLS = 52;//short
-  private static final short OFFSET_PILOT0_CODE1 = 54;//short
-  private static final short OFFSET_PILOT0_CODE2 = 56;//short
+  private static final short OFFSET_PILOT0_CODE1 = 54;//byte
+  private static final short OFFSET_PILOT0_CODE2 = 55;//byte
 
   private static final short OFFSET_PILOT1_RANK = 86;//short (=38*playerIndex+48)
   private static final short OFFSET_PILOT1_SORTIES = 88;//short
   private static final short OFFSET_PILOT1_KILLS = 90;//short
-  private static final short OFFSET_PILOT1_CODE1 = 92;//short
-  private static final short OFFSET_PILOT1_CODE2 = 94;//short
+  private static final short OFFSET_PILOT1_CODE1 = 92;// byte
+  private static final short OFFSET_PILOT1_CODE2 = 93;//byte
 
   private static final short OFFSET_PILOT2_RANK = 124;//short
 
@@ -23,7 +25,7 @@ public class Wc1SavegameReader {
   private static final short OFFSET_PILOT3_SORTIES = 164;
   private static final short OFFSET_PILOT3_KILLS = 166;
   private static final short OFFSET_PILOT3_CODE1 = 168;
-  private static final short OFFSET_PILOT3_CODE2 = 170;
+  private static final short OFFSET_PILOT3_CODE2 = 169;
 
   private static final short OFFSET_PILOT4_RANK = 200;
 
@@ -37,7 +39,7 @@ public class Wc1SavegameReader {
   private static final short OFFSET_PLAYER_SORTIES = 354;
   private static final short OFFSET_PLAYER_KILLS = 356;
   private static final short OFFSET_PLAYER_CODE1 = 358;
-  private static final short OFFSET_PLAYER_CODE2 = 360;
+  private static final short OFFSET_PLAYER_CODE2 = 359;
 
   private static final short OFFSET_BRONZE = 364;//byte
   private static final short OFFSET_SILVER = 365;//byte
