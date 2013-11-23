@@ -45,12 +45,16 @@ public class ReaderHelper {
     return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
   }
 
+  public short getShort(byte[] buffer, int offset) {
+    return getShort(new byte[] { buffer[offset], buffer[offset + 1] });
+  }
+
   public List<Integer> extractBlockOffsets(byte[] buffer) {
     List<Integer> blockOffsets = new ArrayList<>();
     int offset = 4;
     do {
       byte[] bytes = Arrays.copyOfRange(buffer, offset, offset + 4);
-      bytes[3] = 0; //always 01 in wc1 file, unknown
+      bytes[3] = 0; //
       blockOffsets.add(getInteger(bytes));
       offset += 4;
     } while (offset < blockOffsets.get(0));
@@ -88,7 +92,16 @@ public class ReaderHelper {
     return result.toString();
   }
 
+  public String getString(byte[] savegameBlock, int offset, int length) {
+    String result = new String(savegameBlock, offset, length);
+    if (result.contains("\0")) {
+      result = result.substring(0, result.indexOf("\0"));
+    }
+    return result;
+  }
+
   public static ReaderHelper getInstance() {
     return INSTANCE;
   }
+
 }
