@@ -3,6 +3,8 @@ package wcworkshop.core.data;
 public class Wc1MissionSlot {
   public static final Wc1MissionSlot EMPTY = new Wc1MissionSlot();
 
+  private byte[] unknown;
+
   private Wc1Cutscene shotglassCutscene;
   private Wc1Cutscene leftCutscene;
   private Wc1Cutscene rightCutscene;
@@ -13,6 +15,14 @@ public class Wc1MissionSlot {
   private short medal;
   private short medalKillPoints;
   private byte[] objectiveVictoryPoints;
+
+  public byte[] getUnknown() {
+    return unknown;
+  }
+
+  public void setUnknown(byte[] unknown) {
+    this.unknown = unknown;
+  }
 
   public Wc1Cutscene getShotglassCutscene() {
     return shotglassCutscene;
@@ -84,5 +94,9 @@ public class Wc1MissionSlot {
 
   public void setObjectiveVictoryPoints(byte[] objectiveVictoryPoints) {
     this.objectiveVictoryPoints = objectiveVictoryPoints;
+  }
+
+  public boolean isEmpty() {
+    return this == EMPTY;
   }
 }

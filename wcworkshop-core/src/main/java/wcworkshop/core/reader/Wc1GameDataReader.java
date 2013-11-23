@@ -27,6 +27,7 @@ public class Wc1GameDataReader {
 
     List<Wc1MissionSlot> allMissionSlots = briefingData.getMissionSlots();
     List<Wc1ConversationPartners> allConversationPartners = campaignData.getConversationPartners();
+    List<byte[]> unknownCampData = campaignData.getFirstBlock();
 
     int seriesIndex = 0;
     for (Wc1SeriesSlot seriesSlot : result.getSeriesSlots()) {
@@ -34,7 +35,11 @@ public class Wc1GameDataReader {
       for (int missionIndex = 0; missionIndex < 4; ++missionIndex) {
         int index = missionIndex + (seriesIndex * 4);
         Wc1MissionSlot missionSlot = allMissionSlots.get(index);
-        missionSlot.setConversationPartners(allConversationPartners.get(missionIndex + (seriesIndex * 4)));
+        if (missionSlot.isEmpty()) {
+          break;
+        }
+        missionSlot.setConversationPartners(allConversationPartners.get(index));
+        missionSlot.setUnknown(unknownCampData.get(index));
         toAdd.add(missionSlot);
       }
       seriesSlot.setMissionSlots(toAdd);
