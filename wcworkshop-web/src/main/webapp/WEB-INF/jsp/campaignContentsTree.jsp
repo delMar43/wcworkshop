@@ -9,15 +9,15 @@
         <c:forEach items="${series.missionSlots}" var="mission" varStatus="missionStatus">
           <li><a href="javascript:openMissionEditor(${seriesStatus.index}, ${missionStatus.index})">Mission ${missionStatus.count}</a>
             <ul>
-              <li>Nav Points
-                <!-- ul>
+              <!-- li>Nav Points
+                <ul>
                   <li>Tiger's Claw</li>
                   <li>Nav 1</li>
                   <li>Nav 2</li>
                   <li>Nav 3</li>
-                </ul -->
-              </li>
-              <li>Cutscenes
+                </ul>
+              </li -->
+              <!-- li>Cutscenes
                 <ul>
                   <li>Shotglass</li>
                   <li>Left Chair</li>
@@ -25,7 +25,7 @@
                   <li>Briefing</li>
                   <li>Debriefing</li>
                 </ul>
-              </li>
+              </li -->
             </ul>
           </li>
         </c:forEach>

@@ -45,6 +45,14 @@
             $("#tab-savegameEditor").html(data);
           }
         });
+        
+        // close icon: removing the tab on click
+        editorTabs.delegate( "span.ui-icon-close", "click", function() {
+          var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
+          $( "#" + panelId ).remove();
+          editorTabs.tabs( "refresh" );
+        });
+
       });
 
       var addTab = function(label, href) {
