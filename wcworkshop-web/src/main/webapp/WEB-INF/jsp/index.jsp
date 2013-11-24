@@ -11,8 +11,7 @@
     <script src="<%=request.getContextPath() %>/scripts/jquery.jstree.js"></script>
     <script>
       var editorTabs;
-      var openSeries = '';
-      var openMissions = '';
+      var openTabs = {};
       
       $(function() {
         var layout = $("body").layout({ applyDefaultStyles: true });
@@ -48,17 +47,23 @@
         
         // close icon: removing the tab on click
         editorTabs.delegate( "span.ui-icon-close", "click", function() {
-          var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
+          var li = $( this ).closest( "li" );
+          var panelId = li.remove().attr( "aria-controls" );
           $( "#" + panelId ).remove();
           editorTabs.tabs( "refresh" );
+          delete openTabs[li.attr("id")];
         });
 
       });
 
       var addTab = function(label, href) {
+        if (label in openTabs) {
+          return;
+        }
         var ul = editorTabs.find(".ui-tabs-nav");
-        $("<li><a href='" + href + "'>" + label+ "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
+        $("<li id='" + label + "'><a href='" + href + "'>" + label+ "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
         editorTabs.tabs("refresh");
+        openTabs[label] = true;
       }
       
       var openSeriesEditor = function(seriesIndex) {
