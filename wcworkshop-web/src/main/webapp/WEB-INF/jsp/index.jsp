@@ -13,7 +13,6 @@
       var editorTabs;
       var openSeries = '';
       var openMissions = '';
-      var tabTemplate = "<li><a href='#'>label</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>";
       
       $(function() {
         var layout = $("body").layout({ applyDefaultStyles: true });
@@ -47,14 +46,19 @@
           }
         });
       });
+
+      var addTab = function(label, href) {
+        var ul = editorTabs.find(".ui-tabs-nav");
+        $("<li><a href='" + href + "'>" + label+ "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
+        editorTabs.tabs("refresh");
+      }
       
       var openSeriesEditor = function(seriesIndex) {
         $.ajax({
           url: "<%=request.getContextPath()%>/seriesEditor.html",
           data: "seriesIndex=" + seriesIndex,
           success: function(data, textStatus, jqXHR) {
-            alert(data);
-            editorTabs.find(".ui-tabs-nav").append(tabTemplate);
+            addTab("Series " + (seriesIndex+1), "seriesEditor.html?seriesIndex=" + seriesIndex);
           }
         });
       };
@@ -64,7 +68,7 @@
           url: "<%=request.getContextPath()%>/missionEditor.html",
           data: "seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex,
           success: function(data, textStatus, jqXHR) {
-            alert(data);
+            addTab("S" + (seriesIndex+1) + "M" + (missionIndex+1), "missionEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
           }
         });
       };
