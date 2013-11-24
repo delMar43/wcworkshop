@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <table>
   <tbody>
     <tr>
       <th>Wingman</th>
-      <td>${series.wingman}</td>
+      <td>${pilots.get(series.wingman)}</td>
     </tr>
     <tr>
       <th>Nr of Missions</th>
@@ -33,5 +35,10 @@
       <td>${series.lossShip}</td>
     </tr>
   </tbody>
-
 </table>
+
+<ol>  
+  <c:forEach items="${series.missionSlots}" var="mission" varStatus="missionStatus">
+    <li><a href="javascript:openMissionEditor(${seriesIndex}, ${missionStatus.index})">Mission ${missionStatus.count}</a></li>
+  </c:forEach>
+</ol>
