@@ -38,8 +38,11 @@ public class Wc1GameDataReader {
         if (missionSlot.isEmpty()) {
           break;
         }
+        Wc1MissionSlot missionFromCampaign = seriesSlot.getMissionSlot(missionIndex);
         missionSlot.setConversationPartners(allConversationPartners.get(index));
         missionSlot.setUnknown(unknownCampData.get(index));
+        missionSlot.setMedal(missionFromCampaign.getMedal());
+        missionSlot.setMedalKillPoints(missionFromCampaign.getMedalKillPoints());
         toAdd.add(missionSlot);
       }
       seriesSlot.setMissionSlots(toAdd);
