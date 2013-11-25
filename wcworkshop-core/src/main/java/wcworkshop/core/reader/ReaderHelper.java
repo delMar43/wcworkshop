@@ -11,6 +11,8 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
+import wcworkshop.core.workdata.Block;
+
 public class ReaderHelper {
   private static final ReaderHelper INSTANCE = new ReaderHelper();
 
@@ -62,21 +64,35 @@ public class ReaderHelper {
     return blockOffsets;
   }
 
+  public List<Block> extractBlocks(byte[] buffer) {
+    List<Block> blockOffsets = new ArrayList<>();
+    int offset = 4;
+    do {
+      byte[] bytes = Arrays.copyOfRange(buffer, offset, offset + 4);
+      boolean compressed = bytes[3] == (byte) 1;
+      bytes[3] = 0; //
+      blockOffsets.add(new Block(getInteger(bytes), compressed));
+      offset += 4;
+    } while (offset < blockOffsets.get(0).getOffset());
+
+    return blockOffsets;
+  }
+
   public List<Integer> extractSecondaryTable(byte[] buffer) {
     List<Integer> blockOffsets = new ArrayList<>();
     int offset = 0;
     do {
       byte[] bytes = Arrays.copyOfRange(buffer, offset, offset + 4);
-      //      if (bytes[3] == 1) { //01 in wc1 means compressed, e0 means uncompressed
-      //        throw new RuntimeException(
-      //            "This file contains compressed data. Not yet able to uncompress it. Please use uncompressed data (eg wc1 kilrathi sage pc gamer coverdisk version available for download at wcnews.com)");
-      //      }
+      // if (bytes[3] == 1) { //01 in wc1 means compressed, e0 means uncompressed
+      // throw new RuntimeException(
+      // "This file contains compressed data. Not yet able to uncompress it. Please use uncompressed data (eg wc1 kilrathi sage pc gamer coverdisk version available for download at wcnews.com)");
+      // }
       bytes[3] = 0;
       int blockOffset = getInteger(bytes);
-      //      System.out.println("   " + blockOffset);
+      // System.out.println("   " + blockOffset);
       blockOffsets.add(blockOffset);
       offset += 4;
-    } while (offset < blockOffsets.get(0));
+    } while (offset < blockOffsets.get(0) - 4);
 
     return blockOffsets;
   }
@@ -97,6 +113,11 @@ public class ReaderHelper {
     if (result.contains("\0")) {
       result = result.substring(0, result.indexOf("\0"));
     }
+    return result;
+  }
+
+  public byte[] decompress(byte[] input) {
+    byte[] result = Lzw.decompress(input);
     return result;
   }
 
