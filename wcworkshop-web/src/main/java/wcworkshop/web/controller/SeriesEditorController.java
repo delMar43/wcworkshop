@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import wcworkshop.core.data.Wc1GameData;
 import wcworkshop.core.data.Wc1SeriesSlot;
 import wcworkshop.core.reader.Wc1GameDataReader;
-import wcworkshop.core.util.Wc1CampPilotUtil;
+import wcworkshop.core.util.Wc1CampUtil;
 
 @Controller
 public class SeriesEditorController {
@@ -26,7 +26,7 @@ public class SeriesEditorController {
 
     model.addAttribute("seriesIndex", seriesIndex);
     model.addAttribute("series", series);
-    model.addAttribute("pilots", new Wc1CampPilotUtil());
+    model.addAttribute("campUtil", new Wc1CampUtil());
 
     return "editors/seriesEditor";
   }

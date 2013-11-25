@@ -4,14 +4,19 @@
 <table>
   <tr>
     <th>Conversation Partners</th>
-    <td>Left: ${pilots.get(mission.conversationPartners.leftSeat)}, Right: ${pilots.get(mission.conversationPartners.rightSeat)}</td>
+    <td>Left: ${campUtil.getPilot(mission.conversationPartners.leftSeat)}, Right: ${campUtil.getPilot(mission.conversationPartners.rightSeat)}</td>
   </tr>
   <tr>
     <th>Medal</th>
-    <td>${mission.medal}</td>
+    <td>${campUtil.getMedal(mission.medal)}</td>
   </tr>
   <tr>
     <th>Medal Killpoints</th>
     <td>${mission.medalKillPoints}</td>
   </tr>
+  <tr>
+    <th>Objective Victory Points</th>
+    <td>${objectiveVictoryPoints}</td>
+  </tr>
 </table>
+
