@@ -70,7 +70,7 @@ public class Wc1CutsceneUtil {
       default:
         result = "Unknown";
     }
-    result += " (0x" + Integer.toHexString(color) + ")";
+    result = appendHexString(color, result);
     return result;
   }
 
@@ -172,7 +172,7 @@ public class Wc1CutsceneUtil {
       default:
         result = "Unknown";
     }
-    result += " (0x" + Integer.toHexString(foreground) + ")";
+    result = appendHexString(foreground, result);
     return result;
   }
 
@@ -207,8 +207,151 @@ public class Wc1CutsceneUtil {
         result = "Unknown";
     }
 
-    result += " (0x" + Integer.toHexString(background) + ")";
+    result = appendHexString(background, result);
     return result;
+  }
+
+  public String hexString(int code) {
+    return "0x" + Integer.toHexString(code);
+  }
+
+  private String appendHexString(byte code, String result) {
+    result += " (" + hexString(code) + ")";
+    return result;
+  }
+
+  public String getCondition(byte condition) {
+    String result;
+
+    switch (condition) {
+      case 0:
+        result = "Unconditional";
+        break;
+      case 1:
+        result = "Pilot x died this mission (Mission didn't go well)";
+        break;
+      case 2:
+        result = "Mission went well";
+        break;
+      case 3:
+        result = "Pilot X is dead";
+        break;
+      case 4:
+        result = "Kilrathi ace x is alive";
+        break;
+      case 5:
+        result = "Pilot x died this mission";
+        break;
+      case 6:
+        result = "Some player kills last mission";
+        break;
+      case 7:
+        result = "No player kills on last mission";
+        break;
+      case 8:
+        result = "Some kills for pilot x on last mission";
+        break;
+      case 9:
+        result = "Pilot x came up empty";
+        break;
+      case 10:
+        result = "Meeting with Halcyon after briefing";
+        break;
+      case 11:
+        result = "Objective x succeeded";
+        break;
+      case 12:
+        result = "Objective x failed";
+        break;
+      case 13:
+        result = "Receiving Bronze/Silver/Gold Star";
+        break;
+      case 14:
+        result = "Receiving Golden Sun";
+        break;
+      case 15:
+        result = "Not promoted";
+        break;
+      case 16:
+        result = "Did not eject this mission";
+        break;
+      case 17:
+        result = "First ejection";
+        break;
+      case 18:
+        result = "Not transferring squadrons";
+        break;
+      case 19:
+        result = "Not transferring to Hornet";
+        break;
+      case 20:
+        result = "Not transferring to Scimitar";
+        break;
+      case 21:
+        result = "Not transferring to Raptor";
+        break;
+      case 22:
+        result = "Not transferring to Rapier";
+        break;
+      case 23:
+        result = "Transferring to inferior ship";
+        break;
+      case 24:
+        result = "Transferring to better ship";
+        break;
+      case 25:
+        result = "Subsequent ejection";
+        break;
+      case 26:
+        result = "Objective x sighted";
+        break;
+      case 27:
+        result = "Objective x not sighted";
+        break;
+      case 28:
+        result = "Objective x sighted";
+        break;
+      case 29:
+        result = "Pilot x died in this mission";
+        break;
+      case 30:
+        result = "Kilrathi ace x dead";
+        break;
+      case 31:
+        result = "Kilrathi ace x survived previous mission";
+        break;
+      case 32:
+        result = "Kilrathi ace x alive";
+        break;
+      case 33:
+        result = "Kilrathi ace x died in previous mission";
+        break;
+      case 34:
+        result = "Mission went well (quantifiable?)";
+        break;
+      case 35:
+        result = "Mission went poorly (quantifiable?)";
+        break;
+      case 44:
+        result = "Separator";
+        break;
+      default:
+        result = "Unknown";
+    }
+
+    result = appendHexString(condition, result);
+    return result;
+  }
+
+  public String getConditionString(byte[] conditions) {
+    if (conditions == null || conditions.length == 0) {
+      return "";
+    }
+    StringBuilder sb = new StringBuilder();
+    for (byte b : conditions) {
+      sb.append(getCondition(b) + " | ");
+    }
+    return sb.toString();
   }
 
   public static Wc1CutsceneUtil getInstance() {

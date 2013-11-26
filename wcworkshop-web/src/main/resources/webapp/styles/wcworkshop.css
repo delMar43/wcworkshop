@@ -7,3 +7,12 @@ ul.tree {
   padding-left: 0px;
   list-style-type: none;
 }
+
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid black;
+}
