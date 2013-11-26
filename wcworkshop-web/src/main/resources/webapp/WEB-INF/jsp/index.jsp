@@ -72,13 +72,7 @@
         if (label in openTabs) {
           return;
         }
-        $.ajax({
-          url: "<%=request.getContextPath()%>/seriesEditor.html",
-          data: "seriesIndex=" + seriesIndex,
-          success: function(data, textStatus, jqXHR) {
-            addTab(label, "seriesEditor.html?seriesIndex=" + seriesIndex);
-          }
-        });
+        addTab(label, "<%=request.getContextPath()%>/seriesEditor.html?seriesIndex=" + seriesIndex);
       };
       
       var openMissionEditor = function(seriesIndex, missionIndex) {
@@ -86,14 +80,16 @@
     	if (label in openTabs) {
           return;
     	}
-        $.ajax({
-          url: "<%=request.getContextPath()%>/missionEditor.html",
-          data: "seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex,
-          success: function(data, textStatus, jqXHR) {
-            addTab(label, "missionEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
-          }
-        });
+    	addTab(label, "<%=request.getContextPath()%>/missionEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
       };
+      
+      var openCutsceneEditor = function(seriesIndex, missionIndex, cutsceneIndex) {
+    	var label = "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "C" + cutsceneIndex;
+    	if (label in openTabs) {
+          return;
+    	}
+    	addTab(label, "<%=request.getContextPath()%>/cutsceneEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
+      }
     </script>
   </head>
   

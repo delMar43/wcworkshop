@@ -10,10 +10,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import wcworkshop.core.workdata.Block;
 
 public class ReaderHelper {
+  private static final Logger logger = LoggerFactory.getLogger(ReaderHelper.class);
   private static final ReaderHelper INSTANCE = new ReaderHelper();
 
   private ReaderHelper() {
@@ -24,10 +27,10 @@ public class ReaderHelper {
     try {
       buffer = IOUtils.toByteArray(new FileInputStream(path));
     } catch (FileNotFoundException e) {
-      System.out.println(e.getMessage());
+      logger.error("Unable to find file: {}", path);
       buffer = null;
     } catch (IOException e) {
-      System.out.println(e.getMessage());
+      logger.error("Unable to load file {} because of {}", path, e.getMessage());
       buffer = null;
     }
     return buffer;

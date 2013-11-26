@@ -16,6 +16,32 @@ public class Wc1MissionSlot {
   private short medalKillPoints;
   private byte[] objectiveVictoryPoints;
 
+  public Wc1Cutscene getCutscene(int index) {
+    Wc1Cutscene result;
+
+    switch (index) {
+      case 0:
+        result = briefingCutscene;
+        break;
+      case 1:
+        result = debriefingCutscene;
+        break;
+      case 2:
+        result = shotglassCutscene;
+        break;
+      case 3:
+        result = rightCutscene;
+        break;
+      case 4:
+        result = leftCutscene;
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown cutscene: " + index);
+    }
+
+    return result;
+  }
+
   public byte[] getUnknown() {
     return unknown;
   }

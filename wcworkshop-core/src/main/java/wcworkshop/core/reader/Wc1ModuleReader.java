@@ -23,22 +23,22 @@ public class Wc1ModuleReader {
     int filesize = readerHelper.extractFilesize(buffer);
     List<Integer> blockOffsets = readerHelper.extractBlockOffsets(buffer);
 
-    System.out.println("Block 1:");
+    //    System.out.println("Block 1:");
     extractBlock1(result, Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
 
-    System.out.println("Block 2:");
+    //    System.out.println("Block 2:");
     extractBlock2(result, Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
 
-    System.out.println("Block 3:");
+    //    System.out.println("Block 3:");
     extractThirdBlock(result, Arrays.copyOfRange(buffer, blockOffsets.get(2), blockOffsets.get(3)), blockOffsets.get(2));
 
     //    System.out.println("Block 4:");
     //    extractSizedBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(3), result.getBlockOffset(4)), result.getBlockOffset(3));
 
-    System.out.println("Block 5:");
+    //    System.out.println("Block 5:");
     extractSizedBlock(result, Arrays.copyOfRange(buffer, blockOffsets.get(4), blockOffsets.get(5)), blockOffsets.get(4), 40);
 
-    System.out.println("Block 6:");
+    //    System.out.println("Block 6:");
     extractSizedBlock(result, Arrays.copyOfRange(buffer, blockOffsets.get(5), filesize), blockOffsets.get(5), 40);
     // extractFirstBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(0), result.getBlockOffset(1)));
     // extractSecondBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(1), result.getBlockOffset(2)));

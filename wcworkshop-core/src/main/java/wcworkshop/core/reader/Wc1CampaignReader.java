@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import wcworkshop.core.data.Wc1CampData;
-import wcworkshop.core.data.Wc1CampMedal;
 import wcworkshop.core.data.Wc1ConversationPartners;
 import wcworkshop.core.data.Wc1MissionSlot;
 import wcworkshop.core.data.Wc1SeriesSlot;
@@ -34,21 +33,21 @@ public class Wc1CampaignReader {
   }
 
   private List<byte[]> extractFirstBlock(byte[] buffer, List<Integer> blockOffsets) {
-    System.out.println("first block starts at " + blockOffsets.get(0));
+    //    System.out.println("first block starts at " + blockOffsets.get(0));
 
     List<byte[]> firstBlock = new ArrayList<>();
     int blockSize = 8;
     int counter = 0;
     for (int index = 0; index < buffer.length; index += blockSize) {
       byte[] byteArray = Arrays.copyOfRange(buffer, index, index + blockSize);
-      System.out.println(++counter + ": " + Arrays.toString(byteArray));
+      //      System.out.println(++counter + ": " + Arrays.toString(byteArray));
       firstBlock.add(byteArray);
     }
     return firstBlock;
   }
 
   private List<Wc1SeriesSlot> extractSecondBlock(byte[] buffer, List<Integer> blockOffsets) {
-    System.out.println("second block starts at " + blockOffsets.get(1) + " and is " + buffer.length + " bytes long");
+    //    System.out.println("second block starts at " + blockOffsets.get(1) + " and is " + buffer.length + " bytes long");
     // 90 bytes per series
 
     List<Wc1SeriesSlot> seriesSlots = new ArrayList<>();
@@ -56,10 +55,10 @@ public class Wc1CampaignReader {
     int startIndex = 0;
     int counter = 0;
     do {
-      System.out.print("Series " + (++counter) + ": ");
+      //      System.out.print("Series " + (++counter) + ": ");
       seriesSlots.add(extractSeriesAndMissions(Arrays.copyOfRange(buffer, startIndex, startIndex + 90)));
       startIndex += 90;
-      System.out.println("-----");
+      //      System.out.println("-----");
     } while (startIndex <= buffer.length - 90);
 
     return seriesSlots;
@@ -76,20 +75,20 @@ public class Wc1CampaignReader {
     series.setVictoryShip(buffer[7]);
     series.setLossDestination(buffer[8]);
     series.setLossShip(buffer[9]);
-    System.out.println(series.toString());
+    //    System.out.println(series.toString());
 
     // mission-data, 20 bytes per mission-slot
     List<Wc1MissionSlot> missionSlots = new ArrayList<>();
     for (int missionIndex = 0; missionIndex < MAX_MISSIONS_PER_SLOT; ++missionIndex) {
-      System.out.print(" Mission " + (missionIndex + 1) + ": ");
+      //      System.out.print(" Mission " + (missionIndex + 1) + ": ");
       int offset = missionIndex * 20 + 10;
       Wc1MissionSlot slot = new Wc1MissionSlot();
       slot.setMedal(readerHelper.getShort(new byte[] { buffer[offset], buffer[offset + 1] }));
       slot.setMedalKillPoints(readerHelper.getShort(new byte[] { buffer[offset + 2], buffer[offset + 3] }));
       slot.setObjectiveVictoryPoints(Arrays.copyOfRange(buffer, offset + 4, offset + 20));
 
-      System.out.println("medal: " + Wc1CampMedal.getByValue(slot.getMedal()) + ", medal killpoints: " + slot.getMedalKillPoints()
-          + ", victoryPoints: " + Arrays.toString(slot.getObjectiveVictoryPoints()));
+      //      System.out.println("medal: " + Wc1CampMedal.getByValue(slot.getMedal()) + ", medal killpoints: " + slot.getMedalKillPoints()
+      //          + ", victoryPoints: " + Arrays.toString(slot.getObjectiveVictoryPoints()));
 
       missionSlots.add(slot);
     }
