@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -61,9 +61,6 @@
       });
 
       var addTab = function(label, href) {
-        if (label in openTabs) {
-          return;
-        }
         var ul = editorTabs.find(".ui-tabs-nav");
         $("<li id='" + label + "'><a href='" + href + "'>" + label+ "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
         editorTabs.tabs("refresh");
@@ -71,21 +68,29 @@
       }
       
       var openSeriesEditor = function(seriesIndex) {
+    	var label = "Series " + (seriesIndex+1);
+        if (label in openTabs) {
+          return;
+        }
         $.ajax({
           url: "<%=request.getContextPath()%>/seriesEditor.html",
           data: "seriesIndex=" + seriesIndex,
           success: function(data, textStatus, jqXHR) {
-            addTab("Series " + (seriesIndex+1), "seriesEditor.html?seriesIndex=" + seriesIndex);
+            addTab(label, "seriesEditor.html?seriesIndex=" + seriesIndex);
           }
         });
       };
       
       var openMissionEditor = function(seriesIndex, missionIndex) {
+    	var label = "S" + (seriesIndex+1) + "M" + (missionIndex+1);
+    	if (label in openTabs) {
+          return;
+    	}
         $.ajax({
           url: "<%=request.getContextPath()%>/missionEditor.html",
           data: "seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex,
           success: function(data, textStatus, jqXHR) {
-            addTab("S" + (seriesIndex+1) + "M" + (missionIndex+1), "missionEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
+            addTab(label, "missionEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
           }
         });
       };
