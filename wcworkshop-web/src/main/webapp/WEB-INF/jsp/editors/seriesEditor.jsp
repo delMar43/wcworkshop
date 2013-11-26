@@ -4,7 +4,7 @@
   <tbody>
     <tr>
       <th>Wingman</th>
-      <td>${pilots.get(series.wingman)}</td>
+      <td>${campUtil.getPilot(series.wingman)}</td>
     </tr>
     <tr>
       <th>Nr of Missions</th>

@@ -92,7 +92,7 @@ public class ReaderHelper {
       // System.out.println("   " + blockOffset);
       blockOffsets.add(blockOffset);
       offset += 4;
-    } while (offset < blockOffsets.get(0) - 4);
+    } while (offset < blockOffsets.get(0));
 
     return blockOffsets;
   }
@@ -113,11 +113,6 @@ public class ReaderHelper {
     if (result.contains("\0")) {
       result = result.substring(0, result.indexOf("\0"));
     }
-    return result;
-  }
-
-  public byte[] decompress(byte[] input) {
-    byte[] result = Lzw.decompress(input);
     return result;
   }
 
