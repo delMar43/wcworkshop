@@ -9,7 +9,7 @@
   <h3>Mission Parameters</h3>
   <table>
     <tr>
-      <th>Unknown Bytes</th>
+      <th>Space Backgrounds?</th>
       <td>
         <c:forEach items="${mission.unknown}" var="unknownPart">
           0x${unknownPart}
