@@ -228,7 +228,7 @@ public class Wc1CutsceneUtil {
         result = "Unconditional";
         break;
       case 1:
-        result = "Pilot x died this mission (Mission didn't go well)";
+        result = "Pilot x died this mission";
         break;
       case 2:
         result = "Mission went well";
@@ -333,7 +333,7 @@ public class Wc1CutsceneUtil {
         result = "Mission went poorly (quantifiable?)";
         break;
       case 36:
-        result = "Initialize Debriefing";
+        result = "Initialize Debriefing?";
         break;
       case 44:
         result = "Separator";
