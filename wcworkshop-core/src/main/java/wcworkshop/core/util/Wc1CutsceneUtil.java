@@ -237,7 +237,7 @@ public class Wc1CutsceneUtil {
         result = "Pilot X is dead";
         break;
       case 4:
-        result = "Kilrathi ace x is alive";
+        result = "Pilot x is alive";
         break;
       case 5:
         result = "Pilot x died this mission";
@@ -331,6 +331,9 @@ public class Wc1CutsceneUtil {
         break;
       case 35:
         result = "Mission went poorly (quantifiable?)";
+        break;
+      case 36:
+        result = "Initialize Debriefing";
         break;
       case 44:
         result = "Separator";
