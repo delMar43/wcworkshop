@@ -16,40 +16,44 @@ public class Wc1GameDataReader {
   private Wc1BriefingReader briefingReader = Wc1BriefingReader.getInstance();
   private Wc1CampaignReader campaignReader = Wc1CampaignReader.getInstance();
 
+  private Wc1GameData gameData;
+
   public Wc1GameData readData() {
-    Wc1GameData result = new Wc1GameData();
-    result.setCampaignName("Vega Campaign 2654");
+    if (gameData == null) {
+      gameData = new Wc1GameData();
+      gameData.setCampaignName("Vega Campaign 2654");
 
-    Wc1CampData campaignData = campaignReader.readCampaignFile("D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/CAMP.000");
-    Wc1BriefingData briefingData = briefingReader.readBriefingFile("D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/BRIEFING.000");
+      Wc1CampData campaignData = campaignReader.readCampaignFile("D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/CAMP.000");
+      Wc1BriefingData briefingData = briefingReader.readBriefingFile("D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/BRIEFING.000");
 
-    result.setSeriesSlots(campaignData.getSeriesSlots());
+      gameData.setSeriesSlots(campaignData.getSeriesSlots());
 
-    List<Wc1MissionSlot> allMissionSlots = briefingData.getMissionSlots();
-    List<Wc1ConversationPartners> allConversationPartners = campaignData.getConversationPartners();
-    List<byte[]> unknownCampData = campaignData.getFirstBlock();
+      List<Wc1MissionSlot> allMissionSlots = briefingData.getMissionSlots();
+      List<Wc1ConversationPartners> allConversationPartners = campaignData.getConversationPartners();
+      List<byte[]> unknownCampData = campaignData.getFirstBlock();
 
-    int seriesIndex = 0;
-    for (Wc1SeriesSlot seriesSlot : result.getSeriesSlots()) {
-      List<Wc1MissionSlot> toAdd = new ArrayList<>();
-      for (int missionIndex = 0; missionIndex < 4; ++missionIndex) {
-        int index = missionIndex + (seriesIndex * 4);
-        Wc1MissionSlot missionSlot = allMissionSlots.get(index);
-        if (missionSlot.isEmpty()) {
-          break;
+      int seriesIndex = 0;
+      for (Wc1SeriesSlot seriesSlot : gameData.getSeriesSlots()) {
+        List<Wc1MissionSlot> toAdd = new ArrayList<>();
+        for (int missionIndex = 0; missionIndex < 4; ++missionIndex) {
+          int index = missionIndex + (seriesIndex * 4);
+          Wc1MissionSlot missionSlot = allMissionSlots.get(index);
+          if (missionSlot.isEmpty()) {
+            break;
+          }
+          Wc1MissionSlot missionFromCampaign = seriesSlot.getMissionSlot(missionIndex);
+          missionSlot.setConversationPartners(allConversationPartners.get(index));
+          missionSlot.setUnknown(unknownCampData.get(index));
+          missionSlot.setMedal(missionFromCampaign.getMedal());
+          missionSlot.setMedalKillPoints(missionFromCampaign.getMedalKillPoints());
+          toAdd.add(missionSlot);
         }
-        Wc1MissionSlot missionFromCampaign = seriesSlot.getMissionSlot(missionIndex);
-        missionSlot.setConversationPartners(allConversationPartners.get(index));
-        missionSlot.setUnknown(unknownCampData.get(index));
-        missionSlot.setMedal(missionFromCampaign.getMedal());
-        missionSlot.setMedalKillPoints(missionFromCampaign.getMedalKillPoints());
-        toAdd.add(missionSlot);
+        seriesSlot.setMissionSlots(toAdd);
+        ++seriesIndex;
       }
-      seriesSlot.setMissionSlots(toAdd);
-      ++seriesIndex;
     }
 
-    return result;
+    return gameData;
   }
 
   public static Wc1GameDataReader getInstance() {
