@@ -29,8 +29,12 @@
    <h3>Savegames</h3>
      We have also been able to find out the most important offsets of the savegames.<br/>
      So there should be an integrated savegame editor/generator available soon, which allows you to jump right into the mission you're currently investigating.
+   
    <h2>Credits</h2>
    Nothing of this would have been possible without the ongoing efforts of the wingnuts over at the <a href="http://www.wcnews.com">Wing Commander CIC</a>,<br/>
    who did neither stop loving the games nor did they stop supporting the games or spreading news about them.
    <br/><i>Here's to you, Wingnuts!</i>
+   
+   <h2>Open Source</h2>
+   The WC-Workshop sourcecode is available on <a target="_blank" href="https://github.com/delMar43/wcworkshop">GitHub</a>.
 </div>
