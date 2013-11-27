@@ -42,12 +42,14 @@
           }
         });
         
+        /*
         $.ajax({
           url: "<%=request.getContextPath()%>/savegameEditor.html",
           success: function(data, textStatus, jqXHR) {
             $("#tab-savegameEditor").html(data);
           }
         });
+        */
         
         // close icon: removing the tab on click
         editorTabs.delegate( "span.ui-icon-close", "click", function() {
@@ -117,10 +119,10 @@
     <div class="ui-layout-center">
       <div id="editorTabs">
         <ul>
-          <li class="editorTab" id="tab_savegameEditor"><a href="#tab-savegameEditor">Savegame Editor</a></li>
+          <!-- li class="editorTab" id="tab_savegameEditor"><a href="#tab-savegameEditor">Savegame Editor</a></li -->
         </ul>
-        <div id="tab-savegameEditor">
-        </div>
+        <!-- div id="tab-savegameEditor">
+        </div -->
       </div>
     </div>
     <div class="ui-layout-west">
