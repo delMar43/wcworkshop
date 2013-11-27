@@ -249,7 +249,7 @@ public class Wc1CutsceneUtil {
         result = "No player kills on last mission";
         break;
       case 8:
-        result = "Some kills for pilot x on last mission";
+        result = "(1) Some kills for pilot x on last mission";
         break;
       case 9:
         result = "Pilot x came up empty";
@@ -312,7 +312,7 @@ public class Wc1CutsceneUtil {
         result = "Objective x sighted";
         break;
       case 29:
-        result = "Pilot x died in this mission";
+        result = "(2)Some kills for pilot x on last mission";
         break;
       case 30:
         result = "Kilrathi ace x dead";
