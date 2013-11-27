@@ -5,7 +5,7 @@ import java.util.List;
 public class Wc1CutsceneLine {
 
   private String facialExpressions;
-  private List<Wc1CutsceneCommand> commands;
+  private List<Wc1CutsceneCommandEnum> commands;
   private byte[] commandBytes;
   private String text;
   private String phonetic;
@@ -21,7 +21,7 @@ public class Wc1CutsceneLine {
       return "";
     }
     StringBuilder sb = new StringBuilder();
-    for (Wc1CutsceneCommand command : commands) {
+    for (Wc1CutsceneCommandEnum command : commands) {
       sb.append(command.toString());
     }
     return sb.toString();
@@ -46,11 +46,11 @@ public class Wc1CutsceneLine {
     this.facialExpressions = facialExpressions;
   }
 
-  public List<Wc1CutsceneCommand> getCommands() {
+  public List<Wc1CutsceneCommandEnum> getCommands() {
     return commands;
   }
 
-  public void setCommands(List<Wc1CutsceneCommand> commands) {
+  public void setCommands(List<Wc1CutsceneCommandEnum> commands) {
     this.commands = commands;
   }
 
