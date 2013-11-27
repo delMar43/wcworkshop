@@ -96,7 +96,7 @@ public class Wc1ModuleReader {
       navPoint.setNavPointManipulations(navManList);
 
       List<Short> shipsToLoad = new ArrayList<>();
-      for (int i = 0; i < 12; i += 2) {
+      for (int i = 0; i < 3; i += 2) {
         short shipToLoad = readerHelper.getShort(new byte[] { buffer[index + i + 53], buffer[index + i + 54] });
         if (shipToLoad == (short) 0xffff) {
           break;

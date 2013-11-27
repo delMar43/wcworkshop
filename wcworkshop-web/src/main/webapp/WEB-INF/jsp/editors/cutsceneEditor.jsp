@@ -30,7 +30,7 @@
         <td>${cutsceneUtil.hexString(cutscene.unknown2)}</td>
       </tr>
       <tr>
-        <th>Condition</th>
+        <th>Commands</th>
         <td>${cutsceneUtil.getConditionString(cutscene.condition)}</td>
       </tr>
       <tr>
@@ -43,6 +43,13 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+<div>
+Known fact:<br/>
+Some commands may have parameters.<br/>
+A parameter comes immediately after the command, without 0x2c in between.<br/>
+Parameters are not yet displayed as such here and thus are shown as Unknown (but they aren't)
 </div>
 
 <div>

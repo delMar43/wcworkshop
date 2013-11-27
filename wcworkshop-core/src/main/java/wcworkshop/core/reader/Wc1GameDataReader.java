@@ -3,6 +3,7 @@ package wcworkshop.core.reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import wcworkshop.core.config.Configuration;
 import wcworkshop.core.data.Wc1BriefingData;
 import wcworkshop.core.data.Wc1CampData;
 import wcworkshop.core.data.Wc1ConversationPartners;
@@ -13,6 +14,7 @@ import wcworkshop.core.data.Wc1SeriesSlot;
 public class Wc1GameDataReader {
   private static final Wc1GameDataReader instance = new Wc1GameDataReader();
 
+  private Configuration config = Configuration.getInstance();
   private Wc1BriefingReader briefingReader = Wc1BriefingReader.getInstance();
   private Wc1CampaignReader campaignReader = Wc1CampaignReader.getInstance();
 
@@ -23,8 +25,8 @@ public class Wc1GameDataReader {
       gameData = new Wc1GameData();
       gameData.setCampaignName("Vega Campaign 2654");
 
-      Wc1CampData campaignData = campaignReader.readCampaignFile("D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/CAMP.000");
-      Wc1BriefingData briefingData = briefingReader.readBriefingFile("D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/BRIEFING.000");
+      Wc1CampData campaignData = campaignReader.readCampaignFile(config.getResourcePath() + "CAMP.000");
+      Wc1BriefingData briefingData = briefingReader.readBriefingFile(config.getResourcePath() + "BRIEFING.000");
 
       gameData.setSeriesSlots(campaignData.getSeriesSlots());
 
