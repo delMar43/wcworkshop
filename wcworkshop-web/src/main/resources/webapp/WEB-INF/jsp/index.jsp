@@ -60,36 +60,55 @@
 
       });
 
-      var addTab = function(label, href) {
+      var addTab = function(key, label, href) {
         var ul = editorTabs.find(".ui-tabs-nav");
-        $("<li id='" + label + "'><a href='" + href + "'>" + label+ "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
+        $("<li id='tab_" + key + "' class='editorTab'><a href='" + href + "'>" + label+ "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
         editorTabs.tabs("refresh");
-        openTabs[label] = true;
+        openTabs['tab_' + key] = true;
+        
+        switchTab(key);
+      };
+      
+      var switchTab = function(key) {
+        var id = "#tab_" + key;
+        var listItem = $(id);
+        var index = $("li.editorTab").index(listItem);
+        editorTabs.tabs( "option", "active", index );
+      };
+      
+      var tabAlreadyOpen = function(key) {
+        return ("tab_" + key) in openTabs;
       }
       
       var openSeriesEditor = function(seriesIndex) {
-    	var label = "Series " + (seriesIndex+1);
-        if (label in openTabs) {
-          return;
+    	var key = "Series" + (seriesIndex+1);
+    	var label = "Series " + (seriesIndex +1);
+        if (tabAlreadyOpen(key)) {
+          switchTab(key);
+        } else {
+          addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?seriesIndex=" + seriesIndex);
         }
-        addTab(label, "<%=request.getContextPath()%>/seriesEditor.html?seriesIndex=" + seriesIndex);
       };
       
       var openMissionEditor = function(seriesIndex, missionIndex) {
-    	var label = "S" + (seriesIndex+1) + "M" + (missionIndex+1);
-    	if (label in openTabs) {
-          return;
+    	var key = "S" + (seriesIndex+1) + "M" + (missionIndex+1);
+    	var label = "S" + (seriesIndex+1) + " M" + (missionIndex+1);
+    	if (tabAlreadyOpen(key)) {
+    	  switchTab(key);
+    	} else {
+          addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
     	}
-    	addTab(label, "<%=request.getContextPath()%>/missionEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
       };
       
       var openCutsceneEditor = function(seriesIndex, missionIndex, cutsceneIndex) {
-    	var label = "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "C" + cutsceneIndex;
-    	if (label in openTabs) {
-          return;
+    	var key = "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "C" + cutsceneIndex;
+    	var label = "S" + (seriesIndex+1) + " M" + (missionIndex+1) + " C" + cutsceneIndex;
+    	if (tabAlreadyOpen(key)) {
+    	  switchTab(key);
+    	} else {
+          addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
     	}
-    	addTab(label, "<%=request.getContextPath()%>/cutsceneEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
-      }
+      };
     </script>
   </head>
   
@@ -98,7 +117,7 @@
     <div class="ui-layout-center">
       <div id="editorTabs">
         <ul>
-          <li><a href="#tab-savegameEditor">Savegame Editor</a></li>
+          <li class="editorTab" id="tab_savegameEditor"><a href="#tab-savegameEditor">Savegame Editor</a></li>
         </ul>
         <div id="tab-savegameEditor">
         </div>
