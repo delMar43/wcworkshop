@@ -4,6 +4,8 @@
 <html>
   <head>
     <title>WC Workshop</title>
+    <meta name="description" content="Wing Commander Campaign Editor" />
+    <meta name="keywords" content="Wing Commander, Secret Missions, WC, SM, SM1, SM2, WC2, SO1, SO2, WCA, Academy, Armada, Kilrathi, Tiger's Claw, Victory, Concordia, Caernavon" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/styles/base/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/styles/default/style.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/styles/wcworkshop.css" />
@@ -119,10 +121,11 @@
     <div class="ui-layout-center">
       <div id="editorTabs">
         <ul>
-          <!-- li class="editorTab" id="tab_savegameEditor"><a href="#tab-savegameEditor">Savegame Editor</a></li -->
+          <li class="editorTab" id="tab_welcome"><a href="#tab-welcome">Welcome</a></li>
         </ul>
-        <!-- div id="tab-savegameEditor">
-        </div -->
+        <div id="tab-welcome">
+          <%@include file="welcome.jsp" %>
+        </div>
       </div>
     </div>
     <div class="ui-layout-west">
