@@ -9,6 +9,14 @@
   <h3>Mission Parameters</h3>
   <table>
     <tr>
+      <th>Unknown Bytes</th>
+      <td>
+        <c:forEach items="${mission.unknown}" var="unknownPart">
+          0x${unknownPart}
+        </c:forEach>
+      </td>
+    </tr>
+    <tr>
       <th>Conversation Partners</th>
       <td>Left: ${campUtil.getPilot(mission.conversationPartners.leftSeat)}, Right: ${campUtil.getPilot(mission.conversationPartners.rightSeat)}</td>
     </tr>

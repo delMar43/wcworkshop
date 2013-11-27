@@ -5,7 +5,7 @@ import java.util.List;
 public class Wc1CampData {
   public static final Wc1CampData EMPTY = new Wc1CampData();
 
-  private List<byte[]> firstBlock;
+  private List<short[]> firstBlock;
   private List<Wc1SeriesSlot> seriesSlots;
   private List<Wc1ConversationPartners> conversationPartners;
 
@@ -27,11 +27,11 @@ public class Wc1CampData {
     this.seriesSlots = seriesSlots;
   }
 
-  public List<byte[]> getFirstBlock() {
+  public List<short[]> getFirstBlock() {
     return firstBlock;
   }
 
-  public void setFirstBlock(List<byte[]> firstBlock) {
+  public void setFirstBlock(List<short[]> firstBlock) {
     this.firstBlock = firstBlock;
   }
 

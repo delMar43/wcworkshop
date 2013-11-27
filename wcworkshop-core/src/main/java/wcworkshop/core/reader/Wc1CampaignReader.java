@@ -32,16 +32,18 @@ public class Wc1CampaignReader {
     return result;
   }
 
-  private List<byte[]> extractFirstBlock(byte[] buffer, List<Integer> blockOffsets) {
+  private List<short[]> extractFirstBlock(byte[] buffer, List<Integer> blockOffsets) {
     //    System.out.println("first block starts at " + blockOffsets.get(0));
 
-    List<byte[]> firstBlock = new ArrayList<>();
+    List<short[]> firstBlock = new ArrayList<>();
     int blockSize = 8;
-    int counter = 0;
     for (int index = 0; index < buffer.length; index += blockSize) {
-      byte[] byteArray = Arrays.copyOfRange(buffer, index, index + blockSize);
-      //      System.out.println(++counter + ": " + Arrays.toString(byteArray));
-      firstBlock.add(byteArray);
+      short[] shortArray = new short[4];
+      int ctr = 0;
+      for (int sub = 0; sub < 8; sub += 2) {
+        shortArray[ctr++] = readerHelper.getShort(buffer, sub + index);
+      }
+      firstBlock.add(shortArray);
     }
     return firstBlock;
   }

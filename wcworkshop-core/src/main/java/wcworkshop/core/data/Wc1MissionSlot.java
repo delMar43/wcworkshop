@@ -3,7 +3,7 @@ package wcworkshop.core.data;
 public class Wc1MissionSlot {
   public static final Wc1MissionSlot EMPTY = new Wc1MissionSlot();
 
-  private byte[] unknown;
+  private short[] unknown;
 
   private Wc1Cutscene shotglassCutscene;
   private Wc1Cutscene leftCutscene;
@@ -42,11 +42,11 @@ public class Wc1MissionSlot {
     return result;
   }
 
-  public byte[] getUnknown() {
+  public short[] getUnknown() {
     return unknown;
   }
 
-  public void setUnknown(byte[] unknown) {
+  public void setUnknown(short[] unknown) {
     this.unknown = unknown;
   }
 
