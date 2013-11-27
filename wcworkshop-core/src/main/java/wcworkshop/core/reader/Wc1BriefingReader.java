@@ -23,9 +23,9 @@ public class Wc1BriefingReader {
     Wc1BriefingData result = new Wc1BriefingData();
     int filesize = readerHelper.extractFilesize(buffer);
     List<Integer> blockOffsets = readerHelper.extractBlockOffsets(buffer);
-    //    extractFuneralBlock(result, buffer);
-    //    extractHalcyonBlock(result, buffer);
-    //    extractMedalCeremonyBlock(result, buffer);
+    // extractFuneralBlock(result, buffer);
+    // extractHalcyonBlock(result, buffer);
+    // extractMedalCeremonyBlock(result, buffer);
     result.setMissionSlots(extractMissionSlots(buffer, blockOffsets, filesize));
 
     return result;
@@ -34,7 +34,7 @@ public class Wc1BriefingReader {
   private void extractFuneralBlock(byte[] buffer, List<Integer> blockOffsets) {
     byte[] funeralBuffer = extractBlock(buffer, blockOffsets, 0);
     List<Integer> offsets = readerHelper.extractSecondaryTable(funeralBuffer);
-    //    System.out.println("funeralBuffer has " + funeralBuffer.length + " bytes. offsets: " + Arrays.toString(offsets.toArray()));
+    // System.out.println("funeralBuffer has " + funeralBuffer.length + " bytes. offsets: " + Arrays.toString(offsets.toArray()));
 
     int blockIndex = 0;
     for (Integer startOffset : offsets) {
@@ -44,7 +44,7 @@ public class Wc1BriefingReader {
       } else {
         endOffset = funeralBuffer.length;
       }
-      //      System.out.println("     from " + startOffset + " to " + endOffset);
+      // System.out.println("     from " + startOffset + " to " + endOffset);
 
       byte[] block = Arrays.copyOfRange(funeralBuffer, startOffset, endOffset);
       System.out.println("  " + new String(block));
@@ -59,12 +59,12 @@ public class Wc1BriefingReader {
 
   private void extractHalcyonBlock(byte[] buffer, List<Integer> blockOffsets) {
     byte[] halcyonBuffer = extractBlock(buffer, blockOffsets, 1);
-    //    System.out.println("halcyonBuffer has " + halcyonBuffer.length + " bytes: " + Arrays.toString(halcyonBuffer));
+    // System.out.println("halcyonBuffer has " + halcyonBuffer.length + " bytes: " + Arrays.toString(halcyonBuffer));
   }
 
   private void extractMedalCeremonyBlock(byte[] buffer, List<Integer> blockOffsets) {
     byte[] medalCeremonyBuffer = extractBlock(buffer, blockOffsets, 2);
-    //    System.out.println("medalCeremonyBuffer has " + medalCeremonyBuffer.length + " bytes: " + Arrays.toString(medalCeremonyBuffer));
+    // System.out.println("medalCeremonyBuffer has " + medalCeremonyBuffer.length + " bytes: " + Arrays.toString(medalCeremonyBuffer));
   }
 
   private List<Wc1MissionSlot> extractMissionSlots(byte[] buffer, List<Integer> blockOffsets, int filesize) {
@@ -78,7 +78,7 @@ public class Wc1BriefingReader {
         missionEndOffset = filesize;
       }
       byte[] missionBuffer = Arrays.copyOfRange(buffer, missionStartOffset, missionEndOffset);
-      //      System.out.println("Mission " + (blockIndex - 3) + " starts at " + missionStartOffset);
+      // System.out.println("Mission " + (blockIndex - 3) + " starts at " + missionStartOffset);
 
       Wc1MissionSlot missionSlot;
       if (missionBuffer.length > 0) {
@@ -96,17 +96,18 @@ public class Wc1BriefingReader {
 
     List<Integer> secondaryTable = readerHelper.extractSecondaryTable(missionBuffer);
 
-    result.setBriefingCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 0)); //briefing
-    result.setDebriefingCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 2)); //debriefing
-    result.setShotglassCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 4)); //shotglass
-    result.setLeftCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 6)); //right bar seat
-    result.setRightCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 8)); //left bar seat
+    result.setBriefingCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 0, "Briefing")); // briefing
+    result.setDebriefingCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 2, "Debriefing")); // debriefing
+    result.setShotglassCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 4, "Shotglass")); // shotglass
+    result.setLeftCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 6, "Right Bar Seat")); // right bar seat
+    result.setRightCutscene(extractCutscene(missionBuffer, secondaryTable, (byte) 8, "Left Bar Seat")); // left bar seat
 
     return result;
   }
 
-  private Wc1Cutscene extractCutscene(byte[] missionBuffer, List<Integer> secondaryTable, byte firstOffset) {
+  private Wc1Cutscene extractCutscene(byte[] missionBuffer, List<Integer> secondaryTable, byte firstOffset, String title) {
     Wc1Cutscene scene = new Wc1Cutscene();
+    scene.setTitle(title);
 
     byte[] entryBuffer = extractEntryBuffer(missionBuffer, secondaryTable, firstOffset);
     scene.setForeground(entryBuffer[0]);
@@ -141,15 +142,15 @@ public class Wc1BriefingReader {
 
       line.setFacialExpressions(parts[partIndex]);
       if (partIndex + 1 < parts.length) {
-        //        List<Wc1CutsceneCommand> commands = new ArrayList<>();
-        //        for (byte command : parts[partIndex + 1].getBytes()) {
-        //          Wc1CutsceneCommand cmd = Wc1CutsceneCommand.getByValue(command);
-        //          if (cmd != null) {
-        //            commands.add(cmd);
-        //          }
-        //        }
+        // List<Wc1CutsceneCommand> commands = new ArrayList<>();
+        // for (byte command : parts[partIndex + 1].getBytes()) {
+        // Wc1CutsceneCommand cmd = Wc1CutsceneCommand.getByValue(command);
+        // if (cmd != null) {
+        // commands.add(cmd);
+        // }
+        // }
         line.setCommandBytes(parts[partIndex + 1].getBytes());
-        //        line.setCommands(commands);
+        // line.setCommands(commands);
       }
       if (partIndex + 2 < parts.length) {
         line.setText(parts[partIndex + 2]);

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Wc1Cutscene {
 
+  private String title;
   private byte foreground;
   private byte textColor;
   private byte background;
@@ -21,9 +22,8 @@ public class Wc1Cutscene {
 
   @Override
   public String toString() {
-    return " FG: " + hex(foreground) + " | TC: " + hex(textColor) + " | BG: " + hex(background) + " | unknown1: " + hex(unknown1)
-        + " | unknown2: " + hex(unknown2) + " \n Condition: " + byteArrayToHexString(condition) + " | first line: " + firstLine
-        + "| lines:\r\n" + cutsceneLinesText();
+    return " FG: " + hex(foreground) + " | TC: " + hex(textColor) + " | BG: " + hex(background) + " | unknown1: " + hex(unknown1) + " | unknown2: "
+        + hex(unknown2) + " \n Condition: " + byteArrayToHexString(condition) + " | first line: " + firstLine + "| lines:\r\n" + cutsceneLinesText();
   }
 
   private String byteArrayToHexString(byte[] input) {
@@ -50,6 +50,14 @@ public class Wc1Cutscene {
 
   private String hex(int value) {
     return "0x" + Integer.toHexString(value).toUpperCase();
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
   }
 
   public byte getForeground() {

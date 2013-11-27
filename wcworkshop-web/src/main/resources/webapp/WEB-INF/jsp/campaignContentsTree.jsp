@@ -17,15 +17,11 @@
                   <li>Nav 3</li>
                 </ul>
               </li -->
-              <!-- li>Cutscenes
-                <ul>
-                  <li>Shotglass</li>
-                  <li>Left Chair</li>
-                  <li>Right Chair</li>
-                  <li>Briefing</li>
-                  <li>Debriefing</li>
-                </ul>
-              </li -->
+              <li><a href="javascript:openCutsceneEditor(${seriesStatus.index}, ${missionStatus.index}, 2)">[C] Shotglass</a></li>
+              <li><a href="javascript:openCutsceneEditor(${seriesStatus.index}, ${missionStatus.index}, 3)">[C] Left Seat</a></li>
+              <li><a href="javascript:openCutsceneEditor(${seriesStatus.index}, ${missionStatus.index}, 4)">[C] Right Seat</a></li>
+              <li><a href="javascript:openCutsceneEditor(${seriesStatus.index}, ${missionStatus.index}, 0)">[C] Briefing</a></li>
+              <li><a href="javascript:openCutsceneEditor(${seriesStatus.index}, ${missionStatus.index}, 1)">[C] Debriefing</a></li>
             </ul>
           </li>
         </c:forEach>

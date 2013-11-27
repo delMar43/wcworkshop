@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+
+<h2>Series ${seriesIndex +1}, Mission ${missionIndex +1}: ${cutscene.title}</h2>
 <div>
   <h3>First Line</h3>
   <table>
