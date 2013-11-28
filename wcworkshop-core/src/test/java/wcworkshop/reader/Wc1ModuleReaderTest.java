@@ -13,6 +13,7 @@ public class Wc1ModuleReaderTest {
   public void readFile() {
     String path = "D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/MODULE.000";
     Wc1ModuleData moduleData = reader.readModuleFile(path);
+
   }
 
 }
