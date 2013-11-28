@@ -119,17 +119,17 @@
   <body>
     <div class="ui-layout-north">WC Workshop</div>
     <div class="ui-layout-center">
-      <div id="editorTabs">
+      <div id="editorTabs" class="scrollableTab">
         <ul>
           <li class="editorTab" id="tab_welcome"><a href="#tab-welcome">Welcome</a></li>
         </ul>
-        <div id="tab-welcome">
+        <div id="tab-welcome" class="editorTabContent">
           <%@include file="welcome.jsp" %>
         </div>
       </div>
     </div>
     <div class="ui-layout-west">
-      <div id="projectViewTabs">
+      <div id="projectViewTabs" class="scrollableTab">
         <ul>
           <!-- li><a href="#tab-allContents">All</a></li -->
           <li><a href="#tab-campaignContents">Campaign</a></li>

@@ -1,6 +1,6 @@
-<h1>Welcome to the WC-Workshop!</h1>
+<div class="scrollablePane">
 
-<div>
+  <h1>Welcome to the WC-Workshop!</h1>
   <p>The WC-Workshop will be a web application that enables you to edit all known parts of Wing Commander I and Wing Commander II.</p>
   <p>Unfortunately, not all bits of the resource files are known yet.</p>
   <p>
