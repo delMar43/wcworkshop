@@ -20,7 +20,7 @@
     What is not fully known so far, is, how conversations are controlled.<br/>
     If you want to help out, please check the conversations in the tree to the left ([C]).<br/>
     Start the game, watch the cutscenes and try to make sense of the commands listet here.<br/>
-    If you find out something new, please tell us at the corresponding CIC thread on <a href="http://www.wcnews.com">www.wcnews.com</a> (deep link soon to come).  
+    If you find out something new, please tell us at the corresponding CIC thread on <a href="http://www.wcnews.com/chatzone/threads/wc-workshop-online.27177/">www.wcnews.com</a>.  
    <h3>CAMP.000</h3>
     CAMP.000 is nearly 100% known already.
    <h3>MODULE.000</h3>
