@@ -5,6 +5,7 @@ public class Wc1MissionSlot {
 
   private short[] unknown;
 
+  private String wingName;
   private Wc1Cutscene shotglassCutscene;
   private Wc1Cutscene leftCutscene;
   private Wc1Cutscene rightCutscene;
@@ -40,6 +41,14 @@ public class Wc1MissionSlot {
     }
 
     return result;
+  }
+
+  public String getWingName() {
+    return wingName;
+  }
+
+  public void setWingName(String wingName) {
+    this.wingName = wingName;
   }
 
   public short[] getUnknown() {

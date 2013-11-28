@@ -22,12 +22,14 @@ public class Wc1ModuleReader {
     Wc1ModuleData result = new Wc1ModuleData();
     int filesize = readerHelper.extractFilesize(buffer);
     List<Integer> blockOffsets = readerHelper.extractBlockOffsets(buffer);
+    System.out.println("blocks: " + Arrays.toString(blockOffsets.toArray()));
 
     //    System.out.println("Block 1:");
     //    extractBlock1(result, Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
 
     System.out.println("Block 2:");
-    extractNavPoints(Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
+    List<Wc1NavPoint> navPoints = extractNavPoints(Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
+    result.setNavPoints(navPoints);
 
     //    System.out.println("Block 3:");
     //    extractThirdBlock(result, Arrays.copyOfRange(buffer, blockOffsets.get(2), blockOffsets.get(3)), blockOffsets.get(2));
@@ -35,11 +37,12 @@ public class Wc1ModuleReader {
     //    System.out.println("Block 4:");
     //    extractSizedBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(3), result.getBlockOffset(4)), result.getBlockOffset(3));
 
-    //    System.out.println("Block 5:");
-    //    extractSizedBlock(result, Arrays.copyOfRange(buffer, blockOffsets.get(4), blockOffsets.get(5)), blockOffsets.get(4), 40);
+    System.out.println("Block 5:");
+    List<String> wingNames = extractSizedBlock(Arrays.copyOfRange(buffer, blockOffsets.get(4), blockOffsets.get(5)), 160, 40);
+    result.setWingNames(wingNames);
 
-    //    System.out.println("Block 6:");
-    //    extractSizedBlock(result, Arrays.copyOfRange(buffer, blockOffsets.get(5), filesize), blockOffsets.get(5), 40);
+    List<String> systemNames = extractSizedBlock(Arrays.copyOfRange(buffer, blockOffsets.get(5), filesize), 0x28, 40);
+    result.setSystemNames(systemNames);
 
     return result;
   }
@@ -134,14 +137,14 @@ public class Wc1ModuleReader {
 
   }
 
-  private void extractSizedBlock(Wc1ModuleData result, byte[] buffer, int startOffset, int chunkSize) {
-    for (int index = 0; index < buffer.length; index += chunkSize) {
-      int absOffset = startOffset + index;
+  private List<String> extractSizedBlock(byte[] buffer, int startOffset, int chunkSize) {
+    List<String> result = new ArrayList<>();
+    for (int index = startOffset; index < buffer.length; index += chunkSize) {
       String raw = new String(Arrays.copyOfRange(buffer, index, index + chunkSize));
       raw = raw.substring(0, raw.indexOf("\0"));
-      System.out
-          .println("0x" + Integer.toHexString(index).toUpperCase() + " 0x" + Integer.toHexString(absOffset).toUpperCase() + " " + raw);
+      result.add(raw);
     }
+    return result;
   }
 
 }

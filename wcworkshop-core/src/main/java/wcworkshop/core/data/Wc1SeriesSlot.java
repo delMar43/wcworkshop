@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Wc1SeriesSlot {
 
+  private String systemName;
   private short wingman;
   private byte nrOfMissions;
   private short victoryPoints;
@@ -27,6 +28,14 @@ public class Wc1SeriesSlot {
     return "Wingman: " + Wc1CampPilot.getByValue(wingman) + ", nrOfMissions: " + nrOfMissions + ", victoryPoints: " + victoryPoints
         + ", missionTreeLevel: " + missionTreeLevel + ", victoryDestination: " + victoryDestination + ", victoryShip: "
         + Wc1CampShip.getByValue(victoryShip) + ", lossDestination: " + lossDestination + ", lossShip: " + Wc1CampShip.getByValue(lossShip);
+  }
+
+  public String getSystemName() {
+    return systemName;
+  }
+
+  public void setSystemName(String systemName) {
+    this.systemName = systemName;
   }
 
   public short getWingman() {
