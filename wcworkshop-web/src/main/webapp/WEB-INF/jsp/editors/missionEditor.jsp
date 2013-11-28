@@ -9,6 +9,10 @@
   <h3>Mission Parameters</h3>
   <table>
     <tr>
+      <th>Wing</th>
+      <td>${mission.wingName}</td>
+    </tr>
+    <tr>
       <th>Space Backgrounds?</th>
       <td>
         <c:forEach items="${mission.unknown}" var="unknownPart">

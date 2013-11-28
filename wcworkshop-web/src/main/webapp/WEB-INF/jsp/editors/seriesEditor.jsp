@@ -4,6 +4,10 @@
 <table>
   <tbody>
     <tr>
+      <th>System</th>
+      <td>${series.systemName}</td>
+    </tr>
+    <tr>
       <th>Wingman</th>
       <td>${campUtil.getPilot(series.wingman)}</td>
     </tr>

@@ -9,6 +9,9 @@ import wcworkshop.core.data.Wc1CampData;
 import wcworkshop.core.data.Wc1ConversationPartners;
 import wcworkshop.core.data.Wc1GameData;
 import wcworkshop.core.data.Wc1MissionSlot;
+import wcworkshop.core.data.Wc1ModuleData;
+import wcworkshop.core.data.Wc1NavPoint;
+import wcworkshop.core.data.Wc1NavPointInfo;
 import wcworkshop.core.data.Wc1SeriesSlot;
 
 public class Wc1GameDataReader {
@@ -17,6 +20,7 @@ public class Wc1GameDataReader {
   private Configuration config = Configuration.getInstance();
   private Wc1BriefingReader briefingReader = Wc1BriefingReader.getInstance();
   private Wc1CampaignReader campaignReader = Wc1CampaignReader.getInstance();
+  private Wc1ModuleReader moduleReader = Wc1ModuleReader.getInstance();
 
   private Wc1GameData gameData;
 
@@ -27,6 +31,7 @@ public class Wc1GameDataReader {
 
       Wc1CampData campaignData = campaignReader.readCampaignFile(config.getResourcePath() + "CAMP.000");
       Wc1BriefingData briefingData = briefingReader.readBriefingFile(config.getResourcePath() + "BRIEFING.000");
+      Wc1ModuleData moduleData = moduleReader.readModuleFile(config.getResourcePath() + "MODULE.000");
 
       gameData.setSeriesSlots(campaignData.getSeriesSlots());
 
@@ -36,6 +41,8 @@ public class Wc1GameDataReader {
 
       int seriesIndex = 0;
       for (Wc1SeriesSlot seriesSlot : gameData.getSeriesSlots()) {
+        seriesSlot.setSystemName(moduleData.getSystemNames().get(seriesIndex));
+
         List<Wc1MissionSlot> toAdd = new ArrayList<>();
         for (int missionIndex = 0; missionIndex < 4; ++missionIndex) {
           int index = missionIndex + (seriesIndex * 4);
@@ -48,6 +55,22 @@ public class Wc1GameDataReader {
           missionSlot.setUnknown(unknownCampData.get(index));
           missionSlot.setMedal(missionFromCampaign.getMedal());
           missionSlot.setMedalKillPoints(missionFromCampaign.getMedalKillPoints());
+          missionSlot.setWingName(moduleData.getWingNames().get(index));
+
+          List<Wc1NavPoint> navPoints = new ArrayList<>();
+          List<Wc1NavPointInfo> navPointInfos = new ArrayList<>();
+          for (int navCtr = 0; navCtr < 16; ++navCtr) {
+            int navIndex = index * 16 + navCtr;
+            Wc1NavPoint navPoint = moduleData.getNavPoints().get(navIndex);
+            if (navPoint.getShipsToLoad() == null || navPoint.getShipsToLoad().size() == 0) {
+              break;
+            }
+            navPoints.add(navPoint);
+            navPointInfos.add(moduleData.getNavPointInfo().get(navIndex));
+          }
+          missionSlot.setNavPoints(navPoints);
+          missionSlot.setNavPointInfos(navPointInfos);
+
           toAdd.add(missionSlot);
         }
         seriesSlot.setMissionSlots(toAdd);

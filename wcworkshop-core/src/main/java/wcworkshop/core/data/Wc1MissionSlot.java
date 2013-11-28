@@ -1,5 +1,7 @@
 package wcworkshop.core.data;
 
+import java.util.List;
+
 public class Wc1MissionSlot {
   public static final Wc1MissionSlot EMPTY = new Wc1MissionSlot();
 
@@ -16,6 +18,9 @@ public class Wc1MissionSlot {
   private short medal;
   private short medalKillPoints;
   private byte[] objectiveVictoryPoints;
+
+  private List<Wc1NavPoint> navPoints;
+  private List<Wc1NavPointInfo> navPointInfos;
 
   public Wc1Cutscene getCutscene(int index) {
     Wc1Cutscene result;
@@ -133,5 +138,21 @@ public class Wc1MissionSlot {
 
   public boolean isEmpty() {
     return this == EMPTY;
+  }
+
+  public List<Wc1NavPoint> getNavPoints() {
+    return navPoints;
+  }
+
+  public void setNavPoints(List<Wc1NavPoint> navPoints) {
+    this.navPoints = navPoints;
+  }
+
+  public List<Wc1NavPointInfo> getNavPointInfos() {
+    return navPointInfos;
+  }
+
+  public void setNavPointInfos(List<Wc1NavPointInfo> navPointInfos) {
+    this.navPointInfos = navPointInfos;
   }
 }

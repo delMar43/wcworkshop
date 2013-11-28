@@ -6,9 +6,18 @@ public class Wc1ModuleData {
 
   public static final Wc1ModuleData EMPTY = new Wc1ModuleData();
 
+  private List<Wc1NavPoint> navPoints;
+  private List<Wc1NavPointInfo> navPointInfo;
   private List<String> systemNames;
   private List<String> wingNames;
-  private List<Wc1NavPoint> navPoints;
+
+  public List<Wc1NavPointInfo> getNavPointInfo() {
+    return navPointInfo;
+  }
+
+  public void setNavPointInfo(List<Wc1NavPointInfo> navPointInfo) {
+    this.navPointInfo = navPointInfo;
+  }
 
   public List<String> getSystemNames() {
     return systemNames;

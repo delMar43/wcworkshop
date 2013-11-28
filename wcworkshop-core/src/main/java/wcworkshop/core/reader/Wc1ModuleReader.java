@@ -6,10 +6,12 @@ import java.util.List;
 
 import wcworkshop.core.data.Wc1ModuleData;
 import wcworkshop.core.data.Wc1NavPoint;
+import wcworkshop.core.data.Wc1NavPointIcon;
 import wcworkshop.core.data.Wc1NavPointInfo;
 import wcworkshop.core.data.Wc1NavPointManipulation;
 
 public class Wc1ModuleReader {
+  private static final Wc1ModuleReader instance = new Wc1ModuleReader();
 
   private ReaderHelper readerHelper = ReaderHelper.getInstance();
 
@@ -27,17 +29,15 @@ public class Wc1ModuleReader {
     //    System.out.println("Block 1:");
     //    extractBlock1(result, Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
 
-    System.out.println("Block 2:");
     List<Wc1NavPoint> navPoints = extractNavPoints(Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
     result.setNavPoints(navPoints);
 
-    //    System.out.println("Block 3:");
-    //    extractThirdBlock(result, Arrays.copyOfRange(buffer, blockOffsets.get(2), blockOffsets.get(3)), blockOffsets.get(2));
+    List<Wc1NavPointInfo> navPointInfos = extractThirdBlock(Arrays.copyOfRange(buffer, blockOffsets.get(2), blockOffsets.get(3)));
+    result.setNavPointInfo(navPointInfos);
 
     //    System.out.println("Block 4:");
     //    extractSizedBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(3), result.getBlockOffset(4)), result.getBlockOffset(3));
 
-    System.out.println("Block 5:");
     List<String> wingNames = extractSizedBlock(Arrays.copyOfRange(buffer, blockOffsets.get(4), blockOffsets.get(5)), 160, 40);
     result.setWingNames(wingNames);
 
@@ -67,7 +67,7 @@ public class Wc1ModuleReader {
     //    for (int index = offset; index < buffer.length; index += chunkSize) {
     int index = offset;
     int curOffset = offset;
-    for (int series = 0; series < 12; ++series) {
+    for (int series = 0; series < 13; ++series) {
       for (int mission = 0; mission < 4; ++mission) {
         for (int nav = 0; nav < navsPerMission; ++nav) {
           //          int curOffset = offset + (nav * 77) + (mission * 16 * 77) + (series * 64 * 77);
@@ -130,11 +130,26 @@ public class Wc1ModuleReader {
     return navPoint;
   }
 
-  private void extractThirdBlock(Wc1ModuleData result, byte[] copyOfRange, int blockOffset) {
+  private List<Wc1NavPointInfo> extractThirdBlock(byte[] buffer) {
     int start = 0x1000;
+    int chunkSize = 64;
+    List<Wc1NavPointInfo> result = new ArrayList<>();
+    for (int offset = start; offset < buffer.length; offset += chunkSize) {
+      Wc1NavPointInfo info = new Wc1NavPointInfo();
 
-    Wc1NavPointInfo info = new Wc1NavPointInfo();
+      short iconValue = readerHelper.getShort(buffer, offset);
+      Wc1NavPointIcon icon = Wc1NavPointIcon.getByValue(iconValue);
+      short shipOrPoint = readerHelper.getShort(buffer, offset + 2);
+      String text = readerHelper.getString(buffer, offset + 4, 60);
 
+      info.setIcon(icon);
+      info.setPointOrShipNr(shipOrPoint);
+      info.setText(text);
+
+      result.add(info);
+    }
+
+    return result;
   }
 
   private List<String> extractSizedBlock(byte[] buffer, int startOffset, int chunkSize) {
@@ -147,4 +162,7 @@ public class Wc1ModuleReader {
     return result;
   }
 
+  public static Wc1ModuleReader getInstance() {
+    return instance;
+  }
 }

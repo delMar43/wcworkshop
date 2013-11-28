@@ -5,19 +5,18 @@
   <h3>${gameData.campaignName}</h3>
   <ul class="tree" id="campaignTree">
     <c:forEach items="${gameData.seriesSlots}" var="series" varStatus="seriesStatus">
-      <li><a href="javascript:openSeriesEditor(${seriesStatus.index})">Series ${seriesStatus.count}</a>
+      <li><a href="javascript:openSeriesEditor(${seriesStatus.index})">Series ${seriesStatus.count} (${series.systemName})</a>
         <ul>
           <c:forEach items="${series.missionSlots}" var="mission" varStatus="missionStatus">
-            <li><a href="javascript:openMissionEditor(${seriesStatus.index}, ${missionStatus.index})">Mission ${missionStatus.count}</a>
+            <li><a href="javascript:openMissionEditor(${seriesStatus.index}, ${missionStatus.index})">Mission ${missionStatus.count} (${mission.wingName})</a>
               <ul>
-                <!-- li>Nav Points
+                <li>Nav Points
                   <ul>
-                    <li>Tiger's Claw</li>
-                    <li>Nav 1</li>
-                    <li>Nav 2</li>
-                    <li>Nav 3</li>
+                    <c:forEach items="${mission.navPoints}" var="navPoint">
+                      <li>[N] ${navPoint.id}</li>
+                    </c:forEach>
                   </ul>
-                </li -->
+                </li>
                 <li><a href="javascript:openCutsceneEditor(${seriesStatus.index}, ${missionStatus.index}, 2)">[C] Shotglass</a></li>
                 <li><a href="javascript:openCutsceneEditor(${seriesStatus.index}, ${missionStatus.index}, 3)">[C] Left Seat</a></li>
                 <li><a href="javascript:openCutsceneEditor(${seriesStatus.index}, ${missionStatus.index}, 4)">[C] Right Seat</a></li>

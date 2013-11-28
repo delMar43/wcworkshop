@@ -28,8 +28,8 @@ public class Wc1NavPoint {
         sb.append(npm.toString());
       }
     }
-    String result = " " + id + (visible ? " " : " (invisible) ") + ", u1: " + hex(unknown1) + ", xPos: " + xPos + ", u2: " + hex(unknown2) + ", yPos: " + yPos
-        + ", unknown3: " + hex(unknown3) + ", unknown4: " + hex(inSystemJumpPoint) + ", unknown5: " + hex(isJumpPoint);
+    String result = " " + id + (visible ? " " : " (invisible) ") + ", u1: " + hex(unknown1) + ", xPos: " + xPos + ", u2: " + hex(unknown2)
+        + ", yPos: " + yPos + ", unknown3: " + hex(unknown3) + ", unknown4: " + hex(inSystemJumpPoint) + ", unknown5: " + hex(isJumpPoint);
 
     boolean hasShipsToLoad = shipsToLoad != null && shipsToLoad.size() > 0;
     if (hasNavPointManipulations) {
