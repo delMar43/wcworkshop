@@ -20,7 +20,7 @@
     What is not fully known so far, is, how conversations are controlled.<br/>
     If you want to help out, please check the conversations in the tree to the left ([C]).<br/>
     Start the game, watch the cutscenes and try to make sense of the commands listet here.<br/>
-    If you find out something new, please tell us at the corresponding CIC thread on <a href="http://www.wcnews.com/chatzone/threads/wc-workshop-online.27177/">www.wcnews.com</a>.  
+    If you find out something new, please tell us at the corresponding CIC thread on <a target="_blank" href="http://www.wcnews.com/chatzone/threads/wc-workshop-online.27177/">www.wcnews.com</a>.  
    <h3>CAMP.000</h3>
     CAMP.000 is nearly 100% known already.
    <h3>MODULE.000</h3>
@@ -31,7 +31,7 @@
      So there should be an integrated savegame editor/generator available soon, which allows you to jump right into the mission you're currently investigating.
    
    <h2>Credits</h2>
-   Nothing of this would have been possible without the ongoing efforts of the wingnuts over at the <a href="http://www.wcnews.com">Wing Commander CIC</a>,<br/>
+   Nothing of this would have been possible without the ongoing efforts of the wingnuts over at the <a target="_blank" href="http://www.wcnews.com">Wing Commander CIC</a>,<br/>
    who did neither stop loving the games nor did they stop supporting the games or spreading news about them.
    <br/><i>Here's to you, Wingnuts!</i>
    
