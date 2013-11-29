@@ -215,6 +215,10 @@ public class Wc1CutsceneUtil {
     return "0x" + Integer.toHexString(code);
   }
 
+  public String hexString(byte code) {
+    return "0x" + Integer.toHexString(code);
+  }
+
   private String appendHexString(byte code, String result) {
     result += " (" + hexString(code) + ")";
     return result;

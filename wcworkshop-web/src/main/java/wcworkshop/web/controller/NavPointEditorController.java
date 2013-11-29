@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import wcworkshop.core.data.Wc1GameData;
 import wcworkshop.core.data.Wc1NavPoint;
+import wcworkshop.core.data.Wc1NavPointInfo;
 import wcworkshop.core.reader.Wc1GameDataReader;
 import wcworkshop.core.repo.Wc1ShipRepo;
+import wcworkshop.core.util.Wc1CutsceneUtil;
 
 @Controller
 public class NavPointEditorController {
@@ -22,12 +24,16 @@ public class NavPointEditorController {
 
     Wc1GameData gameData = gameDataReader.readData(campaign);
     Wc1NavPoint navPoint = gameData.getSeriesSlots().get(seriesIndex).getMissionSlot(missionIndex).getNavPoints().get(navPointIndex);
+    Wc1NavPointInfo navPointInfo = gameData.getSeriesSlots().get(seriesIndex).getMissionSlot(missionIndex).getNavPointInfos()
+        .get(navPointIndex);
 
     model.addAttribute("seriesIndex", seriesIndex);
     model.addAttribute("missionIndex", missionIndex);
     model.addAttribute("navPointIndex", navPointIndex);
     model.addAttribute("navPoint", navPoint);
+    model.addAttribute("navPointInfo", navPointInfo);
     model.addAttribute("shipRepo", shipRepo);
+    model.addAttribute("cutsceneUtil", Wc1CutsceneUtil.getInstance());
 
     return "editors/navPointEditor";
   }

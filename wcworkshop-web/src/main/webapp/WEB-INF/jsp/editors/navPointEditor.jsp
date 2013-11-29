@@ -18,8 +18,24 @@
       <td>${navPoint.visible}</td>
     </tr>
     <tr>
-      <th>Coordinates</th>
-      <td>${navPoint.xPos} / ${navPoint.yPos}</td>
+      <th>Unknown 1</th>
+      <td>${navPoint.unknown1}</td>
+    </tr>
+    <tr>
+      <th>coordinate 1 (x?)</th>
+      <td>${navPoint.xPos}</td>
+    </tr>
+    <tr>
+      <th>Unknown 2</th>
+      <td>${navPoint.unknown2}</td>
+    </tr>
+    <tr>
+      <th>Coordinate 2 (y?)</th>
+      <td>${navPoint.yPos}</td>
+    </tr>
+    <tr>
+      <th>Unknown 3</th>
+      <td>${navPoint.unknown3}</td>
     </tr>
     <tr>
       <th>Ships Present</th>
@@ -36,6 +52,19 @@
           ${manip.enableNavPoint ? 'show' : 'hide'}&nbsp;<a href="javascript:openNavPointEditor(${seriesIndex}, ${missionIndex}, ${manip.navPoint})">nav&nbsp;${manip.navPoint}</a><br/>
         </c:forEach>
       </td>
+    </tr>
+    
+    <tr>
+      <th>Icon</th>
+      <td>${navPointInfo.icon}</td>
+    </tr>
+    <tr>
+      <th>Ship or NavPoint Nr</th>
+      <td>${navPointInfo.pointOrShipNr}</td>
+    </tr>
+    <tr>
+      <th>Notes</th>
+      <td>${navPointInfo.text}</td>
     </tr>
   </table>
 </div>

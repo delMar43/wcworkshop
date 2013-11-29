@@ -25,23 +25,24 @@
     </tr>
     <tr>
       <th>Victory Destination</th>
-      <td><a href="javascript:openSeriesEditor(${series.victoryDestination-1})">${series.victoryDestination}</a></td>
+      <td><a href="javascript:openSeriesEditor(${series.victoryDestination-1})">Series ${series.victoryDestination}</a></td>
     </tr>
     <tr>
       <th>Victory Ship</th>
-      <td>${series.victoryShip}</td>
+      <td>${shipRepo.getShip(series.victoryShip).name}</td>
     </tr>
     <tr>
       <th>Loss Destination</th>
-      <td><a href="javascript:openSeriesEditor(${series.lossDestination-1})">${series.lossDestination}</a></td>
+      <td><a href="javascript:openSeriesEditor(${series.lossDestination-1})">Series ${series.lossDestination}</a></td>
     </tr>
     <tr>
       <th>Loss Ship</th>
-      <td>${series.lossShip}</td>
+      <td>${shipRepo.getShip(series.lossShip).name}</td>
     </tr>
   </tbody>
 </table>
 
+<h3>Missions</h3>
 <ol>  
   <c:forEach items="${series.missionSlots}" var="mission" varStatus="missionStatus">
     <li><a href="javascript:openMissionEditor(${seriesIndex}, ${missionStatus.index})">Mission ${missionStatus.count}</a></li>

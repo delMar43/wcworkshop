@@ -14,7 +14,7 @@
                   <ul>
                     <c:forEach items="${mission.navPoints}" var="navPoint" varStatus="navPointStatus">
                       <li><a href="javascript:openNavPointEditor(${seriesStatus.index}, ${missionStatus.index}, ${navPointStatus.index})">
-                        ${navPointStatus.index}: [N] ${navPoint.id}
+                        [N] ${navPointStatus.index}: ${navPoint.id}
                       </a></li>
                     </c:forEach>
                   </ul>
