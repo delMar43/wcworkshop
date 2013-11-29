@@ -3,8 +3,9 @@
 
 <div class="scrollablePane">
   <h2>
-    <a href="javascript:openSeriesEditor(${seriesIndex +0})">Series ${seriesIndex +1}</a>,
-    <a href="javascript:openMissionEditor(${seriesIndex +0}, ${missionIndex +0})">Mission ${missionIndex +1}</a>: ${cutscene.title}
+    Campaign ${campaign}, 
+    <a href="javascript:openSeriesEditor('${campaign}', ${seriesIndex +0})">Series ${seriesIndex +1}</a>,
+    <a href="javascript:openMissionEditor('${campaign}', ${seriesIndex +0}, ${missionIndex +0})">Mission ${missionIndex +1}</a>: ${cutscene.title}
   </h2>
   <div>
     <h3>First Line</h3>

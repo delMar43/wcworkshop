@@ -28,7 +28,7 @@
         $.ajax({
           url: "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=000",
           success: function(data, textStatus, jqXHR) {
-            $("#tab-campaignContents").html(data);
+            $("#tab-campaignContents_000").html(data);
             /*
             $("#campaignTree").jstree({
               "plugins" : ["themes","html_data","ui","crrm","hotkeys"],
@@ -43,20 +43,20 @@
             */
           }
         });
-        /*
+
         $.ajax({
           url: "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=001",
           success: function(data, textStatus, jqXHR) {
-            $("#tab-campaignContents").html(data);
+            $("#tab-campaignContents_001").html(data);
           }
         });
+        
         $.ajax({
           url: "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=002",
           success: function(data, textStatus, jqXHR) {
-            $("#tab-campaignContents").html(data);
+            $("#tab-campaignContents_002").html(data);
           }
         });
-        */
         
         /*
         $.ajax({
@@ -98,43 +98,43 @@
         return ("tab_" + key) in openTabs;
       }
       
-      var openSeriesEditor = function(seriesIndex) {
-    	var key = "Series" + (seriesIndex+1);
-    	var label = "Series " + (seriesIndex +1);
+      var openSeriesEditor = function(campaign, seriesIndex) {
+    	var key = "C" + campaign + "S" + (seriesIndex+1);
+    	var label = campaign + " Series " + (seriesIndex +1);
         if (tabAlreadyOpen(key)) {
           switchTab(key);
         } else {
-          addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?campaign=000&seriesIndex=" + seriesIndex);
+          addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex);
         }
       };
       
-      var openMissionEditor = function(seriesIndex, missionIndex) {
-    	var key = "S" + (seriesIndex+1) + "M" + (missionIndex+1);
-    	var label = "S" + (seriesIndex+1) + " M" + (missionIndex+1);
+      var openMissionEditor = function(campaign, seriesIndex, missionIndex) {
+    	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1);
+    	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1);
     	if (tabAlreadyOpen(key)) {
     	  switchTab(key);
     	} else {
-          addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=000&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
+          addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
     	}
       };
       
-      var openCutsceneEditor = function(seriesIndex, missionIndex, cutsceneIndex) {
-    	var key = "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "C" + cutsceneIndex;
-    	var label = "S" + (seriesIndex+1) + " M" + (missionIndex+1) + " C" + cutsceneIndex;
+      var openCutsceneEditor = function(campaign, seriesIndex, missionIndex, cutsceneIndex) {
+    	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "C" + cutsceneIndex;
+    	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " C" + cutsceneIndex;
     	if (tabAlreadyOpen(key)) {
     	  switchTab(key);
     	} else {
-          addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?campaign=000&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
+          addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
     	}
       };
       
-      var openNavPointEditor = function(seriesIndex, missionIndex, navPointIndex) {
-    	var key = "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "N" + navPointIndex;
-    	var label = "S" + (seriesIndex+1) + " M" + (missionIndex+1) + " Nav " + navPointIndex;
+      var openNavPointEditor = function(campaign, seriesIndex, missionIndex, navPointIndex) {
+    	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "N" + navPointIndex;
+    	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " Nav " + navPointIndex;
     	if (tabAlreadyOpen(key)) {
     	  switchTab(key);
     	} else {
-          addTab(key, label, "<%=request.getContextPath()%>/navPointEditor.html?campaign=000&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&navPointIndex=" + navPointIndex);
+          addTab(key, label, "<%=request.getContextPath()%>/navPointEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&navPointIndex=" + navPointIndex);
     	}
       };
     </script>
@@ -156,10 +156,14 @@
       <div id="projectViewTabs" class="scrollableTab">
         <ul>
           <!-- li><a href="#tab-allContents">All</a></li -->
-          <li><a href="#tab-campaignContents">Campaign</a></li>
+          <li><a href="#tab-campaignContents_000">WC</a></li>
+          <li><a href="#tab-campaignContents_001">SM1</a></li>
+          <li><a href="#tab-campaignContents_002">SM2</a></li>
         </ul>
         <!-- div id="tab-allContents"></div -->
-        <div id="tab-campaignContents"></div>
+        <div id="tab-campaignContents_000"></div>
+        <div id="tab-campaignContents_001"></div>
+        <div id="tab-campaignContents_002"></div>
       </div>
     </div>
   </body>

@@ -26,6 +26,7 @@ public class SeriesEditorController {
     List<Wc1SeriesSlot> seriesSlots = gameData.getSeriesSlots();
     Wc1SeriesSlot series = seriesSlots.get(seriesIndex);
 
+    model.addAttribute("campaign", campaign);
     model.addAttribute("seriesIndex", seriesIndex);
     model.addAttribute("series", series);
     model.addAttribute("campUtil", new Wc1CampUtil());

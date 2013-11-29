@@ -3,7 +3,7 @@ body {
   font-size: 12px;
 }
 
-#campaignTree ul {
+li.campaignTree {
   list-style-type: none;
   padding-left: 15px;
 }

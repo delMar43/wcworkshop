@@ -1,7 +1,9 @@
 package wcworkshop.core.reader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import wcworkshop.core.config.Configuration;
 import wcworkshop.core.data.Wc1BriefingData;
@@ -22,12 +24,14 @@ public class Wc1GameDataReader {
   private Wc1CampaignReader campaignReader = Wc1CampaignReader.getInstance();
   private Wc1ModuleReader moduleReader = Wc1ModuleReader.getInstance();
 
-  private Wc1GameData gameData;
+  private Map<String, Wc1GameData> gameDataCache = new HashMap<>();
 
   public Wc1GameData readData(String extension) {
+    Wc1GameData gameData = gameDataCache.get(extension);
+
     if (gameData == null) {
       gameData = new Wc1GameData();
-      gameData.setCampaignName("Vega Campaign 2654");
+      gameData.setCampaignName(extension);
 
       Wc1CampData campaignData = campaignReader.readCampaignFile(config.getResourcePath() + "CAMP." + extension);
       Wc1BriefingData briefingData = briefingReader.readBriefingFile(config.getResourcePath() + "BRIEFING." + extension);
@@ -41,6 +45,9 @@ public class Wc1GameDataReader {
 
       int seriesIndex = 0;
       for (Wc1SeriesSlot seriesSlot : gameData.getSeriesSlots()) {
+        if (seriesSlot.getNrOfMissions() == (byte) 0) {
+          break;
+        }
         seriesSlot.setSystemName(moduleData.getSystemNames().get(seriesIndex));
 
         List<Wc1MissionSlot> toAdd = new ArrayList<>();
@@ -76,6 +83,8 @@ public class Wc1GameDataReader {
         seriesSlot.setMissionSlots(toAdd);
         ++seriesIndex;
       }
+
+      gameDataCache.put(extension, gameData);
     }
 
     return gameData;

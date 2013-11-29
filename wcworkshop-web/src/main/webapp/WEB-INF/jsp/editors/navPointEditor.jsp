@@ -3,8 +3,9 @@
 
 <div class="scrollablePane">
   <h2>
-    <a href="javascript:openSeriesEditor(${seriesIndex})">Series ${seriesIndex +1}</a>, 
-    <a href="javascript:openMissionEditor(${seriesIndex}, ${missionIndex})">Mission ${missionIndex +1}</a>,
+    Campaign ${campaign}, 
+    <a href="javascript:openSeriesEditor('${campaign}', ${seriesIndex})">Series ${seriesIndex +1}</a>, 
+    <a href="javascript:openMissionEditor('${campaign}', ${seriesIndex}, ${missionIndex})">Mission ${missionIndex +1}</a>,
     NavPoint ${navPointIndex +1}
   </h2>
   
@@ -49,7 +50,7 @@
       <th>Nav Point Manipulations</th>
       <td>
         <c:forEach items="${navPoint.navPointManipulations}" var="manip">
-          ${manip.enableNavPoint ? 'show' : 'hide'}&nbsp;<a href="javascript:openNavPointEditor(${seriesIndex}, ${missionIndex}, ${manip.navPoint})">nav&nbsp;${manip.navPoint}</a><br/>
+          ${manip.enableNavPoint ? 'show' : 'hide'}&nbsp;<a href="javascript:openNavPointEditor('${campaign}', ${seriesIndex}, ${missionIndex}, ${manip.navPoint})">nav&nbsp;${manip.navPoint}</a><br/>
         </c:forEach>
       </td>
     </tr>

@@ -26,6 +26,7 @@ public class MissionEditorController {
     Wc1SeriesSlot seriesSlot = gameData.getSeriesSlots().get(seriesIndex);
     Wc1MissionSlot missionSlot = seriesSlot.getMissionSlot(missionIndex);
 
+    model.addAttribute("campaign", campaign);
     model.addAttribute("seriesIndex", seriesIndex);
     model.addAttribute("missionIndex", missionIndex);
     model.addAttribute("mission", missionSlot);

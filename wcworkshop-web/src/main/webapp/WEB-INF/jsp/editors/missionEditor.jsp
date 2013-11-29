@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <h2>
-  <a href="javascript:openSeriesEditor(${seriesIndex})">Series ${seriesIndex +1}</a>, Mission ${missionIndex +1}
+  Campaign ${campaign}, <a href="javascript:openSeriesEditor('${campaign}', ${seriesIndex})">Series ${seriesIndex +1}</a>, Mission ${missionIndex +1}
 </h2>
 <div>
   <h3>Mission Parameters</h3>
@@ -43,23 +43,23 @@
   <table>
     <tr>
       <th>Shotglass</th>
-      <td><a href="javascript:openCutsceneEditor(${seriesIndex}, ${missionIndex}, 2)">Edit...</a></td>
+      <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 2)">Edit...</a></td>
     </tr>
     <tr>
       <th>Left Chair</th>
-      <td>${campUtil.getPilot(mission.conversationPartners.leftSeat)}&nbsp;<a href="javascript:openCutsceneEditor(${seriesIndex}, ${missionIndex}, 3)">Edit...</a></td>
+      <td>${campUtil.getPilot(mission.conversationPartners.leftSeat)}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 3)">Edit...</a></td>
     </tr>
     <tr>
       <th>Right Chair</th>
-      <td>${campUtil.getPilot(mission.conversationPartners.rightSeat)}&nbsp;<a href="javascript:openCutsceneEditor(${seriesIndex}, ${missionIndex}, 4)">Edit...</a></td>
+      <td>${campUtil.getPilot(mission.conversationPartners.rightSeat)}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 4)">Edit...</a></td>
     </tr>
     <tr>
       <th>Briefing</th>
-      <td><a href="javascript:openCutsceneEditor(${seriesIndex}, ${missionIndex}, 0)">Edit...</a></td>
+      <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 0)">Edit...</a></td>
     </tr>
     <tr>
       <th>Debriefing</th>
-      <td><a href="javascript:openCutsceneEditor(${seriesIndex}, ${missionIndex}, 1)">Edit...</a></td>
+      <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 1)">Edit...</a></td>
     </tr>
   </table>
 </div>

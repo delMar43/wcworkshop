@@ -17,6 +17,7 @@ public class CampaignContentsTreeController {
     Wc1GameData wc1Data = dataReader.readData(campaign);
 
     model.addAttribute("gameData", wc1Data);
+    model.addAttribute("campaign", campaign);
 
     return "campaignContentsTree";
   }

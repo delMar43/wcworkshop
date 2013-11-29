@@ -23,6 +23,7 @@ public class CutsceneEditorController {
     Wc1GameData gameData = gameDataReader.readData(campaign);
     Wc1Cutscene cutscene = gameData.getSeriesSlots().get(seriesIndex).getMissionSlot(missionIndex).getCutscene(cutsceneIndex);
 
+    model.addAttribute("campaign", campaign);
     model.addAttribute("cutscene", cutscene);
     model.addAttribute("cutsceneUtil", cutsceneUtil);
 

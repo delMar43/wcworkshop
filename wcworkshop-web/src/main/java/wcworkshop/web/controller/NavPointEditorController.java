@@ -27,6 +27,7 @@ public class NavPointEditorController {
     Wc1NavPointInfo navPointInfo = gameData.getSeriesSlots().get(seriesIndex).getMissionSlot(missionIndex).getNavPointInfos()
         .get(navPointIndex);
 
+    model.addAttribute("campaign", campaign);
     model.addAttribute("seriesIndex", seriesIndex);
     model.addAttribute("missionIndex", missionIndex);
     model.addAttribute("navPointIndex", navPointIndex);
