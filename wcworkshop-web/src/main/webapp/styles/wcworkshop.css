@@ -3,14 +3,14 @@ body {
   font-size: 12px;
 }
 
-li.campaignTree {
-  list-style-type: none;
-  padding-left: 15px;
+.campaignTree ul {
+  list-style: none;
+  padding-left: 10px;
 }
 
-ul.tree {
+ul.campaignTree {
+  list-style: none;
   padding-left: 0px;
-  list-style-type: none;
 }
 
 table {
