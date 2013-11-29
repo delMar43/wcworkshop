@@ -2,8 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <h2>
-  <a href="javascript:openSeriesEditor(${seriesIndex})">Series ${seriesIndex +1}</a>, 
-  Mission ${missionIndex +1}
+  <a href="javascript:openSeriesEditor(${seriesIndex})">Series ${seriesIndex +1}</a>, Mission ${missionIndex +1}
 </h2>
 <div>
   <h3>Mission Parameters</h3>

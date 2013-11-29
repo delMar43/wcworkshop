@@ -104,7 +104,7 @@
         if (tabAlreadyOpen(key)) {
           switchTab(key);
         } else {
-          addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?seriesIndex=" + seriesIndex);
+          addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?campaign=000&seriesIndex=" + seriesIndex);
         }
       };
       
@@ -114,7 +114,7 @@
     	if (tabAlreadyOpen(key)) {
     	  switchTab(key);
     	} else {
-          addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
+          addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=000&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
     	}
       };
       
@@ -124,7 +124,17 @@
     	if (tabAlreadyOpen(key)) {
     	  switchTab(key);
     	} else {
-          addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
+          addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?campaign=000&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
+    	}
+      };
+      
+      var openNavPointEditor = function(seriesIndex, missionIndex, navPointIndex) {
+    	var key = "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "N" + navPointIndex;
+    	var label = "S" + (seriesIndex+1) + " M" + (missionIndex+1) + " Nav " + navPointIndex;
+    	if (tabAlreadyOpen(key)) {
+    	  switchTab(key);
+    	} else {
+          addTab(key, label, "<%=request.getContextPath()%>/navPointEditor.html?campaign=000&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&navPointIndex=" + navPointIndex);
     	}
       };
     </script>

@@ -7,7 +7,7 @@ public class Wc1NavPointManipulation {
 
   @Override
   public String toString() {
-    return (enableNavPoint ? "show" : "hide") + " nav " + navPoint + ", ";
+    return (enableNavPoint ? "show" : "hide") + " nav " + navPoint;
   }
 
   public byte getNavPoint() {

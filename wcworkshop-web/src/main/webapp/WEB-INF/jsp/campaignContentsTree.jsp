@@ -12,8 +12,10 @@
               <ul>
                 <li>Nav Points
                   <ul>
-                    <c:forEach items="${mission.navPoints}" var="navPoint">
-                      <li>[N] ${navPoint.id}</li>
+                    <c:forEach items="${mission.navPoints}" var="navPoint" varStatus="navPointStatus">
+                      <li><a href="javascript:openNavPointEditor(${seriesStatus.index}, ${missionStatus.index}, ${navPointStatus.index})">
+                        ${navPointStatus.index}: [N] ${navPoint.id}
+                      </a></li>
                     </c:forEach>
                   </ul>
                 </li>
