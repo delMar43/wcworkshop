@@ -25,7 +25,7 @@
     </tr>
     <tr>
       <th>Medal</th>
-      <td>${campUtil.getMedal(mission.medal)}</td>
+      <td>${medalRepo.getMedal(mission.medal).name}</td>
     </tr>
     <tr>
       <th>Medal Killpoints</th>
