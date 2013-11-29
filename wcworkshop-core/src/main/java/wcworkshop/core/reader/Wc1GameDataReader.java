@@ -24,14 +24,14 @@ public class Wc1GameDataReader {
 
   private Wc1GameData gameData;
 
-  public Wc1GameData readData() {
+  public Wc1GameData readData(String extension) {
     if (gameData == null) {
       gameData = new Wc1GameData();
       gameData.setCampaignName("Vega Campaign 2654");
 
-      Wc1CampData campaignData = campaignReader.readCampaignFile(config.getResourcePath() + "CAMP.000");
-      Wc1BriefingData briefingData = briefingReader.readBriefingFile(config.getResourcePath() + "BRIEFING.000");
-      Wc1ModuleData moduleData = moduleReader.readModuleFile(config.getResourcePath() + "MODULE.000");
+      Wc1CampData campaignData = campaignReader.readCampaignFile(config.getResourcePath() + "CAMP." + extension);
+      Wc1BriefingData briefingData = briefingReader.readBriefingFile(config.getResourcePath() + "BRIEFING." + extension);
+      Wc1ModuleData moduleData = moduleReader.readModuleFile(config.getResourcePath() + "MODULE." + extension);
 
       gameData.setSeriesSlots(campaignData.getSeriesSlots());
 

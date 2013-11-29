@@ -20,9 +20,9 @@ public class MissionEditorController {
   private Wc1CampUtil campUtil = new Wc1CampUtil();
 
   @RequestMapping("/missionEditor.html")
-  public String renderEditor(@RequestParam int seriesIndex, @RequestParam int missionIndex, Model model) {
+  public String renderEditor(@RequestParam String campaign, @RequestParam int seriesIndex, @RequestParam int missionIndex, Model model) {
 
-    Wc1GameData gameData = gameDataReader.readData();
+    Wc1GameData gameData = gameDataReader.readData(campaign);
     Wc1SeriesSlot seriesSlot = gameData.getSeriesSlots().get(seriesIndex);
     Wc1MissionSlot missionSlot = seriesSlot.getMissionSlot(missionIndex);
 

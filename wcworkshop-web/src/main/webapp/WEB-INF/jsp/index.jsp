@@ -26,7 +26,7 @@
         $(".ui-tabs-nav").sortable();
         
         $.ajax({
-          url: "<%=request.getContextPath()%>/campaignContentsTree.html",
+          url: "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=000",
           success: function(data, textStatus, jqXHR) {
             $("#tab-campaignContents").html(data);
             /*
@@ -43,6 +43,20 @@
             */
           }
         });
+        /*
+        $.ajax({
+          url: "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=001",
+          success: function(data, textStatus, jqXHR) {
+            $("#tab-campaignContents").html(data);
+          }
+        });
+        $.ajax({
+          url: "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=002",
+          success: function(data, textStatus, jqXHR) {
+            $("#tab-campaignContents").html(data);
+          }
+        });
+        */
         
         /*
         $.ajax({

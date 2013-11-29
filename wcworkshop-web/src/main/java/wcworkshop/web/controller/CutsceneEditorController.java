@@ -17,9 +17,10 @@ public class CutsceneEditorController {
   private Wc1CutsceneUtil cutsceneUtil = Wc1CutsceneUtil.getInstance();
 
   @RequestMapping("/cutsceneEditor")
-  public String render(@RequestParam int seriesIndex, @RequestParam int missionIndex, @RequestParam int cutsceneIndex, Model model) {
+  public String render(@RequestParam String campaign, @RequestParam int seriesIndex, @RequestParam int missionIndex,
+      @RequestParam int cutsceneIndex, Model model) {
 
-    Wc1GameData gameData = gameDataReader.readData();
+    Wc1GameData gameData = gameDataReader.readData(campaign);
     Wc1Cutscene cutscene = gameData.getSeriesSlots().get(seriesIndex).getMissionSlot(missionIndex).getCutscene(cutsceneIndex);
 
     model.addAttribute("cutscene", cutscene);

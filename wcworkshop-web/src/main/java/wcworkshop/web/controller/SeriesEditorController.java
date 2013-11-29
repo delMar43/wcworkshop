@@ -18,9 +18,9 @@ public class SeriesEditorController {
   private Wc1GameDataReader gameDataReader = Wc1GameDataReader.getInstance();
 
   @RequestMapping("/seriesEditor.html")
-  public String renderEditor(@RequestParam int seriesIndex, Model model) {
+  public String renderEditor(@RequestParam String campaign, @RequestParam int seriesIndex, Model model) {
 
-    Wc1GameData gameData = gameDataReader.readData();
+    Wc1GameData gameData = gameDataReader.readData(campaign);
     List<Wc1SeriesSlot> seriesSlots = gameData.getSeriesSlots();
     Wc1SeriesSlot series = seriesSlots.get(seriesIndex);
 

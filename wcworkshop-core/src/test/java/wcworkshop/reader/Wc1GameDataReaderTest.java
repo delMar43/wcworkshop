@@ -11,7 +11,7 @@ public class Wc1GameDataReaderTest {
 
   @Test
   public void fill() {
-    Wc1GameData data = reader.readData();
+    Wc1GameData data = reader.readData("000");
     System.out.println("done");
   }
 }
