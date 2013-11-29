@@ -37,7 +37,13 @@ public class Wc1GameDataReader {
       Wc1BriefingData briefingData = briefingReader.readBriefingFile(config.getResourcePath() + "BRIEFING." + extension);
       Wc1ModuleData moduleData = moduleReader.readModuleFile(config.getResourcePath() + "MODULE." + extension);
 
-      gameData.setSeriesSlots(campaignData.getSeriesSlots());
+      List<Wc1SeriesSlot> seriesSlots = new ArrayList<>();
+      for (Wc1SeriesSlot seriesSlot : campaignData.getSeriesSlots()) {
+        if (seriesSlot.getNrOfMissions() > 0) {
+          seriesSlots.add(seriesSlot);
+        }
+      }
+      gameData.setSeriesSlots(seriesSlots);
 
       List<Wc1MissionSlot> allMissionSlots = briefingData.getMissionSlots();
       List<Wc1ConversationPartners> allConversationPartners = campaignData.getConversationPartners();
