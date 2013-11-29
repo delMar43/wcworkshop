@@ -25,9 +25,9 @@ public class Wc1SeriesSlot {
 
   @Override
   public String toString() {
-    return "Wingman: " + Wc1CampPilot.getByValue(wingman) + ", nrOfMissions: " + nrOfMissions + ", victoryPoints: " + victoryPoints
-        + ", missionTreeLevel: " + missionTreeLevel + ", victoryDestination: " + victoryDestination + ", victoryShip: " + victoryShip
-        + ", lossDestination: " + lossDestination + ", lossShip: " + lossShip;
+    return "Wingman: " + wingman + ", nrOfMissions: " + nrOfMissions + ", victoryPoints: " + victoryPoints + ", missionTreeLevel: "
+        + missionTreeLevel + ", victoryDestination: " + victoryDestination + ", victoryShip: " + victoryShip + ", lossDestination: "
+        + lossDestination + ", lossShip: " + lossShip;
   }
 
   public String getSystemName() {

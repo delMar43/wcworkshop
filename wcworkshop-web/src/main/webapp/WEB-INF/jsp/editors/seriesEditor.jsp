@@ -9,7 +9,7 @@
     </tr>
     <tr>
       <th>Wingman</th>
-      <td>${campUtil.getPilot(series.wingman)}</td>
+      <td>${pilotRepo.getPilot(series.wingman).name}</td>
     </tr>
     <tr>
       <th>Nr of Missions</th>

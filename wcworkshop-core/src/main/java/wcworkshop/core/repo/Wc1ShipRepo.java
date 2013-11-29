@@ -10,7 +10,7 @@ public class Wc1ShipRepo {
 
   private List<Wc1Ship> ships = new ArrayList<>();
 
-  public Wc1ShipRepo() {
+  private Wc1ShipRepo() {
     ships.add(new Wc1Ship((byte) 0, "Hornet"));
     ships.add(new Wc1Ship((byte) 1, "Rapier"));
     ships.add(new Wc1Ship((byte) 2, "Scimitar"));

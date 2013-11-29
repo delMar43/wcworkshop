@@ -21,7 +21,7 @@
     </tr>
     <tr>
       <th>Conversation Partners</th>
-      <td>Left: ${campUtil.getPilot(mission.conversationPartners.leftSeat)}, Right: ${campUtil.getPilot(mission.conversationPartners.rightSeat)}</td>
+      <td>Left: ${pilotRepo.getPilot(mission.conversationPartners.leftSeat).name}, Right: ${pilotRepo.getPilot(mission.conversationPartners.rightSeat).name}</td>
     </tr>
     <tr>
       <th>Medal</th>
@@ -47,11 +47,11 @@
     </tr>
     <tr>
       <th>Left Chair</th>
-      <td>${campUtil.getPilot(mission.conversationPartners.leftSeat)}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 3)">Edit...</a></td>
+      <td>${pilotRepo.getPilot(mission.conversationPartners.leftSeat).name}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 3)">Edit...</a></td>
     </tr>
     <tr>
       <th>Right Chair</th>
-      <td>${campUtil.getPilot(mission.conversationPartners.rightSeat)}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 4)">Edit...</a></td>
+      <td>${pilotRepo.getPilot(mission.conversationPartners.rightSeat).name}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 4)">Edit...</a></td>
     </tr>
     <tr>
       <th>Briefing</th>

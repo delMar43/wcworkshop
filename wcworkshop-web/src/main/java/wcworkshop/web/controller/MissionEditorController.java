@@ -10,14 +10,14 @@ import wcworkshop.core.data.Wc1MissionSlot;
 import wcworkshop.core.data.Wc1SeriesSlot;
 import wcworkshop.core.reader.ReaderHelper;
 import wcworkshop.core.reader.Wc1GameDataReader;
-import wcworkshop.core.util.Wc1CampUtil;
+import wcworkshop.core.repo.Wc1PilotRepo;
 
 @Controller
 public class MissionEditorController {
 
   private Wc1GameDataReader gameDataReader = Wc1GameDataReader.getInstance();
   private ReaderHelper readerHelper = ReaderHelper.getInstance();
-  private Wc1CampUtil campUtil = new Wc1CampUtil();
+  private Wc1PilotRepo pilotRepo = Wc1PilotRepo.getInstance();
 
   @RequestMapping("/missionEditor.html")
   public String renderEditor(@RequestParam String campaign, @RequestParam int seriesIndex, @RequestParam int missionIndex, Model model) {
@@ -30,7 +30,7 @@ public class MissionEditorController {
     model.addAttribute("seriesIndex", seriesIndex);
     model.addAttribute("missionIndex", missionIndex);
     model.addAttribute("mission", missionSlot);
-    model.addAttribute("campUtil", campUtil);
+    model.addAttribute("pilotRepo", pilotRepo);
     model.addAttribute("objectiveVictoryPoints", readerHelper.byteArrayToHexString(missionSlot.getObjectiveVictoryPoints()));
 
     return "editors/missionEditor";
