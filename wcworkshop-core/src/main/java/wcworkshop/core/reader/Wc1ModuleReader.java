@@ -25,7 +25,7 @@ public class Wc1ModuleReader {
     Wc1ModuleData result = new Wc1ModuleData();
     int filesize = readerHelper.extractFilesize(buffer);
     List<Integer> blockOffsets = readerHelper.extractBlockOffsets(buffer);
-    System.out.println("blocks: " + Arrays.toString(blockOffsets.toArray()));
+    //    System.out.println("blocks: " + Arrays.toString(blockOffsets.toArray()));
 
     List<List<Short>> autopilotShips = extractBlock1(Arrays.copyOfRange(buffer, blockOffsets.get(0), blockOffsets.get(1)));
     result.setAutopilotShips(autopilotShips);
@@ -36,7 +36,7 @@ public class Wc1ModuleReader {
     List<Wc1NavPointInfo> navPointInfos = extractThirdBlock(Arrays.copyOfRange(buffer, blockOffsets.get(2), blockOffsets.get(3)));
     result.setNavPointInfo(navPointInfos);
 
-    System.out.println("Block 4:");
+    //    System.out.println("Block 4:");
     List<Wc1MissionShipData> shipNavData = extractShipMissionData(Arrays.copyOfRange(buffer, blockOffsets.get(3), blockOffsets.get(4)));
     result.setMissionShipData(shipNavData);
 
@@ -80,27 +80,16 @@ public class Wc1ModuleReader {
     int offset = 0x1340;
     int chunkSize = 77;
     int navsPerMission = 16;
-    int previousIndex = offset;
     List<Wc1NavPoint> result = new ArrayList<>();
-    //    for (int index = offset; index < buffer.length; index += chunkSize) {
-    int index = offset;
     int curOffset = offset;
     for (int series = 0; series < 13; ++series) {
       for (int mission = 0; mission < 4; ++mission) {
         for (int nav = 0; nav < navsPerMission; ++nav) {
-          //          int curOffset = offset + (nav * 77) + (mission * 16 * 77) + (series * 64 * 77);
-          System.out.println("S" + (series + 1) + "M" + (mission + 1) + "N" + (nav + 1) + " - " + curOffset);
-
           byte[] curBuffer = Arrays.copyOfRange(buffer, curOffset, curOffset + chunkSize);
           Wc1NavPoint navPoint = extractNavPointData(curBuffer);
           result.add(navPoint);
-          System.out.println((index - previousIndex) + " " + index + " 0x" + Integer.toHexString(index).toUpperCase() + " - "
-              + navPoint.toString());
-          previousIndex = index;
-          index += chunkSize;
           curOffset += chunkSize;
         }
-        System.out.println("---");
       }
     }
     return result;
