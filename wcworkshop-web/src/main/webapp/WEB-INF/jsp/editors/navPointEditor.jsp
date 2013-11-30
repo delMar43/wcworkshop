@@ -19,20 +19,16 @@
       <td>${navPoint.visible}</td>
     </tr>
     <tr>
+      <th>Coordinates (x/y/z)</th>
+      <td>${navPoint.xPos} / ${navPoint.yPos} / ${navPoint.zPos}</td>
+    </tr>
+    <tr>
       <th>Unknown 1</th>
       <td>${navPoint.unknown1}</td>
     </tr>
     <tr>
-      <th>coordinate 1 (x?)</th>
-      <td>${navPoint.xPos}</td>
-    </tr>
-    <tr>
       <th>Unknown 2</th>
       <td>${navPoint.unknown2}</td>
-    </tr>
-    <tr>
-      <th>Coordinate 2 (y?)</th>
-      <td>${navPoint.yPos}</td>
     </tr>
     <tr>
       <th>Unknown 3</th>

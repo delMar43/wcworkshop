@@ -77,7 +77,7 @@ public class Wc1GameDataReader {
           for (int navCtr = 0; navCtr < 16; ++navCtr) {
             int navIndex = index * 16 + navCtr;
             Wc1NavPoint navPoint = moduleData.getNavPoints().get(navIndex);
-            if (navPoint.getShipsToLoad() == null || navPoint.getShipsToLoad().size() == 0) {
+            if (navPoint.getShipImagesToLoad() == null || navPoint.getShipImagesToLoad().size() == 0) {
               break;
             }
             navPoints.add(navPoint);

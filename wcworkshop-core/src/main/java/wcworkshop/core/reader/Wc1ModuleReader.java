@@ -36,7 +36,6 @@ public class Wc1ModuleReader {
     List<Wc1NavPointInfo> navPointInfos = extractThirdBlock(Arrays.copyOfRange(buffer, blockOffsets.get(2), blockOffsets.get(3)));
     result.setNavPointInfo(navPointInfos);
 
-    //    System.out.println("Block 4:");
     List<Wc1MissionShipData> shipNavData = extractShipMissionData(Arrays.copyOfRange(buffer, blockOffsets.get(3), blockOffsets.get(4)));
     result.setMissionShipData(shipNavData);
 
@@ -101,15 +100,19 @@ public class Wc1ModuleReader {
     String id = new String(Arrays.copyOfRange(curBuffer, 0, 30));
     navPoint.setId(id.substring(0, id.indexOf("\0")));
     navPoint.setVisible(!id.startsWith("."));
-    navPoint.setUnknown1(readerHelper.getShort(Arrays.copyOfRange(curBuffer, 30, 32)));
+    navPoint.setType(curBuffer[30]);
 
-    byte[] xBytes = Arrays.copyOfRange(curBuffer, 32, 34);
-    navPoint.setxPos(readerHelper.getShort(xBytes));
-    navPoint.setUnknown2(readerHelper.getShort(new byte[] { curBuffer[34], curBuffer[35] }));
-    byte[] yBytes = Arrays.copyOfRange(curBuffer, 36, 38);
-    navPoint.setyPos(readerHelper.getShort(yBytes));
-    navPoint.setInSystemJumpPoint(curBuffer[38]);
-    navPoint.setIsJumpPoint(curBuffer[39]);
+    byte[] xBytes = Arrays.copyOfRange(curBuffer, 32, 36);
+    xBytes[3] = 0;
+    navPoint.setxPos(readerHelper.getInteger(xBytes));
+    navPoint.setUnknown1(curBuffer[35]);
+    byte[] yBytes = Arrays.copyOfRange(curBuffer, 36, 40);
+    yBytes[3] = 0;
+    navPoint.setyPos(readerHelper.getInteger(yBytes));
+    navPoint.setUnknown2(curBuffer[39]);
+    byte[] zBytes = Arrays.copyOfRange(curBuffer, 40, 44);
+    zBytes[3] = 0;
+    navPoint.setzPos(readerHelper.getInteger(zBytes));
 
     List<Wc1NavPointManipulation> navManList = new ArrayList<>();
     for (int i = 0; i < 8; i += 2) {
@@ -124,15 +127,25 @@ public class Wc1ModuleReader {
     }
     navPoint.setNavPointManipulations(navManList);
 
-    List<Short> shipsToLoad = new ArrayList<>();
+    List<Short> shipImagesToLoad = new ArrayList<>();
     for (int i = 0; i < 3; i += 2) {
-      short shipToLoad = readerHelper.getShort(new byte[] { curBuffer[i + 53], curBuffer[i + 54] });
-      if (shipToLoad == (short) 0xffff) {
+      short shipImageToLoad = readerHelper.getShort(new byte[] { curBuffer[i + 53], curBuffer[i + 54] });
+      if (shipImageToLoad == (short) 0xffff) {
         break;
       }
-      shipsToLoad.add(shipToLoad);
+      shipImagesToLoad.add(shipImageToLoad);
     }
-    navPoint.setShipsToLoad(shipsToLoad);
+    navPoint.setShipImagesToLoad(shipImagesToLoad);
+
+    List<Short> presentShips = new ArrayList<>();
+    for (int i = 0; i < 20; i += 2) {
+      short shipIndex = readerHelper.getShort(curBuffer, 57 + i);
+      if (shipIndex == -1) {
+        break;
+      }
+      presentShips.add(shipIndex);
+    }
+    navPoint.setPresentShips(presentShips);
 
     return navPoint;
   }

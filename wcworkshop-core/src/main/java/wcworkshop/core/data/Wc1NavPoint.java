@@ -4,48 +4,25 @@ import java.util.List;
 
 public class Wc1NavPoint {
 
+  private byte type;
   private String id;
   private boolean visible;
+  private int xPos;
   private short unknown1;
-  private short xPos;
+  private int yPos;
   private short unknown2;
-  private short yPos;
+  private int zPos;
   private short unknown3;
-  private byte inSystemJumpPoint;
-  private byte isJumpPoint;
-  private List<Short> shipsToLoad;
+  private List<Short> shipImagesToLoad;
   private List<Wc1NavPointManipulation> navPointManipulations;
+  private List<Short> presentShips;
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    boolean hasNavPointManipulations = navPointManipulations != null && navPointManipulations.size() > 0;
-    if (hasNavPointManipulations) {
-      for (Wc1NavPointManipulation npm : navPointManipulations) {
-        if (npm == null) {
-          break;
-        }
-        sb.append(npm.toString());
-      }
-    }
-    String result = " " + id + (visible ? " " : " (invisible) ") + ", u1: " + hex(unknown1) + ", xPos: " + xPos + ", u2: " + hex(unknown2)
-        + ", yPos: " + yPos + ", unknown3: " + hex(unknown3) + ", unknown4: " + hex(inSystemJumpPoint) + ", unknown5: " + hex(isJumpPoint);
-
-    boolean hasShipsToLoad = shipsToLoad != null && shipsToLoad.size() > 0;
-    if (hasNavPointManipulations) {
-      result += "\r\n navPoint manipulations: " + sb.toString();
-    }
-    if (hasShipsToLoad) {
-      result += "\r\n ships to load:";
-      for (Short ship : shipsToLoad) {
-        result += " " + Wc1ModuleShip.getByValue(ship);
-      }
-    }
-    return result;
+  public byte getType() {
+    return type;
   }
 
-  private String hex(int value) {
-    return "0x" + Integer.toHexString(value).toUpperCase();
+  public void setType(byte type) {
+    this.type = type;
   }
 
   public String getId() {
@@ -72,28 +49,28 @@ public class Wc1NavPoint {
     this.unknown1 = unknown1;
   }
 
-  public short getxPos() {
+  public int getxPos() {
     return xPos;
   }
 
-  public void setxPos(short xPos) {
+  public void setxPos(int xPos) {
     this.xPos = xPos;
   }
 
-  public short getyPos() {
+  public int getyPos() {
     return yPos;
   }
 
-  public void setyPos(short yPos) {
+  public void setyPos(int yPos) {
     this.yPos = yPos;
   }
 
-  public List<Short> getShipsToLoad() {
-    return shipsToLoad;
+  public List<Short> getShipImagesToLoad() {
+    return shipImagesToLoad;
   }
 
-  public void setShipsToLoad(List<Short> shipsToLoad) {
-    this.shipsToLoad = shipsToLoad;
+  public void setShipImagesToLoad(List<Short> shipImagesToLoad) {
+    this.shipImagesToLoad = shipImagesToLoad;
   }
 
   public List<Wc1NavPointManipulation> getNavPointManipulations() {
@@ -112,27 +89,27 @@ public class Wc1NavPoint {
     this.unknown2 = unknown2;
   }
 
-  public byte getInSystemJumpPoint() {
-    return inSystemJumpPoint;
-  }
-
-  public void setInSystemJumpPoint(byte inSystemJumpPoint) {
-    this.inSystemJumpPoint = inSystemJumpPoint;
-  }
-
-  public byte getIsJumpPoint() {
-    return isJumpPoint;
-  }
-
-  public void setIsJumpPoint(byte isJumpPoint) {
-    this.isJumpPoint = isJumpPoint;
-  }
-
   public short getUnknown3() {
     return unknown3;
   }
 
   public void setUnknown3(short unknown3) {
     this.unknown3 = unknown3;
+  }
+
+  public int getzPos() {
+    return zPos;
+  }
+
+  public void setzPos(int zPos) {
+    this.zPos = zPos;
+  }
+
+  public List<Short> getPresentShips() {
+    return presentShips;
+  }
+
+  public void setPresentShips(List<Short> presentShips) {
+    this.presentShips = presentShips;
   }
 }
