@@ -8,7 +8,9 @@
     </encoder>
   </appender>
 
-  <root level="debug">
+  <logger name="wcworkshop" level="debug" />
+
+  <root level="info">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>
