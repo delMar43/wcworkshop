@@ -33,7 +33,7 @@ public class Wc1ModuleReader {
     List<Wc1NavPoint> navPoints = extractNavPoints(Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
     result.setNavPoints(navPoints);
 
-    List<Wc1NavPointInfo> navPointInfos = extractThirdBlock(Arrays.copyOfRange(buffer, blockOffsets.get(2), blockOffsets.get(3)));
+    List<Wc1NavPointInfo> navPointInfos = extractNavPointInfos(Arrays.copyOfRange(buffer, blockOffsets.get(2), blockOffsets.get(3)));
     result.setNavPointInfo(navPointInfos);
 
     List<Wc1MissionShipData> shipNavData = extractShipMissionData(Arrays.copyOfRange(buffer, blockOffsets.get(3), blockOffsets.get(4)));
@@ -150,7 +150,7 @@ public class Wc1ModuleReader {
     return navPoint;
   }
 
-  private List<Wc1NavPointInfo> extractThirdBlock(byte[] buffer) {
+  private List<Wc1NavPointInfo> extractNavPointInfos(byte[] buffer) {
     int start = 0x1000;
     int chunkSize = 64;
     List<Wc1NavPointInfo> result = new ArrayList<>();
