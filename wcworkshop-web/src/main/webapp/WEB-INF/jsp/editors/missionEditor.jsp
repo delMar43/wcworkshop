@@ -55,6 +55,7 @@
         <th>Primary Target</th>
         <th>Secondary Target</th>
         <th>Formation</th>
+        <th>Autopilot</th>
       </tr>
     </thead>
     <tbody>
@@ -71,6 +72,7 @@
         <td>${shipData.primaryTarget}</td>
         <td>${shipData.secondaryTarget}</td>
         <td>${shipData.formation}</td>
+        <td><c:if test="${shipData.autopilotShip}">*</c:if></td>
       </tr>
     </c:forEach>
     </tbody>

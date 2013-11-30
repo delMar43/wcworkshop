@@ -27,8 +27,8 @@ public class Wc1ModuleReader {
     List<Integer> blockOffsets = readerHelper.extractBlockOffsets(buffer);
     System.out.println("blocks: " + Arrays.toString(blockOffsets.toArray()));
 
-    System.out.println("Block 1:");
-    extractBlock1(Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
+    List<List<Short>> autopilotShips = extractBlock1(Arrays.copyOfRange(buffer, blockOffsets.get(0), blockOffsets.get(1)));
+    result.setAutopilotShips(autopilotShips);
 
     List<Wc1NavPoint> navPoints = extractNavPoints(Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
     result.setNavPoints(navPoints);
@@ -49,16 +49,27 @@ public class Wc1ModuleReader {
     return result;
   }
 
-  private void extractBlock1(byte[] buffer) {
-    int offset = 131;
+  private List<List<Short>> extractBlock1(byte[] buffer) {
+    int startOffset = 100;
+    int chunkSize = 24;
 
-  }
+    List<List<Short>> autopilotInfo = new ArrayList<>();
 
-  private void extractBlock1(Wc1ModuleData result, byte[] buffer) {
-    int chunkLength = 0x30;
-    for (int index = 0; index < buffer.length; index += chunkLength) {
-      System.out.println(index + ": " + readerHelper.byteArrayToHexString(Arrays.copyOfRange(buffer, index, index + chunkLength)));
+    for (int missionIndex = 0; missionIndex < 52; ++missionIndex) {
+      List<Short> autopilotShips = new ArrayList<>();
+      int missionOffset = startOffset + (missionIndex * chunkSize);
+      for (int shipIdx = 0; shipIdx < 5; ++shipIdx) {
+        int offset = missionOffset + shipIdx * 2;
+        short ship = readerHelper.getShort(buffer, offset);
+        if (ship == -1) {
+          break;
+        }
+        autopilotShips.add(ship);
+      }
+      autopilotInfo.add(autopilotShips);
     }
+
+    return autopilotInfo;
   }
 
   /**

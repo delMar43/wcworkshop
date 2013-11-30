@@ -19,6 +19,7 @@ public class Wc1MissionSlot {
   private short medalKillPoints;
   private byte[] objectiveVictoryPoints;
 
+  private List<Short> autopilotShips;
   private List<Wc1NavPoint> navPoints;
   private List<Wc1NavPointInfo> navPointInfos;
   private List<Wc1MissionShipData> shipData;
@@ -139,6 +140,14 @@ public class Wc1MissionSlot {
 
   public boolean isEmpty() {
     return this == EMPTY;
+  }
+
+  public List<Short> getAutopilotShips() {
+    return autopilotShips;
+  }
+
+  public void setAutopilotShips(List<Short> autopilotShips) {
+    this.autopilotShips = autopilotShips;
   }
 
   public List<Wc1NavPoint> getNavPoints() {

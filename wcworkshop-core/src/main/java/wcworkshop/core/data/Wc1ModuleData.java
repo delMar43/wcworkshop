@@ -6,11 +6,20 @@ public class Wc1ModuleData {
 
   public static final Wc1ModuleData EMPTY = new Wc1ModuleData();
 
+  private List<List<Short>> autopilotShips;
   private List<Wc1NavPoint> navPoints;
   private List<Wc1NavPointInfo> navPointInfo;
   private List<Wc1MissionShipData> missionShipData;
   private List<String> systemNames;
   private List<String> wingNames;
+
+  public List<List<Short>> getAutopilotShips() {
+    return autopilotShips;
+  }
+
+  public void setAutopilotShips(List<List<Short>> autopilotShips) {
+    this.autopilotShips = autopilotShips;
+  }
 
   public List<Wc1NavPointInfo> getNavPointInfo() {
     return navPointInfo;

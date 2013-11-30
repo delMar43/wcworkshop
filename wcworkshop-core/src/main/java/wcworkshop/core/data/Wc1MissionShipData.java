@@ -14,6 +14,7 @@ public class Wc1MissionShipData {
   private byte secondaryTarget;
   private byte formation;
   private byte primaryTarget;
+  private boolean autopilotShip;
 
   public short getType() {
     return type;
@@ -111,4 +112,11 @@ public class Wc1MissionShipData {
     this.primaryTarget = primaryTarget;
   }
 
+  public boolean isAutopilotShip() {
+    return autopilotShip;
+  }
+
+  public void setAutopilotShip(boolean autopilotShip) {
+    this.autopilotShip = autopilotShip;
+  }
 }

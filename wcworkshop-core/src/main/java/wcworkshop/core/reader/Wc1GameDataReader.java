@@ -70,6 +70,7 @@ public class Wc1GameDataReader {
           missionSlot.setMedal(missionFromCampaign.getMedal());
           missionSlot.setMedalKillPoints(missionFromCampaign.getMedalKillPoints());
           missionSlot.setWingName(moduleData.getWingNames().get(index));
+          missionSlot.setAutopilotShips(moduleData.getAutopilotShips().get(index));
 
           List<Wc1NavPoint> navPoints = new ArrayList<>();
           List<Wc1NavPointInfo> navPointInfos = new ArrayList<>();
@@ -84,12 +85,15 @@ public class Wc1GameDataReader {
           }
 
           List<Wc1MissionShipData> shipData = new ArrayList<>();
-          for (int shipCtr = 0; shipCtr < 32; ++shipCtr) {
+          for (short shipCtr = 0; shipCtr < 32; ++shipCtr) {
+            List<Short> autopilotShips = moduleData.getAutopilotShips().get(index);
+
             int shipIndex = index * 32 + shipCtr;
             Wc1MissionShipData curShipData = moduleData.getMissionShipData().get(shipIndex);
             if (curShipData.getType() == -1) {
               break;
             }
+            curShipData.setAutopilotShip(autopilotShips.contains(shipCtr));
             shipData.add(curShipData);
           }
 
