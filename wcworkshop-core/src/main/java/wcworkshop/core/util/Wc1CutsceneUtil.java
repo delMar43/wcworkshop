@@ -220,7 +220,7 @@ public class Wc1CutsceneUtil {
   }
 
   private String appendHexString(byte code, String result) {
-    result += " (" + hexString(code) + ")";
+    result = "[" + hexString(code) + "] " + result;
     return result;
   }
 
@@ -356,7 +356,11 @@ public class Wc1CutsceneUtil {
     }
     StringBuilder sb = new StringBuilder();
     for (byte b : conditions) {
-      sb.append(getCondition(b) + " | ");
+      if (b == 0x2c) {
+        sb.append("<hr/>");
+      } else {
+        sb.append(getCondition(b) + "<br/>");
+      }
     }
     return sb.toString();
   }
