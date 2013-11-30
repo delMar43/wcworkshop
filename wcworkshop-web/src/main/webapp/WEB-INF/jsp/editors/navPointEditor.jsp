@@ -37,7 +37,7 @@
     <tr>
       <th>Ships Present</th>
       <td>
-        <c:forEach items="${navPoint.shipsToLoad}" var="ship">
+        <c:forEach items="${navPoint.shipImagesToLoad}" var="ship">
           ${shipRepo.getShip(ship).name}<br/>
         </c:forEach>
       </td>
