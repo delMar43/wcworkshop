@@ -10,6 +10,7 @@ import wcworkshop.core.data.Wc1BriefingData;
 import wcworkshop.core.data.Wc1CampData;
 import wcworkshop.core.data.Wc1ConversationPartners;
 import wcworkshop.core.data.Wc1GameData;
+import wcworkshop.core.data.Wc1MissionShipData;
 import wcworkshop.core.data.Wc1MissionSlot;
 import wcworkshop.core.data.Wc1ModuleData;
 import wcworkshop.core.data.Wc1NavPoint;
@@ -81,6 +82,18 @@ public class Wc1GameDataReader {
             navPoints.add(navPoint);
             navPointInfos.add(moduleData.getNavPointInfo().get(navIndex));
           }
+
+          List<Wc1MissionShipData> shipData = new ArrayList<>();
+          for (int shipCtr = 0; shipCtr < 32; ++shipCtr) {
+            int shipIndex = index * 32 + shipCtr;
+            Wc1MissionShipData curShipData = moduleData.getMissionShipData().get(shipIndex);
+            if (curShipData.getType() == -1) {
+              break;
+            }
+            shipData.add(curShipData);
+          }
+
+          missionSlot.setShipData(shipData);
           missionSlot.setNavPoints(navPoints);
           missionSlot.setNavPointInfos(navPointInfos);
 

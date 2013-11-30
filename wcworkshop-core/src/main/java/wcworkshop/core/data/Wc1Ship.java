@@ -1,6 +1,7 @@
 package wcworkshop.core.data;
 
 public class Wc1Ship {
+  public static final Wc1Ship EMPTY = new Wc1Ship();
 
   private byte value;
   private String name;

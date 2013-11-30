@@ -46,6 +46,14 @@ public class ReaderHelper {
     return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
   }
 
+  public int getInteger(byte[] bytes, int offset, int length) {
+    byte[] data = Arrays.copyOfRange(bytes, offset, offset + 4);
+    if (length == 3) {
+      data[3] = 0;
+    }
+    return getInteger(data);
+  }
+
   public short getShort(byte[] bytes) {
     return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
   }

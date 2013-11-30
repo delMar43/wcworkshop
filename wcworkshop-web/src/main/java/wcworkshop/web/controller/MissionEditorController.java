@@ -10,8 +10,12 @@ import wcworkshop.core.data.Wc1MissionSlot;
 import wcworkshop.core.data.Wc1SeriesSlot;
 import wcworkshop.core.reader.ReaderHelper;
 import wcworkshop.core.reader.Wc1GameDataReader;
+import wcworkshop.core.repo.Wc1AiPilotRepo;
 import wcworkshop.core.repo.Wc1MedalRepo;
 import wcworkshop.core.repo.Wc1PilotRepo;
+import wcworkshop.core.repo.Wc1ShipIffRepo;
+import wcworkshop.core.repo.Wc1ShipOrderRepo;
+import wcworkshop.core.repo.Wc1ShipRepo;
 
 @Controller
 public class MissionEditorController {
@@ -20,6 +24,8 @@ public class MissionEditorController {
   private ReaderHelper readerHelper = ReaderHelper.getInstance();
   private Wc1PilotRepo pilotRepo = Wc1PilotRepo.getInstance();
   private Wc1MedalRepo medalRepo = Wc1MedalRepo.getInstance();
+  private Wc1ShipRepo shipRepo = Wc1ShipRepo.getInstance();
+  private Wc1AiPilotRepo aiPilotRepo = Wc1AiPilotRepo.getInstance();
 
   @RequestMapping("/missionEditor.html")
   public String renderEditor(@RequestParam String campaign, @RequestParam int seriesIndex, @RequestParam int missionIndex, Model model) {
@@ -33,7 +39,11 @@ public class MissionEditorController {
     model.addAttribute("missionIndex", missionIndex);
     model.addAttribute("mission", missionSlot);
     model.addAttribute("pilotRepo", pilotRepo);
+    model.addAttribute("aiPilotRepo", aiPilotRepo);
     model.addAttribute("medalRepo", medalRepo);
+    model.addAttribute("shipRepo", shipRepo);
+    model.addAttribute("orderRepo", Wc1ShipOrderRepo.getInstance());
+    model.addAttribute("iffRepo", Wc1ShipIffRepo.getInstance());
     model.addAttribute("objectiveVictoryPoints", readerHelper.byteArrayToHexString(missionSlot.getObjectiveVictoryPoints()));
 
     return "editors/missionEditor";

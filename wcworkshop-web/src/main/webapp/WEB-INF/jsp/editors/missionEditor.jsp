@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<div class="scrollablePane">
 <h2>
   Campaign ${campaign}, <a href="javascript:openSeriesEditor('${campaign}', ${seriesIndex})">Series ${seriesIndex +1}</a>, Mission ${missionIndex +1}
 </h2>
@@ -12,7 +13,7 @@
       <td>${mission.wingName}</td>
     </tr>
     <tr>
-      <th>Space Backgrounds?</th>
+      <th>Stellar Backgrounds?</th>
       <td>
         <c:forEach items="${mission.unknown}" var="unknownPart">
           0x${unknownPart}
@@ -35,6 +36,44 @@
       <th>Objective Victory Points</th>
       <td>${objectiveVictoryPoints}</td>
     </tr>
+  </table>
+</div>
+
+<div>
+  <h3>Ships</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Friend / Foe</th>
+        <th>Orders</th>
+        <th>Coordinates</th>
+        <th>Speed</th>
+        <th>Size</th>
+        <th>Pilot</th>
+        <th>Primary Target</th>
+        <th>Secondary Target</th>
+        <th>Formation</th>
+      </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${mission.shipData}" var="shipData" varStatus="shipDataStatus">
+      <tr>
+        <td>${shipDataStatus.index}</td>
+        <td>${shipRepo.getShip(shipData.type).name}</td>
+        <td>${iffRepo.getIff(shipData.iff)}</td>
+        <td>[${shipData.orders}] ${orderRepo.getOrder(shipData.orders).text}</td>
+        <td>${shipData.xCoord} / ${shipData.yCoord} / ${shipData.zCoord}</td>
+        <td>${shipData.speed}</td>
+        <td>${shipData.size}</td>
+        <td>${aiPilotRepo.getAiPilot(shipData.aiPilot).name}</td>
+        <td>${shipData.primaryTarget}</td>
+        <td>${shipData.secondaryTarget}</td>
+        <td>${shipData.formation}</td>
+      </tr>
+    </c:forEach>
+    </tbody>
   </table>
 </div>
 
@@ -62,4 +101,5 @@
       <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 1)">Edit...</a></td>
     </tr>
   </table>
+</div>
 </div>

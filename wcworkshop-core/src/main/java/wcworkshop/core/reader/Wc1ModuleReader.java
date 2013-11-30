@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import wcworkshop.core.data.Wc1MissionShipData;
 import wcworkshop.core.data.Wc1ModuleData;
 import wcworkshop.core.data.Wc1NavPoint;
 import wcworkshop.core.data.Wc1NavPointIcon;
@@ -26,8 +27,8 @@ public class Wc1ModuleReader {
     List<Integer> blockOffsets = readerHelper.extractBlockOffsets(buffer);
     System.out.println("blocks: " + Arrays.toString(blockOffsets.toArray()));
 
-    //    System.out.println("Block 1:");
-    //    extractBlock1(result, Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
+    System.out.println("Block 1:");
+    extractBlock1(Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
 
     List<Wc1NavPoint> navPoints = extractNavPoints(Arrays.copyOfRange(buffer, blockOffsets.get(1), blockOffsets.get(2)));
     result.setNavPoints(navPoints);
@@ -35,8 +36,9 @@ public class Wc1ModuleReader {
     List<Wc1NavPointInfo> navPointInfos = extractThirdBlock(Arrays.copyOfRange(buffer, blockOffsets.get(2), blockOffsets.get(3)));
     result.setNavPointInfo(navPointInfos);
 
-    //    System.out.println("Block 4:");
-    //    extractSizedBlock(result, Arrays.copyOfRange(buffer, result.getBlockOffset(3), result.getBlockOffset(4)), result.getBlockOffset(3));
+    System.out.println("Block 4:");
+    List<Wc1MissionShipData> shipNavData = extractShipMissionData(Arrays.copyOfRange(buffer, blockOffsets.get(3), blockOffsets.get(4)));
+    result.setMissionShipData(shipNavData);
 
     List<String> wingNames = extractSizedBlock(Arrays.copyOfRange(buffer, blockOffsets.get(4), blockOffsets.get(5)), 160, 40);
     result.setWingNames(wingNames);
@@ -45,6 +47,11 @@ public class Wc1ModuleReader {
     result.setSystemNames(systemNames);
 
     return result;
+  }
+
+  private void extractBlock1(byte[] buffer) {
+    int offset = 131;
+
   }
 
   private void extractBlock1(Wc1ModuleData result, byte[] buffer) {
@@ -148,6 +155,40 @@ public class Wc1ModuleReader {
 
       result.add(info);
     }
+
+    return result;
+  }
+
+  private List<Wc1MissionShipData> extractShipMissionData(byte[] buffer) {
+    //    145948: start of this buffer
+    //    151324: ship stuff (139776 ?)
+    //    231963: end of this buffer
+    int startOffset = 5376;
+    int blockSize = 42;
+    int endOffset = startOffset + 32 * 52 * blockSize; //52 missions with 32 ships each
+    List<Wc1MissionShipData> navData = new ArrayList<>(52);
+    for (int offset = startOffset; offset < endOffset; offset += blockSize) {
+      Wc1MissionShipData shipData = extractShipNavData(buffer, offset);
+      navData.add(shipData);
+    }
+    return navData;
+  }
+
+  private Wc1MissionShipData extractShipNavData(byte[] buffer, int offset) {
+    Wc1MissionShipData result = new Wc1MissionShipData();
+
+    result.setType(buffer[offset]);
+    result.setIff(buffer[offset + 2]);
+    result.setOrders(buffer[offset + 6]);
+    result.setxCoord(readerHelper.getInteger(buffer, offset + 10, 3));
+    result.setyCoord(readerHelper.getInteger(buffer, offset + 14, 3));
+    result.setzCoord(readerHelper.getInteger(buffer, offset + 18, 3));
+    result.setSpeed(buffer[offset + 28]);
+    result.setSize(buffer[offset + 29]);
+    result.setAiPilot(buffer[offset + 32]);
+    result.setSecondaryTarget(buffer[offset + 39]);
+    result.setFormation(buffer[offset + 40]);
+    result.setPrimaryTarget(buffer[offset + 41]);
 
     return result;
   }

@@ -21,6 +21,7 @@ public class Wc1MissionSlot {
 
   private List<Wc1NavPoint> navPoints;
   private List<Wc1NavPointInfo> navPointInfos;
+  private List<Wc1MissionShipData> shipData;
 
   public Wc1Cutscene getCutscene(int index) {
     Wc1Cutscene result;
@@ -154,5 +155,13 @@ public class Wc1MissionSlot {
 
   public void setNavPointInfos(List<Wc1NavPointInfo> navPointInfos) {
     this.navPointInfos = navPointInfos;
+  }
+
+  public List<Wc1MissionShipData> getShipData() {
+    return shipData;
+  }
+
+  public void setShipData(List<Wc1MissionShipData> shipData) {
+    this.shipData = shipData;
   }
 }

@@ -37,10 +37,15 @@ public class Wc1ShipRepo {
     ships.add(new Wc1Ship((byte) 23, "Mines"));
   }
 
-  public Wc1Ship getShip(byte value) {
+  public Wc1Ship getShip(short value) {
     if (value >= ships.size()) {
       throw new RuntimeException("Unknown ship: " + value);
     }
+
+    if (value == -1) {
+      return Wc1Ship.EMPTY;
+    }
+
     return ships.get(value);
   }
 

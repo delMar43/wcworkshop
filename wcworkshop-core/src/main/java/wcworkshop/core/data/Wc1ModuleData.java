@@ -8,6 +8,7 @@ public class Wc1ModuleData {
 
   private List<Wc1NavPoint> navPoints;
   private List<Wc1NavPointInfo> navPointInfo;
+  private List<Wc1MissionShipData> missionShipData;
   private List<String> systemNames;
   private List<String> wingNames;
 
@@ -25,6 +26,14 @@ public class Wc1ModuleData {
 
   public void setSystemNames(List<String> systemNames) {
     this.systemNames = systemNames;
+  }
+
+  public List<Wc1MissionShipData> getMissionShipData() {
+    return missionShipData;
+  }
+
+  public void setMissionShipData(List<Wc1MissionShipData> missionShipData) {
+    this.missionShipData = missionShipData;
   }
 
   public List<String> getWingNames() {
