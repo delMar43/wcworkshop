@@ -103,14 +103,15 @@ public class Wc1ModuleReader {
     navPoint.setType(curBuffer[30]);
 
     byte[] xBytes = Arrays.copyOfRange(curBuffer, 32, 36);
+    navPoint.setUnknown1(curBuffer[35]);
     xBytes[3] = 0;
     navPoint.setxPos(readerHelper.getInteger(xBytes));
-    navPoint.setUnknown1(curBuffer[35]);
     byte[] yBytes = Arrays.copyOfRange(curBuffer, 36, 40);
+    navPoint.setUnknown2(curBuffer[39]);
     yBytes[3] = 0;
     navPoint.setyPos(readerHelper.getInteger(yBytes));
-    navPoint.setUnknown2(curBuffer[39]);
     byte[] zBytes = Arrays.copyOfRange(curBuffer, 40, 44);
+    navPoint.setUnknown3(curBuffer[43]);
     zBytes[3] = 0;
     navPoint.setzPos(readerHelper.getInteger(zBytes));
 
