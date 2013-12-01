@@ -53,11 +53,17 @@ public class WcaVxxReader {
 
     for (int offsetIndex = 0; offsetIndex < secondaryTable.size(); ++offsetIndex) {
       int offset = secondaryTable.get(offsetIndex);
+      if (offset >= filesize) {
+        return;
+      }
       int end;
       if ((offsetIndex + 1) == secondaryTable.size()) {
         end = blockData.length;
       } else {
         end = secondaryTable.get(offsetIndex + 1);
+      }
+      if (end >= filesize) {
+        end = filesize;
       }
       byte[] input = Arrays.copyOfRange(blockData, offset, end);
       System.out.println("  " + readerHelper.byteArrayToHexString(input));
