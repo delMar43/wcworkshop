@@ -1,5 +1,4 @@
-package wcworkshop.core.data;
-
+package test;
 
 public class Wc1Savegame {
   public static final Wc1Savegame EMPTY = new Wc1Savegame();
@@ -11,6 +10,17 @@ public class Wc1Savegame {
   private byte occupied;
   private Wc1SavegameScoreboardEntry[] scoreboardEntries;
   private short[] pilotStatus;
+  private byte bronzeStars;
+  private byte silverStars;
+  private byte goldStars;
+  private byte goldenSun;
+  private byte ace1;
+  private byte ace2;
+  private byte ace3;
+  private byte ace4;
+  private byte day;
+  private byte promotion;
+  private byte victory;
 
   public String getName() {
     return name;

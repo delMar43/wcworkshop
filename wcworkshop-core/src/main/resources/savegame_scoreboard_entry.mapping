@@ -1,0 +1,7 @@
+class=wcworkshop.core.data.Wc1SavegameScoreboardEntry
+size=38
+property=name,type=string,offset=0,length=13
+property=callsign,type=string,offset=14,length=13
+property=rank,type=short,offset=16
+property=sorties,type=short,offset=18
+property=kills,type=short,offset=20
