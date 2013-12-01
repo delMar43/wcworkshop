@@ -1,6 +1,5 @@
 package test;
 
-
 public class Wc1SavegameScoreboardEntry {
 
   private String name;
@@ -8,6 +7,8 @@ public class Wc1SavegameScoreboardEntry {
   private short rank;
   private short sorties;
   private short kills;
+  private short unknown1;
+  private short unknown2;
 
   public String getName() {
     return name;
@@ -49,4 +50,19 @@ public class Wc1SavegameScoreboardEntry {
     this.kills = kills;
   }
 
+  public short getUnknown1() {
+    return unknown1;
+  }
+
+  public void setUnknown1(short unknown1) {
+    this.unknown1 = unknown1;
+  }
+
+  public short getUnknown2() {
+    return unknown2;
+  }
+
+  public void setUnknown2(short unknown2) {
+    this.unknown2 = unknown2;
+  }
 }

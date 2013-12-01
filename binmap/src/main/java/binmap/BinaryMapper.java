@@ -25,12 +25,21 @@ public class BinaryMapper {
       Class<?> type = field.getType();
       String typeName = type.getName();
 
-      if ("java.lang.String".equals(typeName)) {
+      if (property instanceof SubMappingProperty) {
+        SubMappingProperty smp = (SubMappingProperty) property;
+        byte[] subData = Arrays.copyOfRange(data, smp.getOffset(), smp.getOffset() + smp.getSubMapping().getSize());
+        Class<?> clazz = getClass(smp.getSubMapping().getClassName());
+        Object sub = toJava(subData, smp.getSubMapping(), clazz);
+        //        setValue(sink, field, sub);
+        System.out.println();
+
+      } else if (property instanceof ArrayMappingProperty) {
+        ArrayMappingProperty amp = (ArrayMappingProperty) property;
+        System.out.println("array: " + typeName);
+
+      } else if ("java.lang.String".equals(typeName)) {
         StringMappingProperty smp = (StringMappingProperty) property;
-        String value = new String(Arrays.copyOfRange(data, smp.getOffset(), smp.getLength()));
-        if (value.contains("\0")) {
-          value = value.substring(0, value.indexOf("\0"));
-        }
+        String value = getString(data, smp.getOffset(), smp.getLength());
         setValue(sink, field, value);
 
       } else if ("byte".equals(typeName)) {
@@ -46,6 +55,14 @@ public class BinaryMapper {
         System.out.println("type: " + type);
       }
     }
+  }
+
+  private String getString(byte[] block, int offset, int length) {
+    String result = new String(block, offset, length);
+    if (result.contains("\0")) {
+      result = result.substring(0, result.indexOf("\0"));
+    }
+    return result;
   }
 
   private void setValue(Object sink, Field field, Object value) {
@@ -84,5 +101,13 @@ public class BinaryMapper {
     }
 
     return result;
+  }
+
+  private Class<?> getClass(String className) {
+    try {
+      return Class.forName(className);
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException("Unable to get class for name '" + className + "'");
+    }
   }
 }

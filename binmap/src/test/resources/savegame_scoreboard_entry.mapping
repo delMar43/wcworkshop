@@ -1,7 +1,9 @@
 class=test.Wc1SavegameScoreboardEntry
 size=38
-property=name,type=string,offset=0,length=13
-property=callsign,type=string,offset=14,length=13
-property=rank,type=short,offset=16
-property=sorties,type=short,offset=18
-property=kills,type=short,offset=20
+property=name,offset=0,length=13
+property=callsign,offset=14,length=13
+property=unknown1,offset=28
+property=rank,offset=30
+property=sorties,offset=32
+property=kills,offset=34
+property=unknown2,offset=36
