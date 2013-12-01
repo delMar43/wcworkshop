@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import wcworkshop.core.data.Wc1Savegame;
-import wcworkshop.core.reader.Wc1SavegameReader;
+import wcworkshop.reader.Wc1SavegameReader;
 import wcworkshop.web.command.SavegameCommand;
 
 @Controller
