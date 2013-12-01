@@ -1,8 +1,10 @@
-package wcworkshop.core.reader;
+package wcworkshop.reader;
 
 import java.util.Arrays;
 
 import wcworkshop.core.data.Wc1Savegame;
+import wcworkshop.core.reader.ReaderHelper;
+import wcworkshop.core.reader.Wc1SavegameOffsets;
 
 public class Wc1SavegameReader {
   private static final Wc1SavegameReader instance = new Wc1SavegameReader();
