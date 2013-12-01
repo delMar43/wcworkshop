@@ -4,7 +4,7 @@ public class Wc1Savegame {
   public static final Wc1Savegame EMPTY = new Wc1Savegame();
 
   private String name;
-  private byte campaign;
+  private short campaign;
   private byte series;
   private byte mission;
   private byte occupied;
@@ -20,7 +20,7 @@ public class Wc1Savegame {
   private byte ace4;
   private byte day;
   private byte promotion;
-  private byte victory;
+  private short victory;
 
   public String getName() {
     return name;
@@ -30,11 +30,11 @@ public class Wc1Savegame {
     this.name = name;
   }
 
-  public byte getCampaign() {
+  public short getCampaign() {
     return campaign;
   }
 
-  public void setCampaign(byte campaign) {
+  public void setCampaign(short campaign) {
     this.campaign = campaign;
   }
 

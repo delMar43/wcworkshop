@@ -1,6 +1,8 @@
 package binmap;
 
 import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -21,17 +23,25 @@ public class BinaryMapper {
     for (MappingProperty property : mapping.getMappingProperties()) {
       Field field = getField(targetClass, property.getProperty());
       Class<?> type = field.getType();
-      if ("java.lang.String".equals(type.getName())) {
+      String typeName = type.getName();
+
+      if ("java.lang.String".equals(typeName)) {
         StringMappingProperty smp = (StringMappingProperty) property;
         String value = new String(Arrays.copyOfRange(data, smp.getOffset(), smp.getLength()));
         if (value.contains("\0")) {
           value = value.substring(0, value.indexOf("\0"));
         }
         setValue(sink, field, value);
-        System.out.println("string is " + value);
-      } else if ("byte".equals(type.getName())) {
+
+      } else if ("byte".equals(typeName)) {
         byte value = data[property.getOffset()];
         setValue(sink, field, value);
+
+      } else if ("short".equals(typeName)) {
+        byte[] bytes = Arrays.copyOfRange(data, property.getOffset(), property.getOffset() + 2);
+        short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
+        setValue(sink, field, value);
+
       } else {
         System.out.println("type: " + type);
       }
