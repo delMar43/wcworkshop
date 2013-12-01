@@ -7,28 +7,22 @@ public class Mapping {
   private int size;
   private List<MappingProperty> mappingProperties;
 
-  public String getClassName() {
-    return className;
+  public Mapping(String className, int size, List<MappingProperty> mappingProperties) {
+    this.className = className;
+    this.size = size;
+    this.mappingProperties = mappingProperties;
   }
 
-  public void setClassName(String className) {
-    this.className = className;
+  public String getClassName() {
+    return className;
   }
 
   public int getSize() {
     return size;
   }
 
-  public void setSize(int size) {
-    this.size = size;
-  }
-
   public List<MappingProperty> getMappingProperties() {
     return mappingProperties;
-  }
-
-  public void setMappingProperties(List<MappingProperty> mappingProperties) {
-    this.mappingProperties = mappingProperties;
   }
 
 }

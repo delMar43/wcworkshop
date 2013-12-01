@@ -16,9 +16,7 @@ public class MappingFactory {
 
   private static final Logger logger = LoggerFactory.getLogger(MappingFactory.class);
 
-  private List<Mapping> mappings = new ArrayList<>();
-
-  public Mapping readMapping(String filename) {
+  public Mapping createMapper(String filename) {
     List<String> lines = readLines(filename);
 
     Mapping mapping = buildMapping(lines);
@@ -36,12 +34,11 @@ public class MappingFactory {
   }
 
   private Mapping buildMapping(List<String> lines) {
-    Mapping mapping = new Mapping();
-    List<MappingProperty> properties = new ArrayList<>();
-    mapping.setMappingProperties(properties);
-
     Class<?> clazz = null;
 
+    String className = null;
+    int size = -1;
+    List<MappingProperty> properties = new ArrayList<>();
     for (String line : lines) {
       if (line.startsWith("#") || !line.contains("=")) {
         continue;
@@ -52,13 +49,11 @@ public class MappingFactory {
       String[] keyValuePair = type.split("=");
       switch (keyValuePair[0]) {
         case "class":
-          String className = keyValuePair[1];
-          mapping.setClassName(className);
+          className = keyValuePair[1];
           clazz = createClass(className);
           break;
         case "size":
-          int size = Integer.parseInt(keyValuePair[1]);
-          mapping.setSize(size);
+          size = Integer.parseInt(keyValuePair[1]);
           break;
         case "property":
           MappingProperty property = buildMappingProperty(clazz, line);
@@ -69,6 +64,7 @@ public class MappingFactory {
           break;
       }
     }
+    Mapping mapping = new Mapping(className, size, properties);
 
     return mapping;
   }
@@ -121,14 +117,11 @@ public class MappingFactory {
 
     } else if (mapping != null) {
 
-      Mapping subMapping = readMapping(mapping + ".mapping");
+      Mapping subMapping = createMapper(mapping + ".mapping");
       int times = Integer.parseInt(tokenMap.get("times"));
       result = new SubMappingProperty(property, offset, subMapping, times);
     } else {
-
-      System.out.println("hihi " + property);
-      result = new MappingProperty(property, offset);
-
+      throw new RuntimeException("Unable to parse line: " + line);
     }
     return result;
   }
