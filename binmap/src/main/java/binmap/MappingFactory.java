@@ -120,7 +120,10 @@ public class MappingFactory {
       result = new MappingProperty(property, offset);
 
     } else if (mapping != null) {
-      System.out.println("submapping " + property);
+
+      Mapping subMapping = readMapping(mapping + ".mapping");
+      int times = Integer.parseInt(tokenMap.get("times"));
+      result = new SubMappingProperty(property, offset, subMapping, times);
     } else {
 
       System.out.println("hihi " + property);
