@@ -3,6 +3,8 @@ package binmap;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
@@ -23,8 +25,13 @@ public class BinaryMapperTest {
     byte[] data = readFile(this.getClass().getClassLoader().getResourceAsStream("SAVEGAME.WLD"));
 
     BinaryMapper bm = new BinaryMapper();
-    Wc1Savegame savegame = bm.toJava(data, mapping, Wc1Savegame.class);
-    System.out.println("done " + savegame);
+    List<Wc1Savegame> savegames = new ArrayList<>();
+    for (int idx = 0; idx < 8; ++idx) {
+      int offset = idx * mapping.getSize();
+      Wc1Savegame savegame = bm.toJava(data, mapping, offset, Wc1Savegame.class);
+      savegames.add(savegame);
+    }
+    System.out.println("done " + savegames);
   }
 
   public byte[] readFile(InputStream inputStream) throws FileNotFoundException, IOException {
