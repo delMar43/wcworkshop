@@ -9,15 +9,16 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BinaryMapper {
-  private static final Logger logger = LoggerFactory.getLogger(BinaryMapper.class);
+public class BinaryReader {
+  private static final Logger logger = LoggerFactory.getLogger(BinaryReader.class);
+  private BinaryUtils binaryUtils = BinaryUtils.getInstance();
 
   public <T> T toJava(byte[] data, Mapping mapping, Class<T> targetClass) {
     return toJava(data, mapping, 0, targetClass);
   }
 
   public <T> T toJava(byte[] data, Mapping mapping, int offset, Class<T> targetClass) {
-    T t = instantiate(targetClass);
+    T t = binaryUtils.instantiate(targetClass);
 
     fillWithData(t, data, mapping, offset, targetClass);
 
@@ -33,7 +34,7 @@ public class BinaryMapper {
         fieldName = property.getProperty();
       }
 
-      Field field = getField(targetClass, fieldName);
+      Field field = binaryUtils.getField(targetClass, fieldName);
       String typeName;
       Class<?> type = field.getType();
       if (type.isArray()) {
@@ -53,10 +54,10 @@ public class BinaryMapper {
             Object subMappingObject = createSubMappingObject(data, smp, fixedOffset, globalOffset);
             Array.set(array, idx, subMappingObject);
           }
-          setValue(sink, field, array);
+          binaryUtils.setValue(sink, field, array);
         } else {
           Object object = createSubMappingObject(data, smp, 0, globalOffset);
-          setValue(sink, field, object);
+          binaryUtils.setValue(sink, field, object);
         }
 
       } else if ("java.lang.String".equals(typeName)) {
@@ -69,10 +70,10 @@ public class BinaryMapper {
             int to = from + smp.getLength();
             Array.set(array, idx, getString(data, from, to));
           }
-          setValue(sink, field, array);
+          binaryUtils.setValue(sink, field, array);
         } else {
           String value = getString(data, globalOffset + smp.getOffset(), smp.getLength());
-          setValue(sink, field, value);
+          binaryUtils.setValue(sink, field, value);
         }
 
       } else if ("byte".equals(typeName)) {
@@ -83,10 +84,10 @@ public class BinaryMapper {
             int pos = globalOffset + property.getOffset() * idx;
             Array.set(array, idx, data[pos]);
           }
-          setValue(sink, field, array);
+          binaryUtils.setValue(sink, field, array);
         } else {
           byte value = data[globalOffset + property.getOffset()];
-          setValue(sink, field, value);
+          binaryUtils.setValue(sink, field, value);
         }
 
       } else if ("short".equals(typeName)) {
@@ -99,13 +100,13 @@ public class BinaryMapper {
             short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
             Array.set(array, idx, value);
           }
-          setValue(sink, field, array);
+          binaryUtils.setValue(sink, field, array);
         } else {
           int from = globalOffset + property.getOffset();
           int to = from + 2;
           byte[] bytes = Arrays.copyOfRange(data, from, to);
           short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
-          setValue(sink, field, value);
+          binaryUtils.setValue(sink, field, value);
         }
 
       } else {
@@ -118,7 +119,7 @@ public class BinaryMapper {
     int from = globalOffset + fixedOffset + smp.getOffset();
     int to = from + smp.getSubMapping().getSize();
     byte[] subData = Arrays.copyOfRange(data, from, to);
-    Class<?> clazz = getClass(smp.getSubMapping().getClassName());
+    Class<?> clazz = binaryUtils.getClass(smp.getSubMapping().getClassName());
     Object sub = toJava(subData, smp.getSubMapping(), clazz);
     return sub;
   }
@@ -131,49 +132,4 @@ public class BinaryMapper {
     return result;
   }
 
-  private void setValue(Object sink, Field field, Object value) {
-    try {
-      boolean accessible = field.isAccessible();
-      if (!accessible) {
-        field.setAccessible(true);
-      }
-      field.set(sink, value);
-      if (!accessible) {
-        field.setAccessible(false);
-      }
-    } catch (IllegalArgumentException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
-  }
-
-  private Field getField(Class<?> clazz, String fieldName) {
-    try {
-      return clazz.getDeclaredField(fieldName);
-    } catch (NoSuchFieldException e) {
-      throw new RuntimeException("Field '" + fieldName + "' not found in class " + clazz.getName());
-    } catch (SecurityException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
-  }
-
-  private <T> T instantiate(Class<T> clazz) {
-    T result;
-    try {
-      result = clazz.newInstance();
-    } catch (InstantiationException | IllegalAccessException e) {
-      throw new RuntimeException("Unable to instanciate " + clazz.getName() + " because of " + e.getMessage());
-    }
-
-    return result;
-  }
-
-  private Class<?> getClass(String className) {
-    try {
-      return Class.forName(className);
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException("Unable to get class for name '" + className + "'");
-    }
-  }
 }
