@@ -96,29 +96,34 @@ public class MappingFactory {
     String mapping = tokenMap.get("mapping");
     String fieldName = property.replace("[]", "");
     int offset = Integer.parseInt(tokenMap.get("offset"));
+    int times;
+    if (tokenMap.containsKey("times")) {
+      times = Integer.parseInt(tokenMap.get("times"));
+    } else {
+      times = 1;
+    }
 
     Field field = getField(clazz, fieldName);
     Class<?> fieldType = field.getType();
-    String fieldTypeName = fieldType.getName();
+    String fieldTypeName;
+    if (fieldType.isArray()) {
+      fieldTypeName = fieldType.getComponentType().getName();
+    } else {
+      fieldTypeName = fieldType.getName();
+    }
 
-    if (property.endsWith("[]")) {
-
-      int times = Integer.parseInt(tokenMap.get("times"));
-      result = new ArrayMappingProperty(fieldName, offset, times);
-
-    } else if (fieldType.isAssignableFrom(String.class)) {
+    if (fieldType.isAssignableFrom(String.class)) {
 
       int length = Integer.parseInt(tokenMap.get("length"));
-      result = new StringMappingProperty(property, offset, length);
+      result = new StringMappingProperty(property, offset, length, times);
 
     } else if ("byte".equals(fieldTypeName) || "short".equals(fieldTypeName) || "int".equals(fieldTypeName)) {
 
-      result = new MappingProperty(property, offset);
+      result = new MappingProperty(property, offset, times);
 
     } else if (mapping != null) {
 
       Mapping subMapping = createMapper(mapping + ".mapping");
-      int times = Integer.parseInt(tokenMap.get("times"));
       result = new SubMappingProperty(property, offset, subMapping, times);
     } else {
       throw new RuntimeException("Unable to parse line: " + line);

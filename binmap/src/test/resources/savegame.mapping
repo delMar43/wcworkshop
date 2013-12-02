@@ -2,7 +2,7 @@ class=test.Wc1Savegame
 size=828
 property=name,offset=0,length=14
 property=occupied,offset=17
-property=scoreboardEntries,mapping=savegame_scoreboard_entry,offset=18,times=8
+property=scoreboardEntries[],mapping=savegame_scoreboard_entry,offset=18,times=8
 property=bronzeStars,offset=364
 property=silverStars,offset=365
 property=goldStars,offset=366

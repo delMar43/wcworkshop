@@ -1,5 +1,6 @@
 package binmap;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -21,40 +22,95 @@ public class BinaryMapper {
 
   private void fillWithData(Object sink, byte[] data, Mapping mapping, Class<?> targetClass) {
     for (MappingProperty property : mapping.getMappingProperties()) {
-      Field field = getField(targetClass, property.getProperty());
+      String fieldName;
+      if (property.getProperty().endsWith("[]")) {
+        fieldName = property.getProperty().replace("[]", "");
+      } else {
+        fieldName = property.getProperty();
+      }
+
+      Field field = getField(targetClass, fieldName);
+      String typeName;
       Class<?> type = field.getType();
-      String typeName = type.getName();
+      if (type.isArray()) {
+        typeName = type.getComponentType().getName();
+      } else {
+        typeName = type.getName();
+      }
 
+      int times = property.getTimes();
       if (property instanceof SubMappingProperty) {
-        SubMappingProperty smp = (SubMappingProperty) property;
-        byte[] subData = Arrays.copyOfRange(data, smp.getOffset(), smp.getOffset() + smp.getSubMapping().getSize());
-        Class<?> clazz = getClass(smp.getSubMapping().getClassName());
-        Object sub = toJava(subData, smp.getSubMapping(), clazz);
-        //        setValue(sink, field, sub);
-        System.out.println();
 
-      } else if (property instanceof ArrayMappingProperty) {
-        ArrayMappingProperty amp = (ArrayMappingProperty) property;
-        System.out.println("array: " + typeName);
+        if (times > 1) {
+          Object[] array = (Object[]) Array.newInstance(type.getComponentType(), times);
+          for (int idx = 0; idx < times; ++idx) {
+            Object subMappingObject = createSubMappingObject(data, property);
+            Array.set(array, idx, subMappingObject);
+            // array[idx] = subMappingObject;
+          }
+          setValue(sink, field, array);
+        } else {
+          Object object = createSubMappingObject(data, property);
+          setValue(sink, field, object);
+        }
 
       } else if ("java.lang.String".equals(typeName)) {
         StringMappingProperty smp = (StringMappingProperty) property;
-        String value = getString(data, smp.getOffset(), smp.getLength());
-        setValue(sink, field, value);
+
+        if (times > 1) {
+          String[] array = (String[]) Array.newInstance(type.getComponentType(), times);
+          for (int idx = 0; idx < times; ++idx) {
+            Array.set(array, idx, getString(data, smp.getOffset(), smp.getLength()));
+            // array[idx] = getString(data, smp.getOffset(), smp.getLength());
+          }
+          setValue(sink, field, array);
+        } else {
+          String value = getString(data, smp.getOffset(), smp.getLength());
+          setValue(sink, field, value);
+        }
 
       } else if ("byte".equals(typeName)) {
-        byte value = data[property.getOffset()];
-        setValue(sink, field, value);
+
+        if (times > 1) {
+          byte[] array = (byte[]) Array.newInstance(type.getComponentType(), times);
+          for (int idx = 0; idx < times; ++idx) {
+            Array.set(array, idx, data[property.getOffset()]);
+            // array[idx] = data[property.getOffset()];
+          }
+          setValue(sink, field, array);
+        } else {
+          byte value = data[property.getOffset()];
+          setValue(sink, field, value);
+        }
 
       } else if ("short".equals(typeName)) {
-        byte[] bytes = Arrays.copyOfRange(data, property.getOffset(), property.getOffset() + 2);
-        short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
-        setValue(sink, field, value);
+        if (times > 1) {
+          short[] array = (short[]) Array.newInstance(type.getComponentType(), times);
+          for (int idx = 0; idx < times; ++idx) {
+            byte[] bytes = Arrays.copyOfRange(data, property.getOffset(), property.getOffset() + 2);
+            short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
+            Array.set(array, idx, value);
+            array[idx] = value;
+          }
+          setValue(sink, field, array);
+        } else {
+          byte[] bytes = Arrays.copyOfRange(data, property.getOffset(), property.getOffset() + 2);
+          short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
+          setValue(sink, field, value);
+        }
 
       } else {
         System.out.println("type: " + type);
       }
     }
+  }
+
+  private Object createSubMappingObject(byte[] data, MappingProperty property) {
+    SubMappingProperty smp = (SubMappingProperty) property;
+    byte[] subData = Arrays.copyOfRange(data, smp.getOffset(), smp.getOffset() + smp.getSubMapping().getSize());
+    Class<?> clazz = getClass(smp.getSubMapping().getClassName());
+    Object sub = toJava(subData, smp.getSubMapping(), clazz);
+    return sub;
   }
 
   private String getString(byte[] block, int offset, int length) {
