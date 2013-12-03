@@ -8,7 +8,6 @@ public class BinaryWriter {
   public byte[] toBinary(Object source, Mapping mapping) {
     byte[] result = new byte[mapping.getSize()];
 
-    int curTargetOffset = 0;
     for (MappingProperty property : mapping.getMappingProperties()) {
       String fieldName = property.getProperty();
       if (fieldName.endsWith("[]")) {
@@ -26,15 +25,15 @@ public class BinaryWriter {
       }
       Object value = binaryUtils.getValue(source, field);
       int times = property.getTimes();
+      int offset = property.getOffset();
 
       if (property instanceof StringMappingProperty) {
 
         StringMappingProperty smp = (StringMappingProperty) property;
         int propLength = smp.getLength();
         byte[] bytes = binaryUtils.createNullTerminatedFromString((String) value, propLength);
-        System.out.println("[" + curTargetOffset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
-        binaryUtils.copyIntoArray(bytes, result, curTargetOffset);
-        curTargetOffset += propLength;
+        System.out.println("[" + offset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
+        binaryUtils.copyIntoArray(bytes, result, offset);
 
       } else if (property instanceof SubMappingProperty) {
         SubMappingProperty smp = (SubMappingProperty) property;
@@ -48,18 +47,17 @@ public class BinaryWriter {
           for (int time = 0; time < times; ++time) {
             Object sub = array[time];
             byte[] bytes = toBinary(sub, smp.getSubMapping());
-            binaryUtils.copyIntoArray(bytes, result, curTargetOffset);
-            System.out.println("[" + curTargetOffset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
-            curTargetOffset += smp.getSubMapping().getSize();
+            binaryUtils.copyIntoArray(bytes, result, offset);
+            System.out.println("[" + offset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
+            offset += smp.getSubMapping().getSize();
           }
 
         } else {
 
           Object sub = binaryUtils.getValue(source, subField);
           byte[] bytes = toBinary(sub, smp.getSubMapping());
-          binaryUtils.copyIntoArray(bytes, result, curTargetOffset);
-          System.out.println("[" + curTargetOffset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
-          curTargetOffset += smp.getSubMapping().getSize();
+          binaryUtils.copyIntoArray(bytes, result, offset);
+          System.out.println("[" + offset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
 
         }
 
@@ -69,12 +67,13 @@ public class BinaryWriter {
           if (times > 1) {
             byte[] array = (byte[]) value;
             for (int time = 0; time < property.getTimes(); ++time) {
-              result[curTargetOffset++] = array[time];
-              System.out.println("[" + curTargetOffset + "] " + property.getProperty() + ": " + Integer.toHexString((Byte) value));
+              result[offset] = array[time];
+              System.out.println("[" + offset + "] " + property.getProperty() + ": " + Integer.toHexString((Byte) value));
+              ++offset;
             }
           } else {
-            result[curTargetOffset++] = ((Byte) value);
-            System.out.println("[" + curTargetOffset + "] " + property.getProperty() + ": " + Integer.toHexString((Byte) value));
+            result[offset] = ((Byte) value);
+            System.out.println("[" + offset + "] " + property.getProperty() + ": " + Integer.toHexString((Byte) value));
           }
 
         } else if (fieldTypeName.equals("short")) {
@@ -83,15 +82,14 @@ public class BinaryWriter {
             short[] array = (short[]) value;
             for (int time = 0; time < times; ++time) {
               byte[] bytes = binaryUtils.createShortBytes(array[time]);
-              System.out.println("[" + curTargetOffset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
-              binaryUtils.copyIntoArray(bytes, result, curTargetOffset);
-              curTargetOffset += 2;
+              System.out.println("[" + offset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
+              binaryUtils.copyIntoArray(bytes, result, offset);
+              offset += 2;
             }
           } else {
             byte[] bytes = binaryUtils.createShortBytes((Short) value);
-            System.out.println("[" + curTargetOffset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
-            binaryUtils.copyIntoArray(bytes, result, curTargetOffset);
-            curTargetOffset += 2;
+            System.out.println("[" + offset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
+            binaryUtils.copyIntoArray(bytes, result, offset);
           }
 
         } else if (fieldTypeName.equals("integer")) {
@@ -100,15 +98,14 @@ public class BinaryWriter {
             int[] array = (int[]) value;
             for (int time = 0; time < times; ++time) {
               byte[] bytes = binaryUtils.createIntegerBytes(array[time]);
-              System.out.println("[" + curTargetOffset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
-              binaryUtils.copyIntoArray(bytes, result, curTargetOffset);
-              curTargetOffset += 4;
+              System.out.println("[" + offset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
+              binaryUtils.copyIntoArray(bytes, result, offset);
+              offset += 4;
             }
           } else {
             byte[] bytes = binaryUtils.createIntegerBytes((Integer) value);
-            System.out.println("[" + curTargetOffset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
-            binaryUtils.copyIntoArray(bytes, result, curTargetOffset);
-            curTargetOffset += 4;
+            System.out.println("[" + offset + "] " + property.getProperty() + ": " + binaryUtils.byteArrayToHexString(bytes));
+            binaryUtils.copyIntoArray(bytes, result, offset);
           }
 
         } else {

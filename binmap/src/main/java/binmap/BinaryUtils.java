@@ -75,7 +75,13 @@ public class BinaryUtils {
   public byte[] createNullTerminatedFromString(String value, int resultLength) {
     byte[] result = new byte[resultLength];
     byte[] bytes = value.getBytes();
-    for (int idx = 0; idx < bytes.length; ++idx) {
+    int to;
+    if (bytes.length < resultLength) {
+      to = bytes.length;
+    } else {
+      to = resultLength;
+    }
+    for (int idx = 0; idx < to; ++idx) {
       result[idx] = bytes[idx];
     }
     if (bytes.length < resultLength) {
@@ -117,7 +123,7 @@ public class BinaryUtils {
     }
     StringBuilder result = new StringBuilder();
     for (byte b : input) {
-      result.append("0x" + Integer.toHexString(b) + " ");
+      result.append("0x" + Integer.toHexString(b).toUpperCase() + " ");
     }
     return result.toString();
   }
