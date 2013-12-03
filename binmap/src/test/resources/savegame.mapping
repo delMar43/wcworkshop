@@ -1,6 +1,6 @@
 class=test.Wc1Savegame
 size=828
-property=name,offset=0,length=14
+property=name,offset=0,length=16
 property=occupied,offset=17
 property=scoreboardEntries[],mapping=savegame_scoreboard_entry,offset=18,times=8
 property=bronzeStars,offset=364
