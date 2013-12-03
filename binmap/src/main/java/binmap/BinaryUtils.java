@@ -1,6 +1,8 @@
 package binmap;
 
 import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class BinaryUtils {
   private static final BinaryUtils instance = new BinaryUtils();
@@ -68,6 +70,45 @@ public class BinaryUtils {
     } catch (ClassNotFoundException e) {
       throw new RuntimeException("Unable to get class for name '" + className + "'");
     }
+  }
+
+  public byte[] createNullTerminatedFromString(String value, int resultLength) {
+    byte[] result = new byte[resultLength];
+    byte[] bytes = value.getBytes();
+    for (int idx = 0; idx < bytes.length; ++idx) {
+      result[idx] = bytes[idx];
+    }
+    if (bytes.length < resultLength) {
+      for (int idx = bytes.length; idx < resultLength; ++idx) {
+        result[idx] = 0;
+      }
+    }
+
+    return result;
+  }
+
+  public void copyIntoArray(byte[] source, byte[] sink, int targetOffset) {
+    for (int idx = 0; idx < source.length; ++idx) {
+      sink[idx + targetOffset] = source[idx];
+    }
+  }
+
+  public byte[] createIntegerBytes(int value) {
+    ByteBuffer record = createLittleEndianByteBuffer();
+    record.putInt(value);
+    return record.array();
+  }
+
+  public byte[] createShortBytes(short value) {
+    ByteBuffer record = createLittleEndianByteBuffer();
+    record.putShort(value);
+    return record.array();
+  }
+
+  private ByteBuffer createLittleEndianByteBuffer() {
+    ByteBuffer record = ByteBuffer.allocate(2);
+    record.order(ByteOrder.LITTLE_ENDIAN);
+    return record;
   }
 
   public static BinaryUtils getInstance() {

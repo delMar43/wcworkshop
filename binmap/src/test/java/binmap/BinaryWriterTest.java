@@ -22,7 +22,7 @@ public class BinaryWriterTest {
     BinaryWriter bw = new BinaryWriter();
     // for (int idx = 0; idx < 8; ++idx) {
     Wc1Savegame savegame = savegames.get(0);
-    Byte[] binary = bw.toBinary(savegame, mapping);
+    byte[] binary = bw.toBinary(savegame, mapping);
     // }
   }
 }
