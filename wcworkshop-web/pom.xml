@@ -19,6 +19,12 @@
       <groupId>wcworkshop</groupId>
       <artifactId>wcworkshop-core</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>binarymapper</groupId>
+      <artifactId>binarymapper</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
+    </dependency>
 
     <!-- dependency>
       <groupId>org.eclipse.jetty</groupId>

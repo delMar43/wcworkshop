@@ -15,6 +15,9 @@
   });
 </script>
 <div>
+Hi there
+</div>
+<div style="margin-top:50px" class="scrollablePane">
   <div>Special Thanks to David S. Raley for creating WCSAV, which was used to identify savegame file offsets.</div>
   <form:form action="savegame.html" method="POST" id="savegameForm">
     <c:forEach items="${command.savegames}" var="savegame" varStatus="savegameStatus">

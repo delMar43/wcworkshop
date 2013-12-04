@@ -58,14 +58,12 @@
           }
         });
         
-        <%--
         $.ajax({
           url: "<%=request.getContextPath()%>/savegameEditor.html",
           success: function(data, textStatus, jqXHR) {
             $("#tab-savegameEditor").html(data);
           }
         });
-        --%>
         
         // close icon: removing the tab on click
         editorTabs.delegate( "span.ui-icon-close", "click", function() {
@@ -146,10 +144,12 @@
       <div id="editorTabs" class="scrollableTab">
         <ul>
           <li class="editorTab" id="tab_welcome"><a href="#tab-welcome">Welcome</a></li>
+          <li class="editorTab" id="tab_savegameEditor"><a href="#tab-savegameEditor">Savegame Editor</a></li>
         </ul>
         <div id="tab-welcome" class="editorTabContent">
           <%@include file="welcome.jsp" %>
         </div>
+        <div id="tab-savegameEditor" class="editorTabContent"></div>
       </div>
     </div>
     <div class="ui-layout-west">

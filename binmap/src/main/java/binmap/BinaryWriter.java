@@ -3,7 +3,11 @@ package binmap;
 import java.lang.reflect.Field;
 
 public class BinaryWriter {
+  private static final BinaryWriter instance = new BinaryWriter();
   private BinaryUtils binaryUtils = BinaryUtils.getInstance();
+
+  private BinaryWriter() {
+  }
 
   public byte[] toBinary(Object source, Mapping mapping) {
     byte[] result = new byte[mapping.getSize()];
@@ -115,5 +119,9 @@ public class BinaryWriter {
 
     }
     return result;
+  }
+
+  public static BinaryWriter getInstance() {
+    return instance;
   }
 }

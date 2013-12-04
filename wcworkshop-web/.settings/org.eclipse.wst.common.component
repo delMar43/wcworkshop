@@ -8,6 +8,9 @@
         <dependent-module archiveName="wcworkshop-core-0.1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wcworkshop-core/wcworkshop-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="binarymapper-0.1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/binmap/binmap">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="wcworkshop-web"/>
         <property name="java-output-path" value="/wcworkshop-web/target/classes"/>
     </wb-module>

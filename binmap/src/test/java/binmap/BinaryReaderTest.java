@@ -12,7 +12,7 @@ import org.junit.Test;
 import test.Wc1Savegame;
 
 public class BinaryReaderTest {
-  private MappingFactory mappingFactory = new MappingFactory();
+  private MappingFactory mappingFactory = MappingFactory.getInstance();
 
   @Test
   public void test() throws FileNotFoundException, IOException {

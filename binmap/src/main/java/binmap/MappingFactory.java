@@ -13,14 +13,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MappingFactory {
-
+  private static final MappingFactory instance = new MappingFactory();
   private static final Logger logger = LoggerFactory.getLogger(MappingFactory.class);
 
-  public Mapping createMapper(String filename) {
-    List<String> lines = readLines(filename);
+  private MappingFactory() {
+  }
 
-    Mapping mapping = buildMapping(lines);
-    return mapping;
+  public Mapping createMapper(String filename) {
+    try {
+      List<String> lines = readLines(filename);
+
+      Mapping mapping = buildMapping(lines);
+      return mapping;
+    } catch (Exception e) {
+      logger.error(e.getMessage(), e);
+      throw new RuntimeException(e.getMessage(), e);
+    }
   }
 
   private List<String> readLines(String filename) {
@@ -137,9 +145,13 @@ public class MappingFactory {
       field = clazz.getDeclaredField(fieldName);
       return field;
     } catch (NoSuchFieldException e) {
-      throw new RuntimeException("Field " + fieldName + " not found!. Unable to create mapping!");
+      throw new RuntimeException("Field " + fieldName + " in class " + clazz.getName() + " not found!. Unable to create mapping!");
     } catch (SecurityException e) {
       throw new RuntimeException("Security exception: " + e.getMessage() + ". Unable to create mapping!");
     }
+  }
+
+  public static MappingFactory getInstance() {
+    return instance;
   }
 }

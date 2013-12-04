@@ -12,7 +12,7 @@ import test.Wc1Savegame;
 public class BinaryWriterTest {
 
   private BinaryReaderTest readerTest = new BinaryReaderTest();
-  private MappingFactory mappingFactory = new MappingFactory();
+  private MappingFactory mappingFactory = MappingFactory.getInstance();
   private BinaryUtils binaryUtils = BinaryUtils.getInstance();
 
   @Test

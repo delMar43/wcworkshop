@@ -10,8 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BinaryReader {
+  private static final BinaryReader instance = new BinaryReader();
   private static final Logger logger = LoggerFactory.getLogger(BinaryReader.class);
   private BinaryUtils binaryUtils = BinaryUtils.getInstance();
+
+  private BinaryReader() {
+  }
 
   public <T> T toJava(byte[] data, Mapping mapping, Class<T> targetClass) {
     return toJava(data, mapping, 0, targetClass);
@@ -132,4 +136,7 @@ public class BinaryReader {
     return result;
   }
 
+  public static BinaryReader getInstance() {
+    return instance;
+  }
 }

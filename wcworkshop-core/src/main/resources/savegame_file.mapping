@@ -1,0 +1,3 @@
+class=wcworkshop.core.data.Wc1SavegameFile
+size=6624
+property=savegames[],mapping=savegame,offset=0,times=8
