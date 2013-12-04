@@ -6,11 +6,7 @@
     <title>WC Workshop</title>
     <meta name="description" content="Wing Commander Campaign Editor" />
     <meta name="keywords" content="Wing Commander, Secret Missions, WC, SM, SM1, SM2, WC2, SO1, SO2, WCA, Academy, Armada, Kilrathi, Tiger's Claw, Victory, Concordia, Caernavon" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/styles/base/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/styles/default/style.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/styles/wcworkshop.css" />
-    <script src="<%=request.getContextPath() %>/scripts/jquery-2.0.3.min.js"></script>
-    <script src="<%=request.getContextPath() %>/scripts/jquery-ui-1.10.3.min.js"></script>
+    <%@ include file="scriptsAndStyles.jsp" %>
     <script src="<%=request.getContextPath() %>/scripts/jquery.layout-latest.min.js"></script>
     <script src="<%=request.getContextPath() %>/scripts/jquery.jstree.js"></script>
     <script>
@@ -76,12 +72,27 @@
 
       });
 
+      // actual addTab function: adds new tab using the input from the form above
+      var addStaticTab = function(key, label, content) {
+        if (!tabAlreadyOpen(key)) {
+          var li = $("<li id='tab_" + key + "' class='editorTab'><a href='#tab-" + key + "'>" + label + "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>");
+     
+          editorTabs.find( ".ui-tabs-nav" ).append( li );
+          editorTabs.append( "<div id='tab-" + key + "'>" + content + "</div>" );
+          editorTabs.tabs( "refresh" );
+          openTabs['tab_' + key] = true;
+        }
+        switchTab(key);
+      }
+      
       var addTab = function(key, label, href) {
-        var ul = editorTabs.find(".ui-tabs-nav");
-        $("<li id='tab_" + key + "' class='editorTab'><a href='" + href + "'>" + label+ "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
-        editorTabs.tabs("refresh");
-        openTabs['tab_' + key] = true;
-        
+        if (!tabAlreadyOpen(key)) {
+          var id = 'tab_' + key;
+          var ul = editorTabs.find(".ui-tabs-nav");
+          $("<li id='" + id + "' class='editorTab'><a href='" + href + "'>" + label+ "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
+          editorTabs.tabs("refresh");
+          openTabs[id] = true;
+        }
         switchTab(key);
       };
       
@@ -99,57 +110,48 @@
       var openSeriesEditor = function(campaign, seriesIndex) {
     	var key = "C" + campaign + "S" + (seriesIndex+1);
     	var label = campaign + " Series " + (seriesIndex +1);
-        if (tabAlreadyOpen(key)) {
-          switchTab(key);
-        } else {
-          addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex);
-        }
+        addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex);
       };
       
       var openMissionEditor = function(campaign, seriesIndex, missionIndex) {
     	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1);
     	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1);
-    	if (tabAlreadyOpen(key)) {
-    	  switchTab(key);
-    	} else {
-          addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
-    	}
+        addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex);
       };
       
       var openCutsceneEditor = function(campaign, seriesIndex, missionIndex, cutsceneIndex) {
     	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "C" + cutsceneIndex;
     	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " C" + cutsceneIndex;
-    	if (tabAlreadyOpen(key)) {
-    	  switchTab(key);
-    	} else {
-          addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
-    	}
+        addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
       };
       
       var openNavPointEditor = function(campaign, seriesIndex, missionIndex, navPointIndex) {
     	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "N" + navPointIndex;
     	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " Nav " + navPointIndex;
-    	if (tabAlreadyOpen(key)) {
-    	  switchTab(key);
-    	} else {
-          addTab(key, label, "<%=request.getContextPath()%>/navPointEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&navPointIndex=" + navPointIndex);
-    	}
+        addTab(key, label, "<%=request.getContextPath()%>/navPointEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&navPointIndex=" + navPointIndex);
+      };
+      
+      var openSavegameEditor = function() {
+        addStaticTab("savegameEditor", "Savegame Editor", "<iframe class='framed' src='<%=request.getContextPath()%>/savegameEditor.html'></iframe>");
       };
     </script>
   </head>
   
   <body>
-    <div class="ui-layout-north">WC Workshop</div>
+    <div class="ui-layout-north" style="position:relative">
+      <h1 class="heading">WC Workshop</h1>
+      <div class="centered">
+        <button style="font-family: Orbitron; font-weight: 700" onclick="openSavegameEditor();">Open Savegame Editor</button>
+      </div>
+    </div>
     <div class="ui-layout-center">
       <div id="editorTabs" class="scrollableTab">
         <ul>
           <li class="editorTab" id="tab_welcome"><a href="#tab-welcome">Welcome</a></li>
-          <li class="editorTab" id="tab_savegameEditor"><a href="#tab-savegameEditor">Savegame Editor</a></li>
         </ul>
         <div id="tab-welcome" class="editorTabContent">
           <%@include file="welcome.jsp" %>
         </div>
-        <div id="tab-savegameEditor" class="editorTabContent"></div>
       </div>
     </div>
     <div class="ui-layout-west">

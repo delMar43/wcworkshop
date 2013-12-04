@@ -8,6 +8,7 @@ property=bronzeStars,offset=364
 property=silverStars,offset=365
 property=goldStars,offset=366
 property=goldenSun,offset=367
+property=pewterPlanet,offset=367
 property=mission,offset=381
 property=series,offset=382
 property=pilotStatus[],offset=392,times=8
@@ -22,3 +23,4 @@ property=unknown3,offset=418
 property=promotion,offset=420
 property=victory,offset=424
 property=campaign,offset=426
+property=seriesCount,offset=583

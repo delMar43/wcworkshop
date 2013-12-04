@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import wcworkshop.core.config.Configuration;
 import wcworkshop.core.data.Wc1SavegameFile;
 import wcworkshop.core.reader.ReaderHelper;
 import wcworkshop.web.command.SavegameCommand;
@@ -21,7 +22,7 @@ public class SavegameEditorController {
   public String renderSavegame(Model model) {
     Mapping mapper = mappingFactory.createMapper("savegame_file.mapping");
 
-    byte[] data = readerHelper.readFile("D:/Users/martin/Dropbox/dev/wcworkshop/gamedat/wc1/savegame.wld");
+    byte[] data = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "SAVEGAME.WLD");
 
     Wc1SavegameFile file = BinaryReader.getInstance().toJava(data, mapper, Wc1SavegameFile.class);
 

@@ -14,6 +14,7 @@ public class Wc1Savegame {
   private byte silverStars;
   private byte goldStars;
   private byte goldenSun;
+  private byte pewterPlanet;
   private byte ace1;
   private byte ace2;
   private byte ace3;
@@ -25,6 +26,7 @@ public class Wc1Savegame {
   private byte promotion;
   private short victory;
   private short campaign;
+  private byte seriesCount;
 
   public String getName() {
     return name;
@@ -122,6 +124,14 @@ public class Wc1Savegame {
     this.goldenSun = goldenSun;
   }
 
+  public byte getPewterPlanet() {
+    return pewterPlanet;
+  }
+
+  public void setPewterPlanet(byte pewterPlanet) {
+    this.pewterPlanet = pewterPlanet;
+  }
+
   public byte getAce1() {
     return ace1;
   }
@@ -202,4 +212,11 @@ public class Wc1Savegame {
     this.victory = victory;
   }
 
+  public byte getSeriesCount() {
+    return seriesCount;
+  }
+
+  public void setSeriesCount(byte seriesCount) {
+    this.seriesCount = seriesCount;
+  }
 }

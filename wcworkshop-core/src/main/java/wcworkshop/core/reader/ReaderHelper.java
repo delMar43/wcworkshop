@@ -24,14 +24,18 @@ public class ReaderHelper {
 
   public byte[] readFile(String path) {
     byte[] buffer;
+    FileInputStream fis = null;
     try {
-      buffer = IOUtils.toByteArray(new FileInputStream(path));
+      fis = new FileInputStream(path);
+      buffer = IOUtils.toByteArray(fis);
     } catch (FileNotFoundException e) {
       logger.error("Unable to find file: {}", path);
       buffer = null;
     } catch (IOException e) {
       logger.error("Unable to load file {} because of {}", path, e.getMessage());
       buffer = null;
+    } finally {
+      IOUtils.closeQuietly(fis);
     }
     return buffer;
   }
