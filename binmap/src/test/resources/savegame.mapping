@@ -1,8 +1,9 @@
 class=test.Wc1Savegame
 size=828
 property=name,offset=0,length=16
+property=unknown1,offset=16
 property=occupied,offset=17
-property=scoreboardEntries[],mapping=savegame_scoreboard_entry,offset=18,times=8
+property=scoreboardEntries[],mapping=savegame_scoreboard_entry,offset=18,times=9
 property=bronzeStars,offset=364
 property=silverStars,offset=365
 property=goldStars,offset=366
@@ -15,6 +16,9 @@ property=ace2,offset=409
 property=ace3,offset=410
 property=ace4,offset=411
 property=day,offset=412
+property=year,offset=414
+property=unknown2,offset=416
+property=unknown3,offset=418
 property=promotion,offset=420
 property=victory,offset=424
 property=campaign,offset=426
