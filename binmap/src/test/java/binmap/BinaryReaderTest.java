@@ -25,7 +25,7 @@ public class BinaryReaderTest {
 
     byte[] data = readFile(this.getClass().getClassLoader().getResourceAsStream("SAVEGAME.WLD"));
 
-    BinaryReader bm = new BinaryReader();
+    BinaryReader bm = BinaryReader.getInstance();
     List<Wc1Savegame> savegames = new ArrayList<>();
     for (int idx = 0; idx < 8; ++idx) {
       int offset = idx * mapping.getSize();

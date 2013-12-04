@@ -23,7 +23,7 @@ public class BinaryWriterTest {
 
     byte[] result = new byte[mapping.getSize() * 8];
 
-    BinaryWriter bw = new BinaryWriter();
+    BinaryWriter bw = BinaryWriter.getInstance();
     for (int idx = 0; idx < 8; ++idx) {
       Wc1Savegame savegame = savegames.get(idx);
       byte[] binary = bw.toBinary(savegame, mapping);
