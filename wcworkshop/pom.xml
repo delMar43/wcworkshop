@@ -43,6 +43,7 @@
   </build>
   
   <modules>
+    <module>../binmap</module>
     <module>../wcworkshop-core</module>
     <module>../wcworkshop-web</module>
   </modules>
