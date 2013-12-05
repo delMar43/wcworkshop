@@ -102,7 +102,7 @@
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].callsign" value="${entry.callsign}"></td>
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].sorties" value="${entry.sorties}"></td>
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].kills" value="${entry.kills}"></td>
-                      <td><input name="savegames[${savegameStatus.index}].pilotStatus[${entryStatus.index}]" <c:out value="${savegames[savegameStatus.index].pilotStatus[entryStatus.index]}"/>"></td>
+                      <td><input name="savegames[${savegameStatus.index}].pilotStatus[${entryStatus.index}]" value="${command.savegames[savegameStatus.index].pilotStatus[entryStatus.index]}"></td>
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].unknown1" value="${entry.unknown1}"></td>
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].unknown2" value="${entry.unknown2}"></td>
                     </tr>
