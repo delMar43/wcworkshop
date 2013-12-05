@@ -1,4 +1,4 @@
-class=test.Wc1SavegameScoreboardEntry
+class=wcworkshop.core.data.Wc1SavegameScoreboardEntry
 size=38
 property=name,offset=0,length=14
 property=callsign,offset=14,length=14

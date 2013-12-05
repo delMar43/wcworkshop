@@ -1,4 +1,4 @@
-class=test.Wc1Savegame
+class=wcworkshop.core.data.Wc1Savegame
 size=828
 property=name,offset=0,length=16
 property=unknown1,offset=16
@@ -8,9 +8,12 @@ property=bronzeStars,offset=364
 property=silverStars,offset=365
 property=goldStars,offset=366
 property=goldenSun,offset=367
+property=pewterPlanet,offset=367
+property=unknownBlock1[],offset=368,times=13
 property=mission,offset=381
 property=series,offset=382
-property=pilotStatus[],offset=392,times=8
+property=unknownBlock2[],offset=383,times=9
+property=pilotStatus[],offset=392,times=9
 property=ace1,offset=408
 property=ace2,offset=409
 property=ace3,offset=410
@@ -22,3 +25,6 @@ property=unknown3,offset=418
 property=promotion,offset=420
 property=victory,offset=424
 property=campaign,offset=426
+property=unknownBlock2[],offset=428,times=155
+property=seriesCount,offset=583
+property=unknownBlock3[],offset=584,times=243
