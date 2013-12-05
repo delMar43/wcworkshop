@@ -54,11 +54,7 @@ public class SavegameDownloadController {
 
     for (int idx = 0; idx < patternSavegames.length; ++idx) {
       Wc1Savegame newSavegame = newSavegames[idx];
-      if (newSavegame.getOccupied() == (byte) 1) {
-        result[idx] = mergeSavegame(patternSavegames[idx], newSavegame);
-      } else {
-        result[idx] = patternSavegames[idx];
-      }
+      result[idx] = mergeSavegame(patternSavegames[idx], newSavegame);
     }
 
     return result;
