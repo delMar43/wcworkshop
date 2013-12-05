@@ -9,26 +9,13 @@
       
       $(function() {
         savegameTabs = $("#savegameTabs").tabs();
-        
-        $("#savegameForm").on("submit", function(event) {
-          event.preventDefault();
-          $.ajax({
-            type: "POST",
-            url: $("#savegameForm").attr("action"),
-            data: $("#savegameForm").serialize(),
-            success: function(data, textStatus, jqXHR) {
-              $("#tab-savegameEditor").html(data);
-            }
-          });
-        });
-        
       });
     </script>
   </head>
   <body>
     <div class="caption">Special Thanks to David S. Raley for creating WCSAV, which was used to identify most of the savegame data.</div>
       
-    <form:form action="savegame.html" method="POST" id="savegameForm">
+    <form:form action="savegame.wld" method="POST" id="savegameForm">
       <div id="savegameTabs">
         <ul>
           <c:forEach items="${command.savegames}" var="savegame" varStatus="savegameStatus">
@@ -46,7 +33,8 @@
                   <span>Name:</span><span><input name="savegames[${savegameStatus.index}].name" value="${savegame.name}"></input></span>
                 </div>
                 <div>
-                  <span>Campaign:</span><span><input name="savegames[${savegameStatus.index}].campaign" value="${savegame.campaign}"></input></span>
+                  <span>Enabled:</span><span><input name="savegames[${savegameStatus.index}].occupied" value="${savegame.occupied}" size="1"></input></span>
+                  <span>Campaign:</span><span><input name="savegames[${savegameStatus.index}].campaign" value="${savegame.campaign}" size="2"></input></span>
                 </div>
                 <div>
                   <span>Series:</span><span><input name="savegames[${savegameStatus.index}].series" value="${savegame.series}" size="2"></input>
@@ -89,7 +77,7 @@
                     <th>Callsign</th>
                     <th>Sorties</th>
                     <th>Kills</th>
-                    <th>Status</th>
+                    <%-- th>Status</th --%>
                     <th>Unknown 1</th>
                     <th>Unknown 2</th>
                   </tr>
@@ -102,7 +90,7 @@
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].callsign" value="${entry.callsign}"></td>
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].sorties" value="${entry.sorties}"></td>
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].kills" value="${entry.kills}"></td>
-                      <td><input name="savegames[${savegameStatus.index}].pilotStatus[${entryStatus.index}]" value="${command.savegames[savegameStatus.index].pilotStatus[entryStatus.index]}"></td>
+                      <%-- td><input name="savegames[${savegameStatus.index}].pilotStatus[${entryStatus.index}]" value="${savegame.pilotStatus[entryStatus.index]}"></td --%>
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].unknown1" value="${entry.unknown1}"></td>
                       <td><input name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].unknown2" value="${entry.unknown2}"></td>
                     </tr>

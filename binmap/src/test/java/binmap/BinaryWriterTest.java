@@ -17,7 +17,7 @@ public class BinaryWriterTest {
 
   @Test
   public void test() throws FileNotFoundException, IOException {
-    Mapping mapping = mappingFactory.createMapper("savegame.mapping");
+    Mapping mapping = mappingFactory.createMapping("savegame.mapping");
 
     List<Wc1Savegame> savegames = readerTest.loadSavegame("savegame.mapping");
 

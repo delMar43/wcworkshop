@@ -11,6 +11,7 @@
   <servlet-mapping>
     <servlet-name>wcworkshop</servlet-name>
     <url-pattern>*.html</url-pattern>
+    <url-pattern>*.wld</url-pattern>
   </servlet-mapping>
  
   <!-- context-param>

@@ -21,7 +21,7 @@ public class BinaryReaderTest {
   }
 
   public List<Wc1Savegame> loadSavegame(String mapperName) throws FileNotFoundException, IOException {
-    Mapping mapping = mappingFactory.createMapper("savegame.mapping");
+    Mapping mapping = mappingFactory.createMapping("savegame.mapping");
 
     byte[] data = readFile(this.getClass().getClassLoader().getResourceAsStream("SAVEGAME.WLD"));
 

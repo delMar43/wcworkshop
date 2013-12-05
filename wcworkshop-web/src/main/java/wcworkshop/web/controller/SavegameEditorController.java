@@ -20,7 +20,7 @@ public class SavegameEditorController {
 
   @RequestMapping("/savegameEditor")
   public String renderSavegame(Model model) {
-    Mapping mapper = mappingFactory.createMapper("savegame_file.mapping");
+    Mapping mapper = mappingFactory.createMapping("savegame_file.mapping");
 
     byte[] data = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "SAVEGAME.WLD");
 

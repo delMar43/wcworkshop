@@ -85,7 +85,7 @@ public class BinaryReader {
         if (times > 1) {
           byte[] array = (byte[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
-            int pos = globalOffset + property.getOffset() * idx;
+            int pos = globalOffset + property.getOffset() + idx;
             Array.set(array, idx, data[pos]);
           }
           binaryUtils.setValue(sink, field, array);
@@ -110,6 +110,26 @@ public class BinaryReader {
           int to = from + 2;
           byte[] bytes = Arrays.copyOfRange(data, from, to);
           short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
+          binaryUtils.setValue(sink, field, value);
+        }
+
+      } else if ("int".equals(typeName)) {
+
+        if (times > 1) {
+          int[] array = (int[]) Array.newInstance(type.getComponentType(), times);
+          for (int idx = 0; idx < times; ++idx) {
+            int from = globalOffset + property.getOffset() + 4 * idx;
+            int to = from + 4;
+            byte[] bytes = Arrays.copyOfRange(data, from, to);
+            int value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
+            Array.set(array, idx, value);
+          }
+          binaryUtils.setValue(sink, field, array);
+        } else {
+          int from = globalOffset + property.getOffset();
+          int to = from + 4;
+          byte[] bytes = Arrays.copyOfRange(data, from, to);
+          int value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
           binaryUtils.setValue(sink, field, value);
         }
 

@@ -15,6 +15,7 @@ public class Wc1Savegame {
   private byte goldStars;
   private byte goldenSun;
   private byte pewterPlanet;
+  private byte[] unknownBlock1;
   private byte ace1;
   private byte ace2;
   private byte ace3;
@@ -23,10 +24,12 @@ public class Wc1Savegame {
   private short year;
   private short unknown2;
   private short unknown3;
-  private byte promotion;
+  private int promotion;
   private short victory;
   private short campaign;
+  private byte[] unknownBlock2;
   private byte seriesCount;
+  private byte[] unknownBlock3;
 
   public String getName() {
     return name;
@@ -196,11 +199,11 @@ public class Wc1Savegame {
     this.unknown3 = unknown3;
   }
 
-  public byte getPromotion() {
+  public int getPromotion() {
     return promotion;
   }
 
-  public void setPromotion(byte promotion) {
+  public void setPromotion(int promotion) {
     this.promotion = promotion;
   }
 
@@ -218,5 +221,29 @@ public class Wc1Savegame {
 
   public void setSeriesCount(byte seriesCount) {
     this.seriesCount = seriesCount;
+  }
+
+  public byte[] getUnknownBlock1() {
+    return unknownBlock1;
+  }
+
+  public void setUnknownBlock1(byte[] unknownBlock1) {
+    this.unknownBlock1 = unknownBlock1;
+  }
+
+  public byte[] getUnknownBlock2() {
+    return unknownBlock2;
+  }
+
+  public void setUnknownBlock2(byte[] unknownBlock2) {
+    this.unknownBlock2 = unknownBlock2;
+  }
+
+  public byte[] getUnknownBlock3() {
+    return unknownBlock3;
+  }
+
+  public void setUnknownBlock3(byte[] unknownBlock3) {
+    this.unknownBlock3 = unknownBlock3;
   }
 }

@@ -100,19 +100,19 @@ public class BinaryUtils {
   }
 
   public byte[] createIntegerBytes(int value) {
-    ByteBuffer record = createLittleEndianByteBuffer();
+    ByteBuffer record = createLittleEndianByteBuffer(4);
     record.putInt(value);
     return record.array();
   }
 
   public byte[] createShortBytes(short value) {
-    ByteBuffer record = createLittleEndianByteBuffer();
+    ByteBuffer record = createLittleEndianByteBuffer(2);
     record.putShort(value);
     return record.array();
   }
 
-  private ByteBuffer createLittleEndianByteBuffer() {
-    ByteBuffer record = ByteBuffer.allocate(2);
+  private ByteBuffer createLittleEndianByteBuffer(int capacity) {
+    ByteBuffer record = ByteBuffer.allocate(capacity);
     record.order(ByteOrder.LITTLE_ENDIAN);
     return record;
   }

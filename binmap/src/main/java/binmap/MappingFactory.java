@@ -19,7 +19,7 @@ public class MappingFactory {
   private MappingFactory() {
   }
 
-  public Mapping createMapper(String filename) {
+  public Mapping createMapping(String filename) {
     try {
       List<String> lines = readLines(filename);
 
@@ -131,7 +131,7 @@ public class MappingFactory {
 
     } else if (mapping != null) {
 
-      Mapping subMapping = createMapper(mapping + ".mapping");
+      Mapping subMapping = createMapping(mapping + ".mapping");
       result = new SubMappingProperty(property, offset, subMapping, times);
     } else {
       throw new RuntimeException("Unable to parse line: " + line);
