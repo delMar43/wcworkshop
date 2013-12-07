@@ -54,13 +54,6 @@
           }
         });
         
-        $.ajax({
-          url: "<%=request.getContextPath()%>/savegameEditor.html",
-          success: function(data, textStatus, jqXHR) {
-            $("#tab-savegameEditor").html(data);
-          }
-        });
-        
         // close icon: removing the tab on click
         editorTabs.delegate( "span.ui-icon-close", "click", function() {
           var li = $( this ).closest( "li" );
