@@ -1,7 +1,17 @@
 package wcworkshop.web.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,8 +31,11 @@ import binmap.MappingFactory;
 
 @Controller
 public class SavegameDownloadController {
+  private static final Logger logger = LoggerFactory.getLogger(SavegameDownloadController.class);
+  private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
 
   private ReaderHelper readerHelper = ReaderHelper.getInstance();
+  private Configuration config = Configuration.getInstance();
   private Mapping savegameMapping;
 
   @PostConstruct
@@ -41,7 +54,7 @@ public class SavegameDownloadController {
   }
 
   private byte[] createBinary(SavegameCommand savegameCommand) {
-    byte[] rawFile = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "SAVEGAME.WLD");
+    byte[] rawFile = readerHelper.readFile(config.getResourcePath() + "SAVEGAME.WLD");
 
     Wc1SavegameFile patternFile = BinaryReader.getInstance().toJava(rawFile, savegameMapping, Wc1SavegameFile.class);
     Wc1Savegame[] patternSavegames = patternFile.getSavegames();
@@ -53,7 +66,33 @@ public class SavegameDownloadController {
 
     byte[] binary = BinaryWriter.getInstance().toBinary(newSavegameFile, savegameMapping);
 
+    writeDump(binary);
+
     return binary;
+  }
+
+  private void writeDump(byte[] binary) {
+    File path = new File(config.getResourcePath() + "generated/");
+    if (!path.exists()) {
+      path.mkdirs();
+    }
+
+    FileOutputStream fos = null;
+    String filename = path.getAbsolutePath() + File.separator + sdf.format(new Date()) + ".wld";
+
+    try {
+      fos = new FileOutputStream(filename);
+      IOUtils.write(binary, fos);
+      logger.info("Savegame file {} written", filename);
+    } catch (FileNotFoundException e) {
+      logger.error("Unable to find file {}. Not writing dumpfile", filename);
+    } catch (IOException e) {
+      logger.error("Exception while trying to write file {}.", filename);
+    } finally {
+      if (fos != null) {
+        IOUtils.closeQuietly(fos);
+      }
+    }
   }
 
   private Wc1Savegame[] mergeSavegames(Wc1Savegame[] patternSavegames, Wc1Savegame[] newSavegames) {
