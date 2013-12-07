@@ -33,7 +33,14 @@ public class SavegameDownloadController {
   @ResponseBody
   @RequestMapping(value = "/savegame.wld", method = RequestMethod.POST, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
   public byte[] saveGame(@ModelAttribute SavegameCommand savegameCommand) {
+    try {
+      return createBinary(savegameCommand);
+    } catch (Exception e) {
+      throw new RuntimeException("Error while generating savegame file: " + e.getMessage(), e);
+    }
+  }
 
+  private byte[] createBinary(SavegameCommand savegameCommand) {
     byte[] rawFile = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "SAVEGAME.WLD");
 
     Wc1SavegameFile patternFile = BinaryReader.getInstance().toJava(rawFile, savegameMapping, Wc1SavegameFile.class);
@@ -66,9 +73,12 @@ public class SavegameDownloadController {
     result.setUnknown1(pattern.getUnknown1());
     result.setUnknown2(pattern.getUnknown2());
     result.setUnknown3(pattern.getUnknown3());
+    result.setUnknown4(pattern.getUnknown4());
+    result.setUnknown5(pattern.getUnknown5());
     result.setUnknownBlock1(pattern.getUnknownBlock1());
     result.setUnknownBlock2(pattern.getUnknownBlock2());
     result.setUnknownBlock3(pattern.getUnknownBlock3());
+    result.setUnknownBlock4(pattern.getUnknownBlock4());
 
     return result;
   }

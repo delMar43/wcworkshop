@@ -30,6 +30,13 @@ public class Wc1Savegame {
   private byte[] unknownBlock2;
   private byte seriesCount;
   private byte[] unknownBlock3;
+  private byte[] unknownBlock4;
+  private short unknown4;
+  private short unknown5;
+
+  public boolean isEnabled() {
+    return occupied == (byte) 1;
+  }
 
   public String getName() {
     return name;
@@ -245,5 +252,29 @@ public class Wc1Savegame {
 
   public void setUnknownBlock3(byte[] unknownBlock3) {
     this.unknownBlock3 = unknownBlock3;
+  }
+
+  public short getUnknown4() {
+    return unknown4;
+  }
+
+  public void setUnknown4(short unknown4) {
+    this.unknown4 = unknown4;
+  }
+
+  public short getUnknown5() {
+    return unknown5;
+  }
+
+  public void setUnknown5(short unknown5) {
+    this.unknown5 = unknown5;
+  }
+
+  public byte[] getUnknownBlock4() {
+    return unknownBlock4;
+  }
+
+  public void setUnknownBlock4(byte[] unknownBlock4) {
+    this.unknownBlock4 = unknownBlock4;
   }
 }

@@ -4,6 +4,8 @@ property=name,offset=0,length=16
 property=unknown1,offset=16
 property=occupied,offset=17
 property=scoreboardEntries[],mapping=savegame_scoreboard_entry,offset=18,times=9
+property=unknown4,offset=360
+property=unknown5,offset=362
 property=bronzeStars,offset=364
 property=silverStars,offset=365
 property=goldStars,offset=366
@@ -12,7 +14,7 @@ property=pewterPlanet,offset=367
 property=unknownBlock1[],offset=368,times=13
 property=mission,offset=381
 property=series,offset=382
-property=unknownBlock2[],offset=383,times=9
+property=unknownBlock4[],offset=383,times=9
 property=pilotStatus[],offset=392,times=9
 property=ace1,offset=408
 property=ace2,offset=409

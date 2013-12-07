@@ -132,7 +132,7 @@
       };
       
       var openSavegameEditor = function() {
-        addStaticTab("savegameEditor", "Savegame Editor", "<iframe class='framed' src='<%=request.getContextPath()%>/savegameEditor.html'></iframe>");
+        addStaticTab("savegameEditor", "Savegame Generator", "<iframe class='framed' src='<%=request.getContextPath()%>/savegameEditor.html'></iframe>");
       };
     </script>
   </head>
