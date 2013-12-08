@@ -1,4 +1,4 @@
-class=wcworkshop.core.data.Wc1Savegame
+class=wcworkshop.core.binary.Wc1Savegame
 size=828
 property=name,offset=0,length=16
 property=unknown1,offset=16

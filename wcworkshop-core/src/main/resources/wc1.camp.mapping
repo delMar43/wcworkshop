@@ -1,0 +1,6 @@
+class=wcworkshop.core.binary.Wc1CampFile
+size=dynamic
+property=filesize,offset=0
+property=stellarBackgrounds[],offset={0},mapping=wc1.camp.stellarBackground,times=52
+property=seriesBlocks[],offset={1},mapping=wc1.camp.seriesBlock,times=13
+property=barData[],offset={2},mapping=wc1.camp.barData,times=52

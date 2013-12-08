@@ -1,0 +1,8 @@
+class=wcworkshop.core.binary.Wc1BriefingFile
+size=dynamic
+property=filesize,offset=0
+#property=Wc1BriefingFuneralData,offset={0},mapping=wc1.briefing.funeralData
+#property=Wc1BriefingHalcyonData,offset={1},mapping=wc1.briefing.halcyonData
+#property=Wc1BriefingMedalCeremonyData,offset={2},mapping=wc1.briefing.medalCeremonyData
+#offsets[3] is empty
+property=Wc1BriefingMissionData,offset={4-},mapping=wc1.briefing.missionData

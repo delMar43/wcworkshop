@@ -4,7 +4,10 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +33,14 @@ public class BinaryReader {
   }
 
   private void fillWithData(Object sink, byte[] data, Mapping mapping, int globalOffset, Class<?> targetClass) {
+
+    List<Integer> dynamicOffsets;
+    if (mapping.isWithDynamicOffsets()) {
+      dynamicOffsets = extractBlockOffsets(data);
+    } else {
+      dynamicOffsets = Collections.EMPTY_LIST;
+    }
+
     for (MappingProperty property : mapping.getMappingProperties()) {
       String fieldName;
       if (property.getProperty().endsWith("[]")) {
@@ -47,6 +58,10 @@ public class BinaryReader {
         typeName = type.getName();
       }
 
+      int propertyOffset = property.getOffset();
+      if (propertyOffset == -1) {
+        propertyOffset = getDynamicOffset(mapping, dynamicOffsets, property.getProperty());
+      }
       int times = property.getTimes();
       if (property instanceof SubMappingProperty) {
 
@@ -55,12 +70,12 @@ public class BinaryReader {
           Object[] array = (Object[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
             int fixedOffset = idx * smp.getSubMapping().getSize();
-            Object subMappingObject = createSubMappingObject(data, smp, fixedOffset, globalOffset);
+            Object subMappingObject = createSubMappingObject(data, smp, fixedOffset + globalOffset + propertyOffset);
             Array.set(array, idx, subMappingObject);
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          Object object = createSubMappingObject(data, smp, 0, globalOffset);
+          Object object = createSubMappingObject(data, smp, globalOffset + propertyOffset);
           binaryUtils.setValue(sink, field, object);
         }
 
@@ -70,13 +85,13 @@ public class BinaryReader {
         if (times > 1) {
           String[] array = (String[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
-            int from = globalOffset + smp.getOffset();
+            int from = globalOffset + propertyOffset;
             int to = from + smp.getLength();
             Array.set(array, idx, getString(data, from, to));
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          String value = getString(data, globalOffset + smp.getOffset(), smp.getLength());
+          String value = getString(data, globalOffset + propertyOffset, smp.getLength());
           binaryUtils.setValue(sink, field, value);
         }
 
@@ -85,12 +100,12 @@ public class BinaryReader {
         if (times > 1) {
           byte[] array = (byte[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
-            int pos = globalOffset + property.getOffset() + idx;
+            int pos = globalOffset + propertyOffset + idx;
             Array.set(array, idx, data[pos]);
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          byte value = data[globalOffset + property.getOffset()];
+          byte value = data[globalOffset + propertyOffset];
           binaryUtils.setValue(sink, field, value);
         }
 
@@ -98,7 +113,7 @@ public class BinaryReader {
         if (times > 1) {
           short[] array = (short[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
-            int from = globalOffset + property.getOffset() + 2 * idx;
+            int from = globalOffset + propertyOffset + 2 * idx;
             int to = from + 2;
             byte[] bytes = Arrays.copyOfRange(data, from, to);
             short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
@@ -106,7 +121,7 @@ public class BinaryReader {
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          int from = globalOffset + property.getOffset();
+          int from = globalOffset + propertyOffset;
           int to = from + 2;
           byte[] bytes = Arrays.copyOfRange(data, from, to);
           short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
@@ -118,7 +133,7 @@ public class BinaryReader {
         if (times > 1) {
           int[] array = (int[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
-            int from = globalOffset + property.getOffset() + 4 * idx;
+            int from = globalOffset + propertyOffset + 4 * idx;
             int to = from + 4;
             byte[] bytes = Arrays.copyOfRange(data, from, to);
             int value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
@@ -126,7 +141,7 @@ public class BinaryReader {
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          int from = globalOffset + property.getOffset();
+          int from = globalOffset + propertyOffset;
           int to = from + 4;
           byte[] bytes = Arrays.copyOfRange(data, from, to);
           int value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
@@ -139,8 +154,29 @@ public class BinaryReader {
     }
   }
 
-  private Object createSubMappingObject(byte[] data, SubMappingProperty smp, int fixedOffset, int globalOffset) {
-    int from = globalOffset + fixedOffset + smp.getOffset();
+  private int getDynamicOffset(Mapping mapping, List<Integer> dynamicOffsets, String propertyName) {
+    int propertyOffset;
+    String propKey = mapping.getDynamicOffset(propertyName);
+    int offsetIndex = Integer.parseInt(propKey.replace("{", "").replace("}", ""));
+    propertyOffset = dynamicOffsets.get(offsetIndex);
+    return propertyOffset;
+  }
+
+  private List<Integer> extractBlockOffsets(byte[] buffer) {
+    List<Integer> blockOffsets = new ArrayList<>();
+    int offset = 4;
+    do {
+      byte[] bytes = Arrays.copyOfRange(buffer, offset, offset + 4);
+      bytes[3] = 0; //
+      blockOffsets.add(binaryUtils.getInteger(bytes));
+      offset += 4;
+    } while (offset < blockOffsets.get(0));
+
+    return blockOffsets;
+  }
+
+  private Object createSubMappingObject(byte[] data, SubMappingProperty smp, int from) {
+    //    int from = globalOffset + fixedOffset + smp.getOffset();
     int to = from + smp.getSubMapping().getSize();
     byte[] subData = Arrays.copyOfRange(data, from, to);
     Class<?> clazz = binaryUtils.getClass(smp.getSubMapping().getClassName());

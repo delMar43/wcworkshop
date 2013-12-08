@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import wcworkshop.core.binary.Wc1Savegame;
+import wcworkshop.core.binary.Wc1SavegameFile;
 import wcworkshop.core.config.Configuration;
-import wcworkshop.core.data.Wc1Savegame;
-import wcworkshop.core.data.Wc1SavegameFile;
 import wcworkshop.core.reader.ReaderHelper;
 import wcworkshop.web.command.SavegameCommand;
 import binmap.BinaryReader;

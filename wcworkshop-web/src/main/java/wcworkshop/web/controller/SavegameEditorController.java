@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import wcworkshop.core.binary.Wc1SavegameFile;
 import wcworkshop.core.config.Configuration;
-import wcworkshop.core.data.Wc1SavegameFile;
 import wcworkshop.core.reader.ReaderHelper;
 import wcworkshop.web.command.SavegameCommand;
 import binmap.BinaryReader;
@@ -21,10 +21,7 @@ public class SavegameEditorController {
   @RequestMapping("/savegameEditor")
   public String renderSavegame(Model model) {
     Mapping mapper = mappingFactory.createMapping("savegame_file.mapping");
-
-    //    byte[] data = readerHelper.readFile("D:/spiele/Wing Commander 1 and 2/WC/GAMEDAT/SAVEGAME.WLD");
     byte[] data = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "SAVEGAME.WLD");
-
     Wc1SavegameFile file = BinaryReader.getInstance().toJava(data, mapper, Wc1SavegameFile.class);
 
     SavegameCommand command = new SavegameCommand();

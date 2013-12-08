@@ -47,6 +47,7 @@ public class MappingFactory {
     String className = null;
     int size = -1;
     List<MappingProperty> properties = new ArrayList<>();
+    Map<String, String> dynamicOffsets = new HashMap<>();
     for (String line : lines) {
       if (line.startsWith("#") || !line.contains("=")) {
         continue;
@@ -61,10 +62,14 @@ public class MappingFactory {
           clazz = createClass(className);
           break;
         case "size":
-          size = Integer.parseInt(keyValuePair[1]);
+          if ("dynamic".equals(keyValuePair[1])) {
+            size = -1;
+          } else {
+            size = Integer.parseInt(keyValuePair[1]);
+          }
           break;
         case "property":
-          MappingProperty property = buildMappingProperty(clazz, line);
+          MappingProperty property = buildMappingProperty(clazz, line, dynamicOffsets);
           properties.add(property);
           break;
         default:
@@ -72,7 +77,7 @@ public class MappingFactory {
           break;
       }
     }
-    Mapping mapping = new Mapping(className, size, properties);
+    Mapping mapping = new Mapping(className, size, properties, dynamicOffsets);
 
     return mapping;
   }
@@ -87,7 +92,7 @@ public class MappingFactory {
     }
   }
 
-  private MappingProperty buildMappingProperty(Class<?> clazz, String line) {
+  private MappingProperty buildMappingProperty(Class<?> clazz, String line, Map<String, String> offsets) {
     MappingProperty result = null;
 
     Map<String, String> tokenMap = new HashMap<>();
@@ -103,7 +108,16 @@ public class MappingFactory {
     String property = tokenMap.get("property");
     String mapping = tokenMap.get("mapping");
     String fieldName = property.replace("[]", "");
-    int offset = Integer.parseInt(tokenMap.get("offset"));
+
+    int offset;
+    String offsetString = tokenMap.get("offset");
+    if (offsetString.startsWith("{")) {
+      offset = -1;
+      offsets.put(property, offsetString);
+    } else {
+      offset = Integer.parseInt(tokenMap.get("offset"));
+    }
+
     int times;
     if (tokenMap.containsKey("times")) {
       times = Integer.parseInt(tokenMap.get("times"));

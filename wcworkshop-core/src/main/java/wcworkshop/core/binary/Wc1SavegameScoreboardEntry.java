@@ -1,4 +1,4 @@
-package wcworkshop.core.data;
+package wcworkshop.core.binary;
 
 public class Wc1SavegameScoreboardEntry {
 

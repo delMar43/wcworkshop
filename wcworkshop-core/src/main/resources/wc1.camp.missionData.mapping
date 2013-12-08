@@ -1,0 +1,5 @@
+class=wcworkshop.core.binary.Wc1CampMissionData
+size=20
+property=medal,offset=0
+property=requiredMedalPoints,offset=2
+property=victoryPointsPerObjective[],offset=4,times=8

@@ -117,6 +117,10 @@ public class BinaryUtils {
     return record;
   }
 
+  public int getInteger(byte[] bytes) {
+    return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
+  }
+
   public String byteArrayToHexString(byte[] input) {
     if (input == null) {
       return "";
