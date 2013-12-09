@@ -120,7 +120,19 @@ public class MappingFactory {
 
     int times;
     if (tokenMap.containsKey("times")) {
-      times = Integer.parseInt(tokenMap.get("times"));
+      String timesString = tokenMap.get("times");
+      if (timesString.startsWith("{")) {
+        timesString = timesString.replace("{", "").replace("}", "");
+        if ("offsets".equals(timesString)) {
+          times = -1;
+        } else if ("all".equals(timesString)) {
+          times = -2;
+        } else {
+          throw new RuntimeException("Unknown times pattern: " + timesString);
+        }
+      } else {
+        times = Integer.parseInt(tokenMap.get("times"));
+      }
     } else {
       times = 1;
     }

@@ -35,10 +35,22 @@ public class BinaryReader {
   private void fillWithData(Object sink, byte[] data, Mapping mapping, int globalOffset, Class<?> targetClass) {
 
     List<Integer> dynamicOffsets;
+    List<Integer> dynamicSizes;
     if (mapping.isWithDynamicOffsets()) {
       dynamicOffsets = extractBlockOffsets(data);
+      dynamicSizes = new ArrayList<>();
+      for (int offsetIdx = 0; offsetIdx < dynamicOffsets.size(); ++offsetIdx) {
+        int curSize;
+        if (offsetIdx + 1 < dynamicOffsets.size()) {
+          curSize = dynamicOffsets.get(offsetIdx + 1) - dynamicOffsets.get(offsetIdx);
+        } else {
+          curSize = data.length - dynamicOffsets.get(offsetIdx);
+        }
+        dynamicSizes.add(curSize);
+      }
     } else {
       dynamicOffsets = Collections.EMPTY_LIST;
+      dynamicSizes = Collections.EMPTY_LIST;
     }
 
     for (MappingProperty property : mapping.getMappingProperties()) {
@@ -63,19 +75,31 @@ public class BinaryReader {
         propertyOffset = getDynamicOffset(mapping, dynamicOffsets, property.getProperty());
       }
       int times = property.getTimes();
+      if (times == -1) {
+        times = dynamicOffsets.size();
+      } else if (times == -2) {
+        times = data.length;
+      }
       if (property instanceof SubMappingProperty) {
 
         SubMappingProperty smp = (SubMappingProperty) property;
         if (times > 1) {
           Object[] array = (Object[]) Array.newInstance(type.getComponentType(), times);
+          int currentOffset = 0;
           for (int idx = 0; idx < times; ++idx) {
-            int fixedOffset = idx * smp.getSubMapping().getSize();
-            Object subMappingObject = createSubMappingObject(data, smp, fixedOffset + globalOffset + propertyOffset);
+            if (idx != 0) {
+              currentOffset += getDynamicSize(smp.getSubMapping(), dynamicSizes, idx - 1);
+            }
+            int from = currentOffset + globalOffset + propertyOffset;
+            int to = from + getDynamicSize(smp.getSubMapping(), dynamicSizes, idx);
+            Object subMappingObject = createSubMappingObject(data, smp, from, to);
             Array.set(array, idx, subMappingObject);
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          Object object = createSubMappingObject(data, smp, globalOffset + propertyOffset);
+          int from = globalOffset + propertyOffset;
+          int to = from + getDynamicSize(smp.getSubMapping(), dynamicSizes, 0);
+          Object object = createSubMappingObject(data, smp, from, to);
           binaryUtils.setValue(sink, field, object);
         }
 
@@ -162,6 +186,14 @@ public class BinaryReader {
     return propertyOffset;
   }
 
+  private int getDynamicSize(Mapping mapping, List<Integer> dynamicSizes, int index) {
+    int size = mapping.getSize();
+    if (size == -1) {
+      size = dynamicSizes.get(index);
+    }
+    return size;
+  }
+
   private List<Integer> extractBlockOffsets(byte[] buffer) {
     List<Integer> blockOffsets = new ArrayList<>();
     int offset = 4;
@@ -175,9 +207,8 @@ public class BinaryReader {
     return blockOffsets;
   }
 
-  private Object createSubMappingObject(byte[] data, SubMappingProperty smp, int from) {
-    //    int from = globalOffset + fixedOffset + smp.getOffset();
-    int to = from + smp.getSubMapping().getSize();
+  private Object createSubMappingObject(byte[] data, SubMappingProperty smp, int from, int to) {
+    logger.debug("createSubMappingObject from {} to {} inside data of size {}", new Object[] { from, to, data.length });
     byte[] subData = Arrays.copyOfRange(data, from, to);
     Class<?> clazz = binaryUtils.getClass(smp.getSubMapping().getClassName());
     Object sub = toJava(subData, smp.getSubMapping(), clazz);

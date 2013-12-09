@@ -1,0 +1,4 @@
+class=wcworkshop.core.binary.Wc1VgaFile
+size=dynamic
+property=filesize,offset=0
+property=unknownBlocks[],offset={0},times={offsets},mapping=unknownBlock

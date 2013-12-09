@@ -1,0 +1,3 @@
+class=wcworkshop.core.binary.UnknownBlock
+size=dynamic
+property=unknownBlock[],times={all},offset=0
