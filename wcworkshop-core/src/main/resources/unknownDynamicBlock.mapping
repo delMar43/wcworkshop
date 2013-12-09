@@ -1,0 +1,4 @@
+class=wcworkshop.core.binary.UnknownDynamicBlock
+size=dynamic
+property=filesize,offset=0
+property=unknownBlock[],times={all},offset={0}

@@ -1,0 +1,3 @@
+class=wcworkshop.core.binary.Wc1RleBlock
+size=dynamic
+property=data,offset={0}
