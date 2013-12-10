@@ -1,0 +1,14 @@
+class=wcworkshop.core.binary.Wc1ModuleNavPointData
+size=77
+property=id,offset=0,length=30
+property=type,offset=30
+property=xCoords[],times=3,offset=32
+property=unknown1,offset=35
+property=yCoords[],times=3,offset=36
+property=unknown2,offset=39
+property=zCoords[],times=3,offset=40
+property=unknown3,offset=43
+property=unknown4,offset=44
+property=navPointManipulation[],mapping=wc1.module.navPointManipulationData,offset=45,times=4
+property=shipImagesToLoad[],times=2,offset=53
+property=presentShips[],times=10,offset=57

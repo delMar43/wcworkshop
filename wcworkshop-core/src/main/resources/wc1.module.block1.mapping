@@ -1,0 +1,5 @@
+class=wcworkshop.core.binary.Wc1ModuleBlock1
+size=1536
+property=unknown1[],times=50,offset=0
+property=autopilotShips[],times=52,offset=100,mapping=wc1.module.autopilotShips
+property=unknown2[],offset=1348,times=188
