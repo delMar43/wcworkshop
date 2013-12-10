@@ -3,3 +3,4 @@ size=235164
 property=filesize,offset=0
 property=block1,offset=28,mapping=wc1.module.block1
 property=block2,offset=1564,mapping=wc1.module.block2
+property=block3,offset=80412,mapping=wc1.module.block3
