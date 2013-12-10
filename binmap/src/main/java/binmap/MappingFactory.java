@@ -148,7 +148,7 @@ public class MappingFactory {
       fieldTypeName = fieldType.getName();
     }
 
-    if (fieldType.isAssignableFrom(String.class)) {
+    if ("java.lang.String".equals(fieldTypeName)) {
 
       int length = Integer.parseInt(tokenMap.get("length"));
       result = new StringMappingProperty(property, offset, length, times);

@@ -109,9 +109,9 @@ public class BinaryReader {
         if (times > 1) {
           String[] array = (String[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
-            int from = globalOffset + propertyOffset;
-            int to = from + smp.getLength();
-            Array.set(array, idx, getString(data, from, to));
+            int propLength = smp.getLength();
+            int from = globalOffset + propertyOffset + idx * propLength;
+            Array.set(array, idx, getString(data, from, propLength));
           }
           binaryUtils.setValue(sink, field, array);
         } else {
