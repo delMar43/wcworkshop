@@ -154,12 +154,17 @@ public class BinaryReader {
 
       } else if ("int".equals(typeName)) {
 
+        IntegerMappingProperty imp = (IntegerMappingProperty) property;
+
         if (times > 1) {
           int[] array = (int[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
             int from = globalOffset + propertyOffset + 4 * idx;
             int to = from + 4;
             byte[] bytes = Arrays.copyOfRange(data, from, to);
+            if (imp.isOnlyThreeBytes()) {
+              bytes[3] = 0;
+            }
             int value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
             Array.set(array, idx, value);
           }
@@ -168,6 +173,9 @@ public class BinaryReader {
           int from = globalOffset + propertyOffset;
           int to = from + 4;
           byte[] bytes = Arrays.copyOfRange(data, from, to);
+          if (imp.isOnlyThreeBytes()) {
+            bytes[3] = 0;
+          }
           int value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
           binaryUtils.setValue(sink, field, value);
         }

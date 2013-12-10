@@ -153,9 +153,14 @@ public class MappingFactory {
       int length = Integer.parseInt(tokenMap.get("length"));
       result = new StringMappingProperty(property, offset, length, times);
 
-    } else if ("byte".equals(fieldTypeName) || "short".equals(fieldTypeName) || "int".equals(fieldTypeName)) {
+    } else if ("byte".equals(fieldTypeName) || "short".equals(fieldTypeName)) {
 
       result = new MappingProperty(property, offset, times);
+
+    } else if ("int".equals(fieldTypeName)) {
+
+      boolean onlyThreeBytes = tokenMap.containsKey("length") && tokenMap.get("length").equals("3");
+      result = new IntegerMappingProperty(property, offset, times, onlyThreeBytes);
 
     } else if (mapping != null) {
 
