@@ -112,8 +112,10 @@ public class MappingFactory {
     int offset;
     String offsetString = tokenMap.get("offset");
     if (offsetString.startsWith("{")) {
-      offset = Constants.OFFSET_VARIABLE;
+      offset = Constants.OFFSET_BLOCK;
       offsets.put(property, offsetString);
+    } else if (offsetString.equals("calc")) {
+      offset = Constants.OFFSET_CALC;
     } else {
       offset = Integer.parseInt(tokenMap.get("offset"));
     }
@@ -150,8 +152,12 @@ public class MappingFactory {
 
     if ("java.lang.String".equals(fieldTypeName)) {
 
-      int length = Integer.parseInt(tokenMap.get("length"));
-      result = new StringMappingProperty(property, offset, length, times);
+      if (tokenMap.containsKey("length")) {
+        int length = Integer.parseInt(tokenMap.get("length"));
+        result = new StringMappingProperty(property, offset, length, times);
+      } else {
+        result = new NullTermStringMappingProperty(property, offset, times);
+      }
 
     } else if ("byte".equals(fieldTypeName) || "short".equals(fieldTypeName)) {
 

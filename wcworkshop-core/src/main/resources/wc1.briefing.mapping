@@ -5,4 +5,4 @@ property=filesize,offset=0
 #property=Wc1BriefingHalcyonData,offset={1},mapping=wc1.briefing.halcyonData
 #property=Wc1BriefingMedalCeremonyData,offset={2},mapping=wc1.briefing.medalCeremonyData
 #offsets[3] is empty
-property=Wc1BriefingMissionData,offset={4-},mapping=wc1.briefing.missionData
+property=missionData[],offset={4},times={toTheEnd},mapping=wc1.briefing.missionData

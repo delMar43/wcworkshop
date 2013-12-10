@@ -53,6 +53,7 @@ public class BinaryReader {
       dynamicSizes = Collections.EMPTY_LIST;
     }
 
+    int cummulatedLength = 0;
     for (MappingProperty property : mapping.getMappingProperties()) {
       String fieldName;
       if (property.getProperty().endsWith("[]")) {
@@ -71,9 +72,12 @@ public class BinaryReader {
       }
 
       int propertyOffset = property.getOffset();
-      if (propertyOffset == -1) {
+      if (propertyOffset == Constants.OFFSET_BLOCK) {
         propertyOffset = getDynamicOffset(mapping, dynamicOffsets, property.getProperty());
+      } else if (propertyOffset == Constants.OFFSET_CALC) {
+        propertyOffset = cummulatedLength;
       }
+
       int times = property.getTimes();
       if (times == Constants.TIMES_OFFSETS) {
         times = dynamicOffsets.size();
@@ -95,6 +99,7 @@ public class BinaryReader {
             int to = from + getDynamicSize(smp.getSubMapping(), dynamicSizes, idx);
             Object subMappingObject = createSubMappingObject(data, smp, from, to);
             Array.set(array, idx, subMappingObject);
+            cummulatedLength += smp.getSubMapping().getSize();
           }
           binaryUtils.setValue(sink, field, array);
         } else {
@@ -102,22 +107,42 @@ public class BinaryReader {
           int to = from + getDynamicSize(smp.getSubMapping(), dynamicSizes, 0);
           Object object = createSubMappingObject(data, smp, from, to);
           binaryUtils.setValue(sink, field, object);
+          cummulatedLength += smp.getSubMapping().getSize();
         }
 
       } else if ("java.lang.String".equals(typeName)) {
-        StringMappingProperty smp = (StringMappingProperty) property;
 
-        if (times > 1) {
-          String[] array = (String[]) Array.newInstance(type.getComponentType(), times);
-          for (int idx = 0; idx < times; ++idx) {
-            int propLength = smp.getLength();
-            int from = globalOffset + propertyOffset + idx * propLength;
-            Array.set(array, idx, getString(data, from, propLength));
+        if (property instanceof NullTermStringMappingProperty) {
+
+          if (times > 1) {
+            String[] array = (String[]) Array.newInstance(type.getComponentType(), times);
+            for (int idx = 0; idx < times; ++idx) {
+              int from = globalOffset + propertyOffset;
+              String value = getString(data, from);
+              Array.set(array, idx, value);
+              cummulatedLength += value.length();
+            }
+            binaryUtils.setValue(sink, field, array);
+          } else {
+            String value = getString(data, globalOffset + propertyOffset);
+            cummulatedLength += value.length();
+            binaryUtils.setValue(sink, field, value);
           }
-          binaryUtils.setValue(sink, field, array);
         } else {
-          String value = getString(data, globalOffset + propertyOffset, smp.getLength());
-          binaryUtils.setValue(sink, field, value);
+          StringMappingProperty smp = (StringMappingProperty) property;
+
+          if (times > 1) {
+            String[] array = (String[]) Array.newInstance(type.getComponentType(), times);
+            for (int idx = 0; idx < times; ++idx) {
+              int propLength = smp.getLength();
+              int from = globalOffset + propertyOffset + idx * propLength;
+              Array.set(array, idx, getString(data, from, propLength));
+            }
+            binaryUtils.setValue(sink, field, array);
+          } else {
+            String value = getString(data, globalOffset + propertyOffset, smp.getLength());
+            binaryUtils.setValue(sink, field, value);
+          }
         }
 
       } else if ("byte".equals(typeName)) {
@@ -127,11 +152,13 @@ public class BinaryReader {
           for (int idx = 0; idx < times; ++idx) {
             int pos = globalOffset + propertyOffset + idx;
             Array.set(array, idx, data[pos]);
+            ++cummulatedLength;
           }
           binaryUtils.setValue(sink, field, array);
         } else {
           byte value = data[globalOffset + propertyOffset];
           binaryUtils.setValue(sink, field, value);
+          ++cummulatedLength;
         }
 
       } else if ("short".equals(typeName)) {
@@ -143,6 +170,7 @@ public class BinaryReader {
             byte[] bytes = Arrays.copyOfRange(data, from, to);
             short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
             Array.set(array, idx, value);
+            cummulatedLength += 2;
           }
           binaryUtils.setValue(sink, field, array);
         } else {
@@ -151,6 +179,7 @@ public class BinaryReader {
           byte[] bytes = Arrays.copyOfRange(data, from, to);
           short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
           binaryUtils.setValue(sink, field, value);
+          cummulatedLength += 2;
         }
 
       } else if ("int".equals(typeName)) {
@@ -168,6 +197,7 @@ public class BinaryReader {
             }
             int value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
             Array.set(array, idx, value);
+            cummulatedLength += 4;
           }
           binaryUtils.setValue(sink, field, array);
         } else {
@@ -179,6 +209,7 @@ public class BinaryReader {
           }
           int value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
           binaryUtils.setValue(sink, field, value);
+          cummulatedLength += 4;
         }
 
       } else {
@@ -234,6 +265,27 @@ public class BinaryReader {
     if (result.contains("\0")) {
       result = result.substring(0, result.indexOf("\0"));
     }
+    return result;
+  }
+
+  private String getString(byte[] block, int offset) {
+
+    int endIndex = -1;
+    for (int idx = offset; idx < block.length; ++idx) {
+      if (block[idx] == (byte) 0) {
+        endIndex = idx;
+        break;
+      }
+    }
+
+    String result;
+    int length;
+    if (endIndex == -1) {
+      length = block.length - offset;
+    } else {
+      length = endIndex - offset;
+    }
+    result = getString(block, offset, length);
     return result;
   }
 

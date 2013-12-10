@@ -1,0 +1,6 @@
+class=wcworkshop.core.binary.Wc1BriefingCutsceneScript
+size=dynamic
+property=commands,offset=0
+property=text,offset=calc
+property=phonetic,offset=calc
+property=facialExpressions,offset=calc
