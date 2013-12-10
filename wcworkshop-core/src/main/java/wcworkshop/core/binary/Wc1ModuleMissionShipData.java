@@ -7,11 +7,11 @@ public class Wc1ModuleMissionShipData {
   private short unknown1;
   private short orders;
   private short unknown2;
-  private int xCoord;
+  private byte[] xCoord;
   private short unknown3;
-  private int yCoord;
+  private byte[] yCoord;
   private short unknown4;
-  private int zCoord;
+  private byte[] zCoord;
   private short unknown5;
   private short unknown6;
   private short unknown7;
@@ -71,11 +71,11 @@ public class Wc1ModuleMissionShipData {
     this.unknown2 = unknown2;
   }
 
-  public int getxCoord() {
+  public byte[] getxCoord() {
     return xCoord;
   }
 
-  public void setxCoord(int xCoord) {
+  public void setxCoord(byte[] xCoord) {
     this.xCoord = xCoord;
   }
 
@@ -87,11 +87,11 @@ public class Wc1ModuleMissionShipData {
     this.unknown3 = unknown3;
   }
 
-  public int getyCoord() {
+  public byte[] getyCoord() {
     return yCoord;
   }
 
-  public void setyCoord(int yCoord) {
+  public void setyCoord(byte[] yCoord) {
     this.yCoord = yCoord;
   }
 
@@ -103,11 +103,11 @@ public class Wc1ModuleMissionShipData {
     this.unknown4 = unknown4;
   }
 
-  public int getzCoord() {
+  public byte[] getzCoord() {
     return zCoord;
   }
 
-  public void setzCoord(int zCoord) {
+  public void setzCoord(byte[] zCoord) {
     this.zCoord = zCoord;
   }
 
