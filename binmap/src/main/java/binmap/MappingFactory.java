@@ -63,7 +63,7 @@ public class MappingFactory {
           break;
         case "size":
           if ("dynamic".equals(keyValuePair[1])) {
-            size = -1;
+            size = Constants.SIZE_DYNAMIC;
           } else {
             size = Integer.parseInt(keyValuePair[1]);
           }
@@ -112,7 +112,7 @@ public class MappingFactory {
     int offset;
     String offsetString = tokenMap.get("offset");
     if (offsetString.startsWith("{")) {
-      offset = -1;
+      offset = Constants.OFFSET_VARIABLE;
       offsets.put(property, offsetString);
     } else {
       offset = Integer.parseInt(tokenMap.get("offset"));
@@ -124,11 +124,11 @@ public class MappingFactory {
       if (timesString.startsWith("{")) {
         timesString = timesString.replace("{", "").replace("}", "");
         if ("offsets".equals(timesString)) {
-          times = -1;
+          times = Constants.TIMES_OFFSETS;
         } else if ("all".equals(timesString)) {
-          times = -2;
+          times = Constants.TIMES_ALL;
         } else if ("blockSize".equals(timesString)) {
-          times = -3;
+          times = Constants.TIMES_BLOCKSIZE;
         } else {
           throw new RuntimeException("Unknown times pattern: " + timesString);
         }

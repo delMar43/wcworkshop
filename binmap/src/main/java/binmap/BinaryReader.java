@@ -196,7 +196,7 @@ public class BinaryReader {
 
   private int getDynamicSize(Mapping mapping, List<Integer> dynamicSizes, int index) {
     int size = mapping.getSize();
-    if (size == -1) {
+    if (size == Constants.SIZE_DYNAMIC) {
       size = dynamicSizes.get(index);
     }
     return size;
