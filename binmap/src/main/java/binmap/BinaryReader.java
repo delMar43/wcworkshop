@@ -21,18 +21,14 @@ public class BinaryReader {
   }
 
   public <T> T toJava(byte[] data, Mapping mapping, Class<T> targetClass) {
-    return toJava(data, mapping, 0, targetClass);
-  }
-
-  public <T> T toJava(byte[] data, Mapping mapping, int offset, Class<T> targetClass) {
     T t = binaryUtils.instantiate(targetClass);
 
-    fillWithData(t, data, mapping, offset, targetClass);
+    fillWithData(t, data, mapping, targetClass);
 
     return t;
   }
 
-  private void fillWithData(Object sink, byte[] data, Mapping mapping, int globalOffset, Class<?> targetClass) {
+  private void fillWithData(Object sink, byte[] data, Mapping mapping, Class<?> targetClass) {
 
     List<Integer> dynamicOffsets;
     List<Integer> dynamicSizes;
@@ -95,7 +91,7 @@ public class BinaryReader {
             if (idx != 0) {
               currentOffset += getDynamicSize(smp.getSubMapping(), dynamicSizes, idx - 1);
             }
-            int from = currentOffset + globalOffset + propertyOffset;
+            int from = currentOffset + propertyOffset;
             int to = from + getDynamicSize(smp.getSubMapping(), dynamicSizes, idx);
             Object subMappingObject = createSubMappingObject(data, smp, from, to);
             Array.set(array, idx, subMappingObject);
@@ -103,7 +99,7 @@ public class BinaryReader {
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          int from = globalOffset + propertyOffset;
+          int from = propertyOffset;
           int to = from + getDynamicSize(smp.getSubMapping(), dynamicSizes, 0);
           Object object = createSubMappingObject(data, smp, from, to);
           binaryUtils.setValue(sink, field, object);
@@ -117,14 +113,14 @@ public class BinaryReader {
           if (times > 1) {
             String[] array = (String[]) Array.newInstance(type.getComponentType(), times);
             for (int idx = 0; idx < times; ++idx) {
-              int from = globalOffset + propertyOffset;
+              int from = propertyOffset;
               String value = getString(data, from);
               Array.set(array, idx, value);
               cummulatedLength += value.length();
             }
             binaryUtils.setValue(sink, field, array);
           } else {
-            String value = getString(data, globalOffset + propertyOffset);
+            String value = getString(data, propertyOffset);
             cummulatedLength += value.length();
             binaryUtils.setValue(sink, field, value);
           }
@@ -135,12 +131,12 @@ public class BinaryReader {
             String[] array = (String[]) Array.newInstance(type.getComponentType(), times);
             for (int idx = 0; idx < times; ++idx) {
               int propLength = smp.getLength();
-              int from = globalOffset + propertyOffset + idx * propLength;
+              int from = propertyOffset + idx * propLength;
               Array.set(array, idx, getString(data, from, propLength));
             }
             binaryUtils.setValue(sink, field, array);
           } else {
-            String value = getString(data, globalOffset + propertyOffset, smp.getLength());
+            String value = getString(data, propertyOffset, smp.getLength());
             binaryUtils.setValue(sink, field, value);
           }
         }
@@ -150,13 +146,13 @@ public class BinaryReader {
         if (times > 1) {
           byte[] array = (byte[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
-            int pos = globalOffset + propertyOffset + idx;
+            int pos = propertyOffset + idx;
             Array.set(array, idx, data[pos]);
             ++cummulatedLength;
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          byte value = data[globalOffset + propertyOffset];
+          byte value = data[propertyOffset];
           binaryUtils.setValue(sink, field, value);
           ++cummulatedLength;
         }
@@ -165,7 +161,7 @@ public class BinaryReader {
         if (times > 1) {
           short[] array = (short[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
-            int from = globalOffset + propertyOffset + 2 * idx;
+            int from = propertyOffset + 2 * idx;
             int to = from + 2;
             byte[] bytes = Arrays.copyOfRange(data, from, to);
             short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
@@ -174,7 +170,7 @@ public class BinaryReader {
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          int from = globalOffset + propertyOffset;
+          int from = propertyOffset;
           int to = from + 2;
           byte[] bytes = Arrays.copyOfRange(data, from, to);
           short value = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
@@ -189,7 +185,7 @@ public class BinaryReader {
         if (times > 1) {
           int[] array = (int[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
-            int from = globalOffset + propertyOffset + 4 * idx;
+            int from = propertyOffset + 4 * idx;
             int to = from + 4;
             byte[] bytes = Arrays.copyOfRange(data, from, to);
             if (imp.isOnlyThreeBytes()) {
@@ -201,7 +197,7 @@ public class BinaryReader {
           }
           binaryUtils.setValue(sink, field, array);
         } else {
-          int from = globalOffset + propertyOffset;
+          int from = propertyOffset;
           int to = from + 4;
           byte[] bytes = Arrays.copyOfRange(data, from, to);
           if (imp.isOnlyThreeBytes()) {
