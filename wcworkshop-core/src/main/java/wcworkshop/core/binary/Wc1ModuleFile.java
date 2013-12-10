@@ -6,4 +6,5 @@ public class Wc1ModuleFile {
   private Wc1ModuleBlock1 block1; //autopilot
   private Wc1ModuleBlock2 block2; //navpoints
   private Wc1ModuleBlock3 block3; //navpoint notes
+  private Wc1ModuleBlock4 block4; //ship mission data
 }
