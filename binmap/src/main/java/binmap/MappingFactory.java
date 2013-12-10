@@ -127,8 +127,8 @@ public class MappingFactory {
           times = Constants.TIMES_OFFSETS;
         } else if ("all".equals(timesString)) {
           times = Constants.TIMES_ALL;
-        } else if ("blockSize".equals(timesString)) {
-          times = Constants.TIMES_BLOCKSIZE;
+        } else if ("toTheEnd".equals(timesString)) {
+          times = Constants.TIMES_TOTHEEND;
         } else {
           throw new RuntimeException("Unknown times pattern: " + timesString);
         }

@@ -7,5 +7,5 @@ public class Constants {
 
   public static final int TIMES_OFFSETS = -1;
   public static final int TIMES_ALL = -2;
-  public static final int TIMES_BLOCKSIZE = -3;
+  public static final int TIMES_TOTHEEND = -3;
 }

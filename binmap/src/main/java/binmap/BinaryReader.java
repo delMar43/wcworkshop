@@ -75,10 +75,11 @@ public class BinaryReader {
         propertyOffset = getDynamicOffset(mapping, dynamicOffsets, property.getProperty());
       }
       int times = property.getTimes();
-      if (times == -1) {
+      if (times == Constants.TIMES_OFFSETS) {
         times = dynamicOffsets.size();
-      } else if (times == -2) {
-        times = data.length;
+      } else if (times == Constants.TIMES_TOTHEEND) {
+        int curOffsetIndex = getCurrentOffsetIndex(mapping, property.getProperty());
+        times = dynamicOffsets.size() - curOffsetIndex;
       }
       if (property instanceof SubMappingProperty) {
 
@@ -188,10 +189,15 @@ public class BinaryReader {
 
   private int getDynamicOffset(Mapping mapping, List<Integer> dynamicOffsets, String propertyName) {
     int propertyOffset;
-    String propKey = mapping.getDynamicOffset(propertyName);
-    int offsetIndex = Integer.parseInt(propKey.replace("{", "").replace("}", ""));
+    int offsetIndex = getCurrentOffsetIndex(mapping, propertyName);
     propertyOffset = dynamicOffsets.get(offsetIndex);
     return propertyOffset;
+  }
+
+  private int getCurrentOffsetIndex(Mapping mapping, String propertyName) {
+    String propKey = mapping.getDynamicOffset(propertyName);
+    int offsetIndex = Integer.parseInt(propKey.replace("{", "").replace("}", ""));
+    return offsetIndex;
   }
 
   private int getDynamicSize(Mapping mapping, List<Integer> dynamicSizes, int index) {
