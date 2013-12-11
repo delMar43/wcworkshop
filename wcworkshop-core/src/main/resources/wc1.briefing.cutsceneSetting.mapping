@@ -1,5 +1,5 @@
 class=wcworkshop.core.binary.Wc1BriefingCutsceneSetting
-size=40
+size=13
 property=foreground,offset=0
 property=fontColor,offset=1
 property=background,offset=2
