@@ -17,13 +17,18 @@ public class Constants {
    */
   public static final int TIMES_OFFSETS = -1;
   /**
-   * as often as the current property value has bytes
+   * as often as the current property value has bytes (used for byte arrays of unknown data)
    */
   public static final int TIMES_ALL = -2;
   /**
    * as often as is still needed to iterate to the last defined block offset
    */
   public static final int TIMES_TOTHEEND = -3;
+
+  /**
+   * repeat until the current block is over (ie length of current block divided by size of current mapping)
+   */
+  public static final int TIMES_CURRENTBLOCK = -4;
 
   /**
    * the string is null-terminated

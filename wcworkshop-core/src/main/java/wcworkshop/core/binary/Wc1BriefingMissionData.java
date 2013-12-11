@@ -3,15 +3,15 @@ package wcworkshop.core.binary;
 public class Wc1BriefingMissionData {
 
   private int[] offsets;
-  private Wc1BriefingCutsceneSetting briefingCutsceneSetting;
+  private Wc1BriefingCutsceneSetting[] briefingCutsceneSettings;
   private Wc1BriefingCutsceneScript briefingCutsceneScript;
-  private Wc1BriefingCutsceneSetting debriefingCutsceneSetting;
+  private Wc1BriefingCutsceneSetting[] debriefingCutsceneSettings;
   private Wc1BriefingCutsceneScript debriefingCutsceneScript;
-  private Wc1BriefingCutsceneSetting shotglassCutsceneSetting;
+  private Wc1BriefingCutsceneSetting[] shotglassCutsceneSettings;
   private Wc1BriefingCutsceneScript shotglassCutsceneScript;
-  private Wc1BriefingCutsceneSetting leftSeatCutsceneSetting;
+  private Wc1BriefingCutsceneSetting[] leftSeatCutsceneSettings;
   private Wc1BriefingCutsceneScript leftSeatCutsceneScript;
-  private Wc1BriefingCutsceneSetting rightSeatCutsceneSetting;
+  private Wc1BriefingCutsceneSetting[] rightSeatCutsceneSettings;
   private Wc1BriefingCutsceneScript rightSeatCutsceneScript;
 
   public int[] getOffsets() {
@@ -22,12 +22,12 @@ public class Wc1BriefingMissionData {
     this.offsets = offsets;
   }
 
-  public Wc1BriefingCutsceneSetting getBriefingCutsceneSetting() {
-    return briefingCutsceneSetting;
+  public Wc1BriefingCutsceneSetting[] getBriefingCutsceneSettings() {
+    return briefingCutsceneSettings;
   }
 
-  public void setBriefingCutsceneSetting(Wc1BriefingCutsceneSetting briefingCutsceneSetting) {
-    this.briefingCutsceneSetting = briefingCutsceneSetting;
+  public void setBriefingCutsceneSettings(Wc1BriefingCutsceneSetting[] briefingCutsceneSettings) {
+    this.briefingCutsceneSettings = briefingCutsceneSettings;
   }
 
   public Wc1BriefingCutsceneScript getBriefingCutsceneScript() {
@@ -38,12 +38,12 @@ public class Wc1BriefingMissionData {
     this.briefingCutsceneScript = briefingCutsceneScript;
   }
 
-  public Wc1BriefingCutsceneSetting getDebriefingCutsceneSetting() {
-    return debriefingCutsceneSetting;
+  public Wc1BriefingCutsceneSetting[] getDebriefingCutsceneSettings() {
+    return debriefingCutsceneSettings;
   }
 
-  public void setDebriefingCutsceneSetting(Wc1BriefingCutsceneSetting debriefingCutsceneSetting) {
-    this.debriefingCutsceneSetting = debriefingCutsceneSetting;
+  public void setDebriefingCutsceneSettings(Wc1BriefingCutsceneSetting[] debriefingCutsceneSettings) {
+    this.debriefingCutsceneSettings = debriefingCutsceneSettings;
   }
 
   public Wc1BriefingCutsceneScript getDebriefingCutsceneScript() {
@@ -54,12 +54,12 @@ public class Wc1BriefingMissionData {
     this.debriefingCutsceneScript = debriefingCutsceneScript;
   }
 
-  public Wc1BriefingCutsceneSetting getShotglassCutsceneSetting() {
-    return shotglassCutsceneSetting;
+  public Wc1BriefingCutsceneSetting[] getShotglassCutsceneSettings() {
+    return shotglassCutsceneSettings;
   }
 
-  public void setShotglassCutsceneSetting(Wc1BriefingCutsceneSetting shotglassCutsceneSetting) {
-    this.shotglassCutsceneSetting = shotglassCutsceneSetting;
+  public void setShotglassCutsceneSettings(Wc1BriefingCutsceneSetting[] shotglassCutsceneSettings) {
+    this.shotglassCutsceneSettings = shotglassCutsceneSettings;
   }
 
   public Wc1BriefingCutsceneScript getShotglassCutsceneScript() {
@@ -70,12 +70,12 @@ public class Wc1BriefingMissionData {
     this.shotglassCutsceneScript = shotglassCutsceneScript;
   }
 
-  public Wc1BriefingCutsceneSetting getLeftSeatCutsceneSetting() {
-    return leftSeatCutsceneSetting;
+  public Wc1BriefingCutsceneSetting[] getLeftSeatCutsceneSettings() {
+    return leftSeatCutsceneSettings;
   }
 
-  public void setLeftSeatCutsceneSetting(Wc1BriefingCutsceneSetting leftSeatCutsceneSetting) {
-    this.leftSeatCutsceneSetting = leftSeatCutsceneSetting;
+  public void setLeftSeatCutsceneSettings(Wc1BriefingCutsceneSetting[] leftSeatCutsceneSettings) {
+    this.leftSeatCutsceneSettings = leftSeatCutsceneSettings;
   }
 
   public Wc1BriefingCutsceneScript getLeftSeatCutsceneScript() {
@@ -86,12 +86,12 @@ public class Wc1BriefingMissionData {
     this.leftSeatCutsceneScript = leftSeatCutsceneScript;
   }
 
-  public Wc1BriefingCutsceneSetting getRightSeatCutsceneSetting() {
-    return rightSeatCutsceneSetting;
+  public Wc1BriefingCutsceneSetting[] getRightSeatCutsceneSettings() {
+    return rightSeatCutsceneSettings;
   }
 
-  public void setRightSeatCutsceneSetting(Wc1BriefingCutsceneSetting rightSeatCutsceneSetting) {
-    this.rightSeatCutsceneSetting = rightSeatCutsceneSetting;
+  public void setRightSeatCutsceneSettings(Wc1BriefingCutsceneSetting[] rightSeatCutsceneSettings) {
+    this.rightSeatCutsceneSettings = rightSeatCutsceneSettings;
   }
 
   public Wc1BriefingCutsceneScript getRightSeatCutsceneScript() {

@@ -135,6 +135,8 @@ public class MappingFactory {
           times = Constants.TIMES_ALL;
         } else if ("toTheEnd".equals(timesString)) {
           times = Constants.TIMES_TOTHEEND;
+        } else if ("currentBlock".equals(timesString)) {
+          times = Constants.TIMES_CURRENTBLOCK;
         } else {
           throw new RuntimeException("Unknown times pattern: " + timesString);
         }
