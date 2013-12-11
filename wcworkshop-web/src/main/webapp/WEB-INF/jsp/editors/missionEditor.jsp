@@ -84,23 +84,23 @@
   <table>
     <tr>
       <th>Shotglass</th>
-      <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 2)">Edit...</a></td>
+      <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 'SHOTGLASS')">Edit...</a></td>
     </tr>
     <tr>
       <th>Left Chair</th>
-      <td>${pilotRepo.getPilot(mission.conversationPartners.leftSeat).name}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 3)">Edit...</a></td>
+      <td>${pilotRepo.getPilot(mission.conversationPartners.leftSeat).name}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 'LEFT_SEAT')">Edit...</a></td>
     </tr>
     <tr>
       <th>Right Chair</th>
-      <td>${pilotRepo.getPilot(mission.conversationPartners.rightSeat).name}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 4)">Edit...</a></td>
+      <td>${pilotRepo.getPilot(mission.conversationPartners.rightSeat).name}&nbsp;<a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 'RIGHT_SEAT')">Edit...</a></td>
     </tr>
     <tr>
       <th>Briefing</th>
-      <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 0)">Edit...</a></td>
+      <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 'BRIEFING')">Edit...</a></td>
     </tr>
     <tr>
       <th>Debriefing</th>
-      <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 1)">Edit...</a></td>
+      <td><a href="javascript:openCutsceneEditor('${campaign}', ${seriesIndex}, ${missionIndex}, 'DEBRIEFING')">Edit...</a></td>
     </tr>
   </table>
 </div>

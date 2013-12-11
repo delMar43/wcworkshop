@@ -18,22 +18,27 @@ import binmap.Mapping;
 import binmap.MappingFactory;
 
 public class Wc1CutsceneService {
+  private static final Wc1CutsceneService instance = new Wc1CutsceneService();
 
   private MappingFactory mappingFactory = MappingFactory.getInstance();
   private ReaderHelper readerHelper = ReaderHelper.getInstance();
 
-  public Wc1Cutscenes createCutscenes() {
+  private Wc1CutsceneService() {
+  }
+
+  public Wc1Cutscenes createCutscenes(String campaign) {
     Mapping mapper = mappingFactory.createMapping("wc1.briefing.mapping");
-    byte[] data = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "BRIEFING.000");
+    byte[] data = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "BRIEFING." + campaign);
     Wc1BriefingFile file = BinaryReader.getInstance().toJava(data, mapper, Wc1BriefingFile.class);
 
     Wc1Cutscenes result = new Wc1Cutscenes();
+    int nrMissions = file.getMissionData().length;
     int missionDataIdx = 0;
     List<Wc1MissionCutscenes> allCutscenes = new ArrayList<>();
     for (int series = 0; series < 13; ++series) {
       for (int mission = 0; mission < 4; ++mission) {
         Wc1MissionCutscenes missionCutscenes = new Wc1MissionCutscenes();
-        System.out.println("Series " + series + ", Mission " + (mission + 1));
+
         Wc1BriefingMissionData missionData = file.getMissionData()[missionDataIdx++];
         if (missionData == null) {
           allCutscenes.add(Wc1MissionCutscenes.EMPTY);
@@ -42,7 +47,12 @@ public class Wc1CutsceneService {
         Map<Wc1CutsceneType, Wc1Cutscene> cutscenes = extractCutscenes(missionData);
         missionCutscenes.setCutscenes(cutscenes);
         allCutscenes.add(missionCutscenes);
-        System.out.println();
+        if (missionDataIdx >= nrMissions) {
+          break;
+        }
+      }
+      if (missionDataIdx >= nrMissions) {
+        break;
       }
     }
     result.setMissionCutscenes(allCutscenes);
@@ -52,23 +62,18 @@ public class Wc1CutsceneService {
   private Map<Wc1CutsceneType, Wc1Cutscene> extractCutscenes(Wc1BriefingMissionData missionData) {
     Map<Wc1CutsceneType, Wc1Cutscene> result = new HashMap<>();
 
-    System.out.println(" Briefing");
     Wc1Cutscene cutscene = extractCutscene(missionData.getBriefingCutsceneSettings(), missionData.getBriefingCutsceneScript());
     result.put(Wc1CutsceneType.BRIEFING, cutscene);
 
-    System.out.println(" Debriefing");
     cutscene = extractCutscene(missionData.getDebriefingCutsceneSettings(), missionData.getDebriefingCutsceneScript());
     result.put(Wc1CutsceneType.DEBRIEFING, cutscene);
 
-    System.out.println(" Shotglass");
     cutscene = extractCutscene(missionData.getShotglassCutsceneSettings(), missionData.getShotglassCutsceneScript());
     result.put(Wc1CutsceneType.SHOTGLASS, cutscene);
 
-    System.out.println(" Left Seat");
     cutscene = extractCutscene(missionData.getLeftSeatCutsceneSettings(), missionData.getLeftSeatCutsceneScript());
     result.put(Wc1CutsceneType.LEFT_SEAT, cutscene);
 
-    System.out.println(" Right Seat");
     cutscene = extractCutscene(missionData.getRightSeatCutsceneSettings(), missionData.getRightSeatCutsceneScript());
     result.put(Wc1CutsceneType.RIGHT_SEAT, cutscene);
 
@@ -87,6 +92,7 @@ public class Wc1CutsceneService {
       screen.setBackground(setting.getBackground());
       screen.setForeground(setting.getForeground());
       screen.setTextColor(setting.getFontColor());
+      screen.setUnknown(setting.getUnknown());
     }
 
     result.setScreens(screens);
@@ -118,4 +124,7 @@ public class Wc1CutsceneService {
     return result;
   }
 
+  public static Wc1CutsceneService getInstance() {
+    return instance;
+  }
 }

@@ -114,7 +114,7 @@
       
       var openCutsceneEditor = function(campaign, seriesIndex, missionIndex, cutsceneIndex) {
     	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "C" + cutsceneIndex;
-    	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " C" + cutsceneIndex;
+    	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " " + cutsceneIndex;
         addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex);
       };
       

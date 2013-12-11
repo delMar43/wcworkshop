@@ -7,6 +7,7 @@ public class Wc1CutsceneScreen {
   private String text;
   private String phonetic;
   private String facialExpression;
+  private short unknown;
   private byte foreground;
   private byte background;
   private byte textColor;
@@ -75,4 +76,11 @@ public class Wc1CutsceneScreen {
     this.textColor = textColor;
   }
 
+  public short getUnknown() {
+    return unknown;
+  }
+
+  public void setUnknown(short unknown) {
+    this.unknown = unknown;
+  }
 }

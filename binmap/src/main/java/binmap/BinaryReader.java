@@ -43,9 +43,7 @@ public class BinaryReader {
           curSize = data.length - dynamicOffsets.get(offsetIdx);
         }
         dynamicSizes.add(curSize);
-        System.out.print(dynamicOffsets.get(offsetIdx) + " ");
       }
-      System.out.println();
     } else {
       dynamicOffsets = Collections.EMPTY_LIST;
       dynamicSizes = Collections.EMPTY_LIST;

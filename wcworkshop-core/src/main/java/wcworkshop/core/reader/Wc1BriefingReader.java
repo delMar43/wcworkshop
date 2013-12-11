@@ -47,7 +47,6 @@ public class Wc1BriefingReader {
       // System.out.println("     from " + startOffset + " to " + endOffset);
 
       byte[] block = Arrays.copyOfRange(funeralBuffer, startOffset, endOffset);
-      System.out.println("  " + new String(block));
       ++blockIndex;
     }
   }

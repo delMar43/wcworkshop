@@ -7,11 +7,11 @@ import wcworkshop.core.service.Wc1Cutscenes;
 
 public class Wc1CutsceneServiceTest {
 
-  private Wc1CutsceneService service = new Wc1CutsceneService();
+  private Wc1CutsceneService service = Wc1CutsceneService.getInstance();
 
   @Test
   public void test() {
-    Wc1Cutscenes cutscenes = service.createCutscenes();
+    Wc1Cutscenes cutscenes = service.createCutscenes("000");
     System.out.println("done");
   }
 }

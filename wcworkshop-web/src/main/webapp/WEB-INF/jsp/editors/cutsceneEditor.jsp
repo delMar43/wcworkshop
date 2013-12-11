@@ -5,60 +5,18 @@
   <h2>
     Campaign ${campaign}, 
     <a href="javascript:openSeriesEditor('${campaign}', ${seriesIndex +0})">Series ${seriesIndex +1}</a>,
-    <a href="javascript:openMissionEditor('${campaign}', ${seriesIndex +0}, ${missionIndex +0})">Mission ${missionIndex +1}</a>: ${cutscene.title}
+    <a href="javascript:openMissionEditor('${campaign}', ${seriesIndex +0}, ${missionIndex +0})">Mission ${missionIndex +1}</a>: ${cutsceneIndex}
   </h2>
-  <div>
-    <h3>First Line</h3>
-    <table>
-      <tbody>
-        <tr>
-          <th>Foreground</th>
-          <td>${cutsceneUtil.getForeground(cutscene.foreground)}</td>
-        </tr>
-        <tr>
-          <th>Background</th>
-          <td>${cutsceneUtil.getBackground(cutscene.background)}</td>
-        </tr>
-        <tr>
-          <th>Text Color</th>
-          <td>${cutsceneUtil.getTextColor(cutscene.textColor)}</td>
-        </tr>
-        <tr>
-          <th>Unknown 1</th>
-          <td>${cutsceneUtil.hexString(cutscene.unknown1)}</td>
-        </tr>
-        <tr>
-          <th>Unknown 2</th>
-          <td>${cutsceneUtil.hexString(cutscene.unknown2)}</td>
-        </tr>
-        <tr>
-          <th>Commands</th>
-          <td>${cutsceneUtil.getConditionString(cutscene.condition)}</td>
-        </tr>
-        <tr>
-          <th>Text</th>
-          <td>${cutscene.firstLine}</td>
-        </tr>
-        <tr>
-          <th>Phonetic</th>
-          <td>${cutscene.firstLinePhonetic}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
   
   <div>
-  Known fact:<br/>
-  Some commands may have parameters.<br/>
-  A parameter comes immediately after the command, without 0x2c in between.<br/>
-  Parameters are not yet displayed as such here and thus are shown as Unknown (but they aren't)
-  </div>
-  
-  <div>
-    <h3>Subsequent Lines</h3>
+    <h3>Screens</h3>
     <table>
       <thead>
         <tr>
+          <th>Nr</th>
+          <th>Foreground</th>
+          <th>Background</th>
+          <th>Color</th>
           <th>Commands</th>
           <th>Text</th>
           <th>Facial expression</th>
@@ -66,12 +24,16 @@
         </tr>
       </thead>
       <tbody>
-  <c:forEach items="${cutscene.cutsceneLines}" var="line" varStatus="lineStatus">
+  <c:forEach items="${cutscene.screens}" var="screen" varStatus="screenStatus">
         <tr>
-          <td>${cutsceneUtil.getConditionString(line.commandBytes)}</td>
-          <td>${line.text}</td>
-          <td>${line.facialExpressions}</td>
-          <td>${line.phonetic}</td>
+          <td>${screenStatus.count}</td>
+          <td>${cutsceneUtil.getForeground(screen.foreground)}</td>
+          <td>${cutsceneUtil.getBackground(screen.background)}</td>
+          <td>${cutsceneUtil.getTextColor(screen.textColor)}</td>
+          <td>${screen.commands}</td>
+          <td>${screen.text}</td>
+          <td>${screen.facialExpression}</td>
+          <td>${screen.phonetic}</td>
         </tr>
   </c:forEach>
       </tbody>

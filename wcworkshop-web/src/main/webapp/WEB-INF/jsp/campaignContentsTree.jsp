@@ -19,11 +19,11 @@
                     </c:forEach>
                   </ul>
                 </li>
-                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 2)">[C] Shotglass</a></li>
-                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 3)">[C] Left Seat</a></li>
-                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 4)">[C] Right Seat</a></li>
-                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 0)">[C] Briefing</a></li>
-                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 1)">[C] Debriefing</a></li>
+                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'SHOTGLASS')">[C] Shotglass</a></li>
+                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'LEFT_SEAT')">[C] Left Seat</a></li>
+                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'RIGHT_SEAT')">[C] Right Seat</a></li>
+                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'BRIEFING')">[C] Briefing</a></li>
+                <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'DEBRIEFING')">[C] Debriefing</a></li>
               </ul>
             </li>
           </c:forEach>
