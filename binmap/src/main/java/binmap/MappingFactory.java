@@ -46,6 +46,7 @@ public class MappingFactory {
 
     String className = null;
     int size = -1;
+    int offsetStart = 0;
     List<MappingProperty> properties = new ArrayList<>();
     Map<String, String> dynamicOffsets = new HashMap<>();
     for (String line : lines) {
@@ -68,6 +69,9 @@ public class MappingFactory {
             size = Integer.parseInt(keyValuePair[1]);
           }
           break;
+        case "offsetStart":
+          offsetStart = Integer.parseInt(keyValuePair[1]);
+          break;
         case "property":
           MappingProperty property = buildMappingProperty(clazz, line, dynamicOffsets);
           properties.add(property);
@@ -77,7 +81,7 @@ public class MappingFactory {
           break;
       }
     }
-    Mapping mapping = new Mapping(className, size, properties, dynamicOffsets);
+    Mapping mapping = new Mapping(className, size, properties, dynamicOffsets, offsetStart);
 
     return mapping;
   }

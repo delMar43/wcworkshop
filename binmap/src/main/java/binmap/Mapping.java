@@ -8,12 +8,14 @@ public class Mapping {
   private int size;
   private List<MappingProperty> mappingProperties;
   private Map<String, String> dynamicOffsets;
+  private int offsetStart;
 
-  public Mapping(String className, int size, List<MappingProperty> mappingProperties, Map<String, String> dynamicOffsets) {
+  public Mapping(String className, int size, List<MappingProperty> mappingProperties, Map<String, String> dynamicOffsets, int offsetStart) {
     this.className = className;
     this.size = size;
     this.mappingProperties = mappingProperties;
     this.dynamicOffsets = dynamicOffsets;
+    this.offsetStart = offsetStart;
   }
 
   public String getClassName() {
@@ -30,6 +32,10 @@ public class Mapping {
 
   public Map<String, String> getDynamicOffsets() {
     return dynamicOffsets;
+  }
+
+  public int getOffsetStart() {
+    return offsetStart;
   }
 
   public boolean isWithDynamicOffsets() {

@@ -1,5 +1,6 @@
 class=wcworkshop.core.binary.Wc1BriefingFile
 size=dynamic
+offsetStart=4
 property=filesize,offset=0
 #property=Wc1BriefingFuneralData,offset={0},mapping=wc1.briefing.funeralData
 #property=Wc1BriefingHalcyonData,offset={1},mapping=wc1.briefing.halcyonData
