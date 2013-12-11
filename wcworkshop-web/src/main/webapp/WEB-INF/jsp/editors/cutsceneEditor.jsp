@@ -21,6 +21,7 @@
           <th>Text</th>
           <th>Facial expression</th>
           <th>Phonetic</th>
+          <th>Unknown</th>
         </tr>
       </thead>
       <tbody>
@@ -34,6 +35,7 @@
           <td>${screen.text}</td>
           <td>${screen.facialExpression}</td>
           <td>${screen.phonetic}</td>
+          <td>${screen.unknown}</td>
         </tr>
   </c:forEach>
       </tbody>
