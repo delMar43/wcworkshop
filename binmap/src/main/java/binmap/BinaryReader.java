@@ -119,7 +119,7 @@ public class BinaryReader {
           int from = propertyOffset;
 
           int to;
-          if (smp.getSubMapping().isWithDynamicOffsets()) {
+          if (smp.getSubMapping().getSize() == Constants.SIZE_DYNAMIC) {
             if (propertyIndex + 1 < mapping.getMappingProperties().size()) {
               to = getDynamicOffset(mapping, dynamicOffsets, mapping.getMappingProperties().get(propertyIndex + 1).getProperty());
             } else {
