@@ -52,6 +52,7 @@ public class BinaryReader {
     }
 
     int cummulatedLength = 0;
+    int propertyIndex = 0;
     for (MappingProperty property : mapping.getMappingProperties()) {
       String fieldName;
       if (property.getProperty().endsWith("[]")) {
@@ -116,7 +117,18 @@ public class BinaryReader {
           binaryUtils.setValue(sink, field, array);
         } else {
           int from = propertyOffset;
-          int to = from + getDynamicSize(smp.getSubMapping(), dynamicSizes, 0);
+
+          int to;
+          if (smp.getSubMapping().isWithDynamicOffsets()) {
+            if (propertyIndex + 1 < mapping.getMappingProperties().size()) {
+              to = getDynamicOffset(mapping, dynamicOffsets, mapping.getMappingProperties().get(propertyIndex + 1).getProperty());
+            } else {
+              to = data.length;
+            }
+          } else {
+            to = from + getDynamicSize(smp.getSubMapping(), dynamicSizes, 0);
+          }
+
           Object object = createSubMappingObject(data, smp, from, to);
           binaryUtils.setValue(sink, field, object);
           cummulatedLength += smp.getSubMapping().getSize();
@@ -161,7 +173,7 @@ public class BinaryReader {
 
       } else if ("byte".equals(typeName)) {
 
-        if (times > 1) {
+        if (times > 1 || property.getProperty().endsWith("[]")) {
           byte[] array = (byte[]) Array.newInstance(type.getComponentType(), times);
           for (int idx = 0; idx < times; ++idx) {
             int pos = propertyOffset + idx;
@@ -229,6 +241,8 @@ public class BinaryReader {
       } else {
         throw new RuntimeException("Unable to handle type " + typeName);
       }
+
+      ++propertyIndex;
     }
   }
 
@@ -267,7 +281,8 @@ public class BinaryReader {
   }
 
   private Object createSubMappingObject(byte[] data, SubMappingProperty smp, int from, int to) {
-    logger.debug("createSubMappingObject for {} from {} to {} inside data of size {}", new Object[] { smp.getProperty(), from, to, data.length });
+    logger.debug("createSubMappingObject for {} from {} to {} inside data of size {}", new Object[] { smp.getProperty(), from, to,
+        data.length });
     byte[] subData = Arrays.copyOfRange(data, from, to);
     Class<?> clazz = binaryUtils.getClass(smp.getSubMapping().getClassName());
     Object sub = toJava(subData, smp.getSubMapping(), clazz);
