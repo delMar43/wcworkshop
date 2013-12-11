@@ -92,7 +92,13 @@ public class BinaryReader {
           Object[] array = (Object[]) Array.newInstance(type.getComponentType(), times);
           int currentOffset = 0;
           for (int idx = 0; idx < times; ++idx) {
-            int offsetIndex = getCurrentOffsetIndex(mapping, property.getProperty()) + idx;
+            int offsetIndex;
+            if (mapping.getSize() == Constants.SIZE_DYNAMIC) {
+              offsetIndex = getCurrentOffsetIndex(mapping, property.getProperty()) + idx;
+            } else {
+              offsetIndex = idx;
+            }
+
             if (idx != 0) {
               currentOffset += getDynamicSize(smp.getSubMapping(), dynamicSizes, offsetIndex - 1);
             }
