@@ -79,6 +79,8 @@ public class BinaryReader {
       int times = property.getTimes();
       if (times == Constants.TIMES_OFFSETS) {
         times = dynamicOffsets.size();
+      } else if (times == Constants.TIMES_ALL) {
+        times = data.length;
       } else if (times == Constants.TIMES_TOTHEEND) {
         int curOffsetIndex = getCurrentOffsetIndex(mapping, property.getProperty());
         times = dynamicOffsets.size() - curOffsetIndex;
@@ -124,12 +126,14 @@ public class BinaryReader {
               int from = propertyOffset;
               String value = getString(data, from);
               Array.set(array, idx, value);
-              cummulatedLength += value.length();
+              int propLength = value.length() + 1;
+              cummulatedLength += propLength;
             }
             binaryUtils.setValue(sink, field, array);
           } else {
             String value = getString(data, propertyOffset);
-            cummulatedLength += value.length();
+            int propLength = value.length() + 1;
+            cummulatedLength += propLength;
             binaryUtils.setValue(sink, field, value);
           }
         } else {
