@@ -5,7 +5,6 @@ import java.util.List;
 public class Wc1BriefingData {
   public static final Wc1BriefingData EMPTY = new Wc1BriefingData();
 
-  private Wc1FuneralData funeralData;
   private List<Wc1MissionSlot> missionSlots;
 
   public List<Wc1MissionSlot> getMissionSlots() {

@@ -4,6 +4,11 @@ public class Wc1BriefingFile {
 
   private int filesize;
   private int[] offsets;
+  //  private Wc1BriefingFuneralData funeralData;
+  private byte[] funeralData;
+  private byte[] halcyon;
+  private byte[] medalCeremony;
+  private byte empty;
   private Wc1BriefingMissionData[] missionData;
 
   public int getFilesize() {

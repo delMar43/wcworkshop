@@ -84,12 +84,21 @@ public class BinaryReader {
         int curOffsetIndex = getCurrentOffsetIndex(mapping, property.getProperty());
         times = dynamicOffsets.size() - curOffsetIndex;
       } else if (times == Constants.TIMES_CURRENTBLOCK) {
-        if (!(property instanceof SubMappingProperty)) {
-          throw new RuntimeException("times={currentBlock} is only supported for subMappings so far");
-        }
-        SubMappingProperty smp = (SubMappingProperty) property;
         int blockLength = getDynamicSize(mapping, dynamicSizes, propertyIndex);
-        times = blockLength / smp.getSubMapping().getSize();
+        int propSize;
+        if (property instanceof SubMappingProperty) {
+          SubMappingProperty smp = (SubMappingProperty) property;
+          propSize = smp.getSubMapping().getSize();
+        } else if (typeName.equals("byte")) {
+          propSize = 1;
+        } else if (typeName.equals("short")) {
+          propSize = 2;
+        } else if (typeName.equals("int")) {
+          propSize = 4;
+        } else {
+          throw new RuntimeException("Unknown property: " + property);
+        }
+        times = blockLength / propSize;
       }
       if (property instanceof SubMappingProperty) {
 

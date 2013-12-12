@@ -17,21 +17,26 @@ import binmap.BinaryReader;
 import binmap.Mapping;
 import binmap.MappingFactory;
 
-public class Wc1CutsceneService {
-  private static final Wc1CutsceneService instance = new Wc1CutsceneService();
+public class Wc1CutsceneReadService {
+  private static final Wc1CutsceneReadService instance = new Wc1CutsceneReadService();
 
   private MappingFactory mappingFactory = MappingFactory.getInstance();
   private ReaderHelper readerHelper = ReaderHelper.getInstance();
 
-  private Wc1CutsceneService() {
+  private Wc1CutsceneReadService() {
   }
 
-  public Wc1Cutscenes createCutscenes(String campaign) {
+  public Wc1Cutscenes loadCutscenes(String campaign) {
     Mapping mapper = mappingFactory.createMapping("wc1.briefing.mapping");
     byte[] data = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "BRIEFING." + campaign);
     Wc1BriefingFile file = BinaryReader.getInstance().toJava(data, mapper, Wc1BriefingFile.class);
 
     Wc1Cutscenes result = new Wc1Cutscenes();
+
+    //    Wc1Cutscene funeralCutscene = extractCutscene(file.getFuneralData().getFuneralCutsceneSettings(), file.getFuneralData()
+    //        .getFuneralCutsceneScript());
+    //    result.setFuneralCutscene(funeralCutscene);
+
     int nrMissions = file.getMissionData().length;
     int missionDataIdx = 0;
     List<Wc1MissionCutscenes> allCutscenes = new ArrayList<>();
@@ -124,7 +129,7 @@ public class Wc1CutsceneService {
     return result;
   }
 
-  public static Wc1CutsceneService getInstance() {
+  public static Wc1CutsceneReadService getInstance() {
     return instance;
   }
 }

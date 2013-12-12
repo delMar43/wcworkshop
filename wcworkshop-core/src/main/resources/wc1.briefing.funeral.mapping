@@ -1,0 +1,5 @@
+class=wcworkshop.core.binary.Wc1BriefingFuneralData
+size=dynamic
+offsetStart=0
+property=funeralCutsceneSettings[],offset={0},times=14,mapping=wc1.briefing.cutsceneSetting
+property=funeralCutsceneScript,offset={1},mapping=wc1.briefing.cutsceneScript
