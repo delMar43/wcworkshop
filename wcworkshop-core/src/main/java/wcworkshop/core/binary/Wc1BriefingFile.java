@@ -35,4 +35,27 @@ public class Wc1BriefingFile {
     this.missionData = missionData;
   }
 
+  public byte[] getFuneralData() {
+    return funeralData;
+  }
+
+  public void setFuneralData(byte[] funeralData) {
+    this.funeralData = funeralData;
+  }
+
+  public byte[] getHalcyon() {
+    return halcyon;
+  }
+
+  public void setHalcyon(byte[] halcyon) {
+    this.halcyon = halcyon;
+  }
+
+  public byte[] getMedalCeremony() {
+    return medalCeremony;
+  }
+
+  public void setMedalCeremony(byte[] medalCeremony) {
+    this.medalCeremony = medalCeremony;
+  }
 }
