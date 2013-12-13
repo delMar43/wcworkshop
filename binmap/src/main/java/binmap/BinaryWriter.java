@@ -31,7 +31,7 @@ public class BinaryWriter {
 
       Object value = binaryUtils.getValue(source, field);
       if (value == null) {
-        System.out.println("NULL OBJECT !!!");
+        offsets.add(previousOffset);
         continue;
       }
       boolean propertyIsArray = property.getProperty().endsWith("[]");
@@ -46,27 +46,31 @@ public class BinaryWriter {
       if (property instanceof SubMappingProperty) {
 
         Mapping subMapping = ((SubMappingProperty) property).getSubMapping();
-        dynamicProperty = new SubMappingProperty(property.getProperty(), property.getOffset(), subMapping, times);
+        dynamicProperty = new SubMappingProperty(property.getProperty(), property.getOffset(), subMapping, times,
+            property.isBlockOffsetCreator());
 
       } else if (property instanceof StringMappingProperty) {
 
-        dynamicProperty = new StringMappingProperty(property.getProperty(), property.getOffset(), ((StringMappingProperty) property).getLength(),
-            property.getTimes());
+        dynamicProperty = new StringMappingProperty(property.getProperty(), property.getOffset(),
+            ((StringMappingProperty) property).getLength(), property.getTimes(), property.isBlockOffsetCreator());
 
       } else {
 
-        dynamicProperty = new MappingProperty(property.getProperty(), property.getOffset(), times);
+        dynamicProperty = new MappingProperty(property.getProperty(), property.getOffset(), times, property.isBlockOffsetCreator());
 
       }
 
-      byte[] propertyBytes = handleProperty(source, mapping, dynamicProperty);
-      for (byte b : propertyBytes) {
-        byteList.add(b);
-      }
+      List<byte[]> propertyByteList = handleProperty(source, mapping, dynamicProperty);
+      for (byte[] propertyBytes : propertyByteList) {
+        for (byte b : propertyBytes) {
+          byteList.add(b);
+        }
 
-      if (mapping.hasOffsets()) {
-        offsets.add(previousOffset);
-        previousOffset += byteList.size();
+        if (property.isBlockOffsetCreator()) {
+          offsets.add(previousOffset);
+        }
+
+        previousOffset += propertyBytes.length;
       }
     }
 
@@ -77,7 +81,7 @@ public class BinaryWriter {
       resultSize = byteList.size();
     }
 
-    if (mapping.hasOffsets()) {
+    if (mapping.isWithBlockOffsetCreators()) {
       resultSize += offsets.size() * 4;
     }
 
@@ -114,16 +118,18 @@ public class BinaryWriter {
 
     int offset = 0;
     for (MappingProperty property : mapping.getMappingProperties()) {
-      byte[] propertyBytes = handleProperty(source, mapping, property);
-      binaryUtils.copyIntoArray(propertyBytes, result, offset);
-      offset += propertyBytes.length;
+      List<byte[]> propertyByteList = handleProperty(source, mapping, property);
+      for (byte[] propertyBytes : propertyByteList) {
+        binaryUtils.copyIntoArray(propertyBytes, result, offset);
+        offset += propertyBytes.length;
+      }
     }
 
     logger.debug("Done with statically mapping {} bytes to {}", mapping.getSize(), mapping.getClassName());
     return result;
   }
 
-  private byte[] handleProperty(Object source, Mapping mapping, MappingProperty property) {
+  private List<byte[]> handleProperty(Object source, Mapping mapping, MappingProperty property) {
     String fieldName = getFieldName(property);
     Class<?> targetClass = binaryUtils.getClass(mapping.getClassName());
 
@@ -139,13 +145,15 @@ public class BinaryWriter {
 
     boolean propertyIsArray = property.getProperty().endsWith("[]");
 
+    List<byte[]> resultList = new ArrayList<>();
+
     byte[] result;
     if (property instanceof StringMappingProperty) {
 
       StringMappingProperty smp = (StringMappingProperty) property;
       int propLength = smp.getLength();
       result = binaryUtils.createNullTerminatedFromString((String) value, propLength);
-      // binaryUtils.copyIntoArray(bytes, result, offset);
+      resultList.add(result);
 
     } else if (property instanceof SubMappingProperty) {
       SubMappingProperty smp = (SubMappingProperty) property;
@@ -154,7 +162,6 @@ public class BinaryWriter {
       Field subField = binaryUtils.getField(targetClass, subFieldName);
 
       if (propertyIsArray) {
-        List<Byte> tempList = new ArrayList<>();
         Object[] array = (Object[]) value;
         for (int time = 0; time < times; ++time) {
           Object sub = array[time];
@@ -164,17 +171,8 @@ public class BinaryWriter {
           } else {
             bytes = toBinary(sub, smp.getSubMapping());
           }
-          for (byte b : bytes) {
-            tempList.add(b);
-          }
-          // binaryUtils.copyIntoArray(bytes, result, offset);
+          resultList.add(bytes);
           offset += bytes.length;
-        }
-
-        result = new byte[tempList.size()];
-        int idx = 0;
-        for (Byte b : tempList) {
-          result[idx++] = b.byteValue();
         }
 
       } else {
@@ -185,7 +183,7 @@ public class BinaryWriter {
         } else {
           result = toBinary(sub, smp.getSubMapping());
         }
-        // binaryUtils.copyIntoArray(bytes, result, offset);
+        resultList.add(result);
 
       }
 
@@ -202,6 +200,7 @@ public class BinaryWriter {
         } else {
           result = new byte[] { ((Byte) value) };
         }
+        resultList.add(result);
 
       } else if (fieldTypeName.equals("short")) {
 
@@ -213,32 +212,28 @@ public class BinaryWriter {
             array = new short[times];
             Arrays.fill(array, (short) 0);
           }
-          result = new byte[times * 2];
           for (int time = 0; time < times; ++time) {
             byte[] bytes = binaryUtils.createShortBytes(array[time]);
-            binaryUtils.copyIntoArray(bytes, result, time * 2);
-            // binaryUtils.copyIntoArray(bytes, result, offset);
+            resultList.add(bytes);
             offset += 2;
           }
         } else {
           result = binaryUtils.createShortBytes((Short) value);
-          // binaryUtils.copyIntoArray(bytes, result, offset);
+          resultList.add(result);
         }
 
       } else if (fieldTypeName.equals("int")) {
 
         if (propertyIsArray) {
           int[] array = (int[]) value;
-          result = new byte[times * 4];
           for (int time = 0; time < times; ++time) {
             byte[] bytes = binaryUtils.createIntegerBytes(array[time]);
-            binaryUtils.copyIntoArray(bytes, result, time * 4);
-            // binaryUtils.copyIntoArray(bytes, result, offset);
+            resultList.add(bytes);
             offset += 4;
           }
         } else {
           result = binaryUtils.createIntegerBytes((Integer) value);
-          // binaryUtils.copyIntoArray(bytes, result, offset);
+          resultList.add(result);
         }
 
       } else {
@@ -246,7 +241,7 @@ public class BinaryWriter {
       }
     }
 
-    return result;
+    return resultList;
   }
 
   private String getFieldTypeName(Class<?> fieldType) {

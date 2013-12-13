@@ -69,6 +69,15 @@ public class Mapping {
     }
   }
 
+  public boolean isWithBlockOffsetCreators() {
+    for (MappingProperty prop : mappingProperties) {
+      if (prop.isBlockOffsetCreator()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public String getMappingFilename() {
     return mappingFilename;
   }

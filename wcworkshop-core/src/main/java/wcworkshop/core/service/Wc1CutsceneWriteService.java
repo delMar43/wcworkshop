@@ -8,7 +8,6 @@ import wcworkshop.core.binary.Wc1BriefingFile;
 import wcworkshop.core.binary.Wc1BriefingMissionData;
 import wcworkshop.core.model.Wc1Cutscene;
 import wcworkshop.core.model.Wc1CutsceneScreen;
-import wcworkshop.core.reader.ReaderHelper;
 import binmap.BinaryUtils;
 import binmap.BinaryWriter;
 import binmap.Mapping;
@@ -19,7 +18,6 @@ public class Wc1CutsceneWriteService {
 
   private MappingFactory mappingFactory = MappingFactory.getInstance();
   private BinaryWriter binaryWriter = BinaryWriter.getInstance();
-  private ReaderHelper readerHelper = ReaderHelper.getInstance();
   private BinaryUtils binaryUtils = BinaryUtils.getInstance();
 
   private Wc1CutsceneWriteService() {
@@ -49,16 +47,8 @@ public class Wc1CutsceneWriteService {
     file.setMedalCeremony(source.getMedalCeremonyData());
     file.setMissionData(missionDataArray);
 
-    //    byte[] donor = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "BRIEFING.000");
-    //    byte[] preface = new byte[14655];
-    //    binaryUtils.copyIntoArray(Arrays.copyOfRange(donor, 0, 14655), preface, 0);
-
     Mapping mapping = mappingFactory.createMapping("wc1.briefing.mapping");
     byte[] newContents = binaryWriter.toDynamicBinary(file, mapping);
-
-    //    byte[] result = new byte[preface.length + newContents.length];
-    //    binaryUtils.copyIntoArray(preface, result, 0);
-    //    binaryUtils.copyIntoArray(newContents, result, 14655);
 
     int length = newContents.length;
     binaryUtils.copyIntoArray(binaryUtils.createIntegerBytes(length), newContents, 0);

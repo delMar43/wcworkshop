@@ -2,10 +2,14 @@ package wcworkshop.core.service;
 
 import java.util.List;
 
+import wcworkshop.core.binary.Wc1BriefingFuneralData;
+import wcworkshop.core.binary.Wc1BriefingHalcyonData;
+import wcworkshop.core.binary.Wc1BriefingMedalCeremonyData;
+
 public class Wc1Cutscenes {
-  private byte[] funeralData;
-  private byte[] halcyonData;
-  private byte[] medalCeremonyData;
+  private Wc1BriefingFuneralData funeralData;
+  private Wc1BriefingHalcyonData halcyonData;
+  private Wc1BriefingMedalCeremonyData medalCeremonyData;
   private List<Wc1MissionCutscenes> missionCutscenes;
 
   public List<Wc1MissionCutscenes> getMissionCutscenes() {
@@ -16,27 +20,27 @@ public class Wc1Cutscenes {
     this.missionCutscenes = missionCutscenes;
   }
 
-  public byte[] getFuneralData() {
+  public Wc1BriefingFuneralData getFuneralData() {
     return funeralData;
   }
 
-  public void setFuneralData(byte[] funeralData) {
+  public void setFuneralData(Wc1BriefingFuneralData funeralData) {
     this.funeralData = funeralData;
   }
 
-  public byte[] getHalcyonData() {
+  public Wc1BriefingHalcyonData getHalcyonData() {
     return halcyonData;
   }
 
-  public void setHalcyonData(byte[] halcyonData) {
+  public void setHalcyonData(Wc1BriefingHalcyonData halcyonData) {
     this.halcyonData = halcyonData;
   }
 
-  public byte[] getMedalCeremonyData() {
+  public Wc1BriefingMedalCeremonyData getMedalCeremonyData() {
     return medalCeremonyData;
   }
 
-  public void setMedalCeremonyData(byte[] medalCeremonyData) {
+  public void setMedalCeremonyData(Wc1BriefingMedalCeremonyData medalCeremonyData) {
     this.medalCeremonyData = medalCeremonyData;
   }
 

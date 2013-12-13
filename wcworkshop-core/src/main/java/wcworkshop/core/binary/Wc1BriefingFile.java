@@ -5,9 +5,9 @@ public class Wc1BriefingFile {
   private int filesize;
   private int[] offsets;
   //  private Wc1BriefingFuneralData funeralData;
-  private byte[] funeralData;
-  private byte[] halcyon;
-  private byte[] medalCeremony;
+  private Wc1BriefingFuneralData funeralData;
+  private Wc1BriefingHalcyonData halcyon;
+  private Wc1BriefingMedalCeremonyData medalCeremony;
   private byte empty;
   private Wc1BriefingMissionData[] missionData;
 
@@ -35,27 +35,28 @@ public class Wc1BriefingFile {
     this.missionData = missionData;
   }
 
-  public byte[] getFuneralData() {
+  public Wc1BriefingFuneralData getFuneralData() {
     return funeralData;
   }
 
-  public void setFuneralData(byte[] funeralData) {
+  public void setFuneralData(Wc1BriefingFuneralData funeralData) {
     this.funeralData = funeralData;
   }
 
-  public byte[] getHalcyon() {
+  public Wc1BriefingHalcyonData getHalcyon() {
     return halcyon;
   }
 
-  public void setHalcyon(byte[] halcyon) {
+  public void setHalcyon(Wc1BriefingHalcyonData halcyon) {
     this.halcyon = halcyon;
   }
 
-  public byte[] getMedalCeremony() {
+  public Wc1BriefingMedalCeremonyData getMedalCeremony() {
     return medalCeremony;
   }
 
-  public void setMedalCeremony(byte[] medalCeremony) {
+  public void setMedalCeremony(Wc1BriefingMedalCeremonyData medalCeremony) {
     this.medalCeremony = medalCeremony;
   }
+
 }

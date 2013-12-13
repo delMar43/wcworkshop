@@ -3,8 +3,8 @@ size=dynamic
 offsetStart=4
 filesize=true
 property=filesize,offset=0
-property=funeralData[],offset={0},times={currentBlock}
-property=halcyon[],offset={1},times={currentBlock}
-property=medalCeremony[],offset={2},times={currentBlock}
-#property=empty,offset={3},times=0
-property=missionData[],offset={4},times={toTheEnd},mapping=wc1.briefing.missionData
+property=funeralData,offset={0},mapping=wc1.briefing.funeral,createsOffset=true
+property=halcyon,offset={1},mapping=wc1.briefing.halcyon,createsOffset=true
+property=medalCeremony,offset={2},mapping=wc1.briefing.medalCeremony,createsOffset=true
+property=empty,offset={3},times=0,createsOffset=true
+property=missionData[],offset={4},times={toTheEnd},mapping=wc1.briefing.missionData,createsOffset=true

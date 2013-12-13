@@ -48,6 +48,7 @@ public class MappingFactory {
     int size = -1;
     Integer offsetStart = null;
     boolean withFilesize = false;
+    int blockOffsetCreators = 0;
     List<MappingProperty> properties = new ArrayList<>();
     Map<String, String> dynamicOffsets = new HashMap<>();
     for (String line : lines) {
@@ -55,6 +56,7 @@ public class MappingFactory {
         continue;
       }
 
+      boolean isBlockOffsetCreator = false;
       String[] commands = line.split(",");
       String type = commands[0];
       String[] keyValuePair = type.split("=");
@@ -151,6 +153,8 @@ public class MappingFactory {
       times = 1;
     }
 
+    boolean isBlockOffsetCreator = tokenMap.containsKey("createsOffset") && tokenMap.get("createsOffset").equals("true");
+
     Field field = getField(clazz, fieldName);
     Class<?> fieldType = field.getType();
     String fieldTypeName;
@@ -164,14 +168,14 @@ public class MappingFactory {
 
       if (tokenMap.containsKey("length")) {
         int length = Integer.parseInt(tokenMap.get("length"));
-        result = new StringMappingProperty(property, offset, length, times);
+        result = new StringMappingProperty(property, offset, length, times, isBlockOffsetCreator);
       } else {
-        result = new NullTermStringMappingProperty(property, offset, times);
+        result = new NullTermStringMappingProperty(property, offset, times, isBlockOffsetCreator);
       }
 
     } else if ("byte".equals(fieldTypeName) || "short".equals(fieldTypeName)) {
 
-      result = new MappingProperty(property, offset, times);
+      result = new MappingProperty(property, offset, times, isBlockOffsetCreator);
 
     } else if ("int".equals(fieldTypeName)) {
 
@@ -181,7 +185,7 @@ public class MappingFactory {
     } else if (mapping != null) {
 
       Mapping subMapping = createMapping(mapping + ".mapping");
-      result = new SubMappingProperty(property, offset, subMapping, times);
+      result = new SubMappingProperty(property, offset, subMapping, times, isBlockOffsetCreator);
     } else {
       throw new RuntimeException("Unable to parse line: " + line);
     }

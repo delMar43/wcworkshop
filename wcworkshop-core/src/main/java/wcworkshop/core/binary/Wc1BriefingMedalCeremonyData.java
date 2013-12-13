@@ -1,6 +1,6 @@
 package wcworkshop.core.binary;
 
-public class Wc1BriefingFuneralData {
+public class Wc1BriefingMedalCeremonyData {
 
   private byte[] bytes;
 
@@ -11,5 +11,4 @@ public class Wc1BriefingFuneralData {
   public void setBytes(byte[] bytes) {
     this.bytes = bytes;
   }
-
 }

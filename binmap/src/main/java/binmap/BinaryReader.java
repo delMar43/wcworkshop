@@ -84,7 +84,8 @@ public class BinaryReader {
         int curOffsetIndex = getCurrentOffsetIndex(mapping, property.getProperty());
         times = dynamicOffsets.size() - curOffsetIndex;
       } else if (times == Constants.TIMES_CURRENTBLOCK) {
-        int blockLength = getDynamicSize(mapping, dynamicSizes, propertyIndex);
+        int offsetIndex = getCurrentOffsetIndex(mapping, property.getProperty());
+        int blockLength = getDynamicSize(mapping, dynamicSizes, offsetIndex);
         int propSize;
         if (property instanceof SubMappingProperty) {
           SubMappingProperty smp = (SubMappingProperty) property;
