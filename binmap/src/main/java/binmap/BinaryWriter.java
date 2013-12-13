@@ -26,8 +26,8 @@ public class BinaryWriter {
       String fieldName = getFieldName(property);
       Class<?> targetClass = binaryUtils.getClass(mapping.getClassName());
       Field field = binaryUtils.getField(targetClass, fieldName);
-      Class<?> fieldType = field.getType();
-      String fieldTypeName = getFieldTypeName(fieldType);
+      // Class<?> fieldType = field.getType();
+      // String fieldTypeName = getFieldTypeName(fieldType);
 
       Object value = binaryUtils.getValue(source, field);
       if (value == null) {
