@@ -1,13 +1,17 @@
 package wcworkshop.core.service;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import wcworkshop.core.binary.Wc1BriefingCutsceneScript;
 import wcworkshop.core.binary.Wc1BriefingCutsceneSetting;
 import wcworkshop.core.binary.Wc1BriefingFile;
 import wcworkshop.core.binary.Wc1BriefingMissionData;
+import wcworkshop.core.config.Configuration;
 import wcworkshop.core.model.Wc1Cutscene;
 import wcworkshop.core.model.Wc1CutsceneScreen;
+import wcworkshop.core.reader.ReaderHelper;
+import binmap.BinaryUtils;
 import binmap.BinaryWriter;
 import binmap.Mapping;
 import binmap.MappingFactory;
@@ -17,12 +21,13 @@ public class Wc1CutsceneWriteService {
 
   private MappingFactory mappingFactory = MappingFactory.getInstance();
   private BinaryWriter binaryWriter = BinaryWriter.getInstance();
+  private ReaderHelper readerHelper = ReaderHelper.getInstance();
+  private BinaryUtils binaryUtils = BinaryUtils.getInstance();
 
   private Wc1CutsceneWriteService() {
   }
 
   public byte[] generateCutscenes(Wc1Cutscenes source) {
-
     Wc1BriefingFile file = new Wc1BriefingFile();
     Wc1BriefingMissionData[] missionDataArray = new Wc1BriefingMissionData[source.getMissionCutscenes().size()];
 
@@ -43,9 +48,20 @@ public class Wc1CutsceneWriteService {
 
     file.setMissionData(missionDataArray);
 
+    byte[] donor = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "BRIEFING.000");
+    byte[] preface = new byte[14655];
+    binaryUtils.copyIntoArray(Arrays.copyOfRange(donor, 0, 14655), preface, 0);
+
     Mapping mapping = mappingFactory.createMapping("wc1.briefing.mapping");
-    byte[] result = binaryWriter.toDynamicBinary(file, mapping);
-    System.out.println("done");
+    byte[] newContents = binaryWriter.toDynamicBinary(file, mapping);
+
+    byte[] result = new byte[preface.length + newContents.length];
+    binaryUtils.copyIntoArray(preface, result, 0);
+    binaryUtils.copyIntoArray(newContents, result, 14655);
+
+    int length = result.length;
+    binaryUtils.copyIntoArray(binaryUtils.createIntegerBytes(length), result, 0);
+
     return result;
   }
 
