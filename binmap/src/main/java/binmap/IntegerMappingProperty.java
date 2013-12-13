@@ -4,11 +4,7 @@ public class IntegerMappingProperty extends MappingProperty {
 
   private boolean onlyThreeBytes;
 
-  public IntegerMappingProperty(String property, int offset, int times, boolean isBlockOffsetCreator) {
-    this(property, offset, times, false, isBlockOffsetCreator);
-  }
-
-  public IntegerMappingProperty(String property, int offset, int times, boolean onlyThreeBytes, boolean isBlockOffsetCreator) {
+  public IntegerMappingProperty(String property, int offset, int times, boolean onlyThreeBytes, String isBlockOffsetCreator) {
     super(property, offset, times, isBlockOffsetCreator);
     this.onlyThreeBytes = onlyThreeBytes;
   }

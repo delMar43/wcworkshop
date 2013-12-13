@@ -5,9 +5,9 @@ public class MappingProperty {
   private String property;
   private int offset;
   private int times;
-  private boolean blockOffsetCreator;
+  private String blockOffsetCreator;
 
-  public MappingProperty(String property, int offset, int times, boolean blockOffsetCreator) {
+  public MappingProperty(String property, int offset, int times, String blockOffsetCreator) {
     this.property = property;
     this.offset = offset;
     this.times = times;
@@ -31,7 +31,7 @@ public class MappingProperty {
     return times;
   }
 
-  public boolean isBlockOffsetCreator() {
+  public String isBlockOffsetCreator() {
     return blockOffsetCreator;
   }
 }

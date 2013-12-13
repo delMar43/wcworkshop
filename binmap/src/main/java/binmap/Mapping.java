@@ -71,7 +71,7 @@ public class Mapping {
 
   public boolean isWithBlockOffsetCreators() {
     for (MappingProperty prop : mappingProperties) {
-      if (prop.isBlockOffsetCreator()) {
+      if (prop.isBlockOffsetCreator() != null) {
         return true;
       }
     }

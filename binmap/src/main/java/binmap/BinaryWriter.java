@@ -69,21 +69,26 @@ public class BinaryWriter {
       }
       if (propertyByteList.isEmpty()) {
 
-        if (property.isBlockOffsetCreator()) {
+        if (property.isBlockOffsetCreator() != null) {
           offsets.add(previousOffset);
         }
 
       } else {
+        boolean first = true;
         for (byte[] propertyBytes : propertyByteList) {
           for (byte b : propertyBytes) {
             byteList.add(b);
           }
 
-          if (property.isBlockOffsetCreator()) {
-            offsets.add(previousOffset);
+          boolean createBlockOffset = property.isBlockOffsetCreator() != null;
+          if (createBlockOffset) {
+            if (property.isBlockOffsetCreator().equals("first") && first || property.isBlockOffsetCreator().equals("true")) {
+              offsets.add(previousOffset);
+            }
           }
 
           previousOffset += propertyBytes.length;
+          first = false;
         }
       }
     }

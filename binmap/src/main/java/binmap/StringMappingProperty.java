@@ -4,7 +4,7 @@ public class StringMappingProperty extends MappingProperty {
 
   private int length;
 
-  public StringMappingProperty(String property, int offset, int length, int times, boolean isBlockOffsetCreator) {
+  public StringMappingProperty(String property, int offset, int length, int times, String isBlockOffsetCreator) {
     super(property, offset, times, isBlockOffsetCreator);
     this.length = length;
   }

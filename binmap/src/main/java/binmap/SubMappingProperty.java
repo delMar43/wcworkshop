@@ -4,7 +4,7 @@ public class SubMappingProperty extends MappingProperty {
 
   private Mapping subMapping;
 
-  public SubMappingProperty(String property, int offset, Mapping subMapping, int times, boolean isBlockOffsetCreator) {
+  public SubMappingProperty(String property, int offset, Mapping subMapping, int times, String isBlockOffsetCreator) {
     super(property, offset, times, isBlockOffsetCreator);
     this.subMapping = subMapping;
   }

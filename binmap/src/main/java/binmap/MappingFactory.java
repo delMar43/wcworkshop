@@ -153,7 +153,12 @@ public class MappingFactory {
       times = 1;
     }
 
-    boolean isBlockOffsetCreator = tokenMap.containsKey("createsOffset") && tokenMap.get("createsOffset").equals("true");
+    String isBlockOffsetCreator;
+    if (tokenMap.containsKey("createsOffset")) {
+      isBlockOffsetCreator = tokenMap.get("createsOffset");
+    } else {
+      isBlockOffsetCreator = null;
+    }
 
     Field field = getField(clazz, fieldName);
     Class<?> fieldType = field.getType();
@@ -180,7 +185,7 @@ public class MappingFactory {
     } else if ("int".equals(fieldTypeName)) {
 
       boolean onlyThreeBytes = tokenMap.containsKey("length") && tokenMap.get("length").equals("3");
-      result = new IntegerMappingProperty(property, offset, times, onlyThreeBytes);
+      result = new IntegerMappingProperty(property, offset, times, onlyThreeBytes, isBlockOffsetCreator);
 
     } else if (mapping != null) {
 
