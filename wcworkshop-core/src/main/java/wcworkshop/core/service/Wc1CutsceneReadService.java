@@ -105,23 +105,20 @@ public class Wc1CutsceneReadService {
       screen.setTextColor(setting.getFontColor());
       screen.setUnknown(setting.getUnknown());
 
-      String string = getString(cutsceneScript, setting.getCommandOffset(), setting.getTextOffset());
-      screen.setCommands(string);
+      if (cutsceneScript.getScriptBytes().length >= 2) {
+        String string = getNullTerminatedString(cutsceneScript, setting.getCommandOffset());
+        screen.setCommands(string);
 
-      string = getString(cutsceneScript, setting.getTextOffset(), setting.getPhoneticOffset());
-      screen.setText(string);
+        string = getNullTerminatedString(cutsceneScript, setting.getTextOffset());
+        screen.setText(string);
 
-      string = getString(cutsceneScript, setting.getPhoneticOffset(), setting.getFacialExpressionOffset());
-      screen.setPhonetic(string);
+        string = getNullTerminatedString(cutsceneScript, setting.getPhoneticOffset());
+        screen.setPhonetic(string);
 
-      int to;
-      if (idx + 1 < cutsceneSettings.length) {
-        to = cutsceneSettings[idx + 1].getCommandOffset();
-      } else {
-        to = cutsceneScript.getScriptBytes().length;
+        string = getNullTerminatedString(cutsceneScript, setting.getFacialExpressionOffset());
+        screen.setFacialExpression(string);
       }
-      string = getString(cutsceneScript, setting.getFacialExpressionOffset(), to);
-      screen.setFacialExpression(string);
+
       screens.add(screen);
     }
 
@@ -130,19 +127,23 @@ public class Wc1CutsceneReadService {
     return result;
   }
 
-  private String getString(Wc1BriefingCutsceneScript cutsceneScript, int from, int to) {
-    if (to < from) {
-      logger.info("to {} > from {}", to, from);
-      return "";
+  private String getNullTerminatedString(Wc1BriefingCutsceneScript cutsceneScript, int from) {
+    byte[] bytes = cutsceneScript.getScriptBytes();
+
+    int to;
+    for (to = from; to < bytes.length; ++to) {
+      if (bytes[to] == (byte) 0) {
+        break;
+      }
     }
 
-    if (to > cutsceneScript.getScriptBytes().length) {
-      logger.info("to {} > data {}", to, cutsceneScript.getScriptBytes().length);
-      return "";
+    try {
+      String string = new String(Arrays.copyOfRange(cutsceneScript.getScriptBytes(), from - 1, to));
+      return string;
+    } catch (Exception e) {
+      System.out.println();
+      throw new RuntimeException(e.getMessage(), e);
     }
-
-    String string = new String(Arrays.copyOfRange(cutsceneScript.getScriptBytes(), from - 1, to));
-    return string;
   }
 
   public static Wc1CutsceneReadService getInstance() {
