@@ -1,9 +1,13 @@
 package wcworkshop.core.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import wcworkshop.core.binary.Wc1BriefingCutsceneScript;
 import wcworkshop.core.binary.Wc1BriefingCutsceneSetting;
@@ -18,6 +22,8 @@ import binmap.Mapping;
 import binmap.MappingFactory;
 
 public class Wc1CutsceneReadService {
+  private static final Logger logger = LoggerFactory.getLogger(Wc1CutsceneReadService.class);
+
   private static final Wc1CutsceneReadService instance = new Wc1CutsceneReadService();
 
   private MappingFactory mappingFactory = MappingFactory.getInstance();
@@ -33,9 +39,9 @@ public class Wc1CutsceneReadService {
 
     Wc1Cutscenes result = new Wc1Cutscenes();
 
-    //    Wc1Cutscene funeralCutscene = extractCutscene(file.getFuneralData().getFuneralCutsceneSettings(), file.getFuneralData()
-    //        .getFuneralCutsceneScript());
-    //    result.setFuneralCutscene(funeralCutscene);
+    // Wc1Cutscene funeralCutscene = extractCutscene(file.getFuneralData().getFuneralCutsceneSettings(), file.getFuneralData()
+    // .getFuneralCutsceneScript());
+    // result.setFuneralCutscene(funeralCutscene);
 
     int nrMissions = file.getMissionData().length;
     int missionDataIdx = 0;
@@ -88,16 +94,35 @@ public class Wc1CutsceneReadService {
   private Wc1Cutscene extractCutscene(Wc1BriefingCutsceneSetting[] cutsceneSettings, Wc1BriefingCutsceneScript cutsceneScript) {
     Wc1Cutscene result = new Wc1Cutscene();
 
-    String script = new String(cutsceneScript.getScriptBytes());
-    List<Wc1CutsceneScreen> screens = extractCutsceneScreens(script);
+    List<Wc1CutsceneScreen> screens = new ArrayList<>();
 
-    for (int idx = 0; idx < screens.size(); ++idx) {
-      Wc1CutsceneScreen screen = screens.get(idx);
+    for (int idx = 0; idx < cutsceneSettings.length; ++idx) {
+      Wc1CutsceneScreen screen = new Wc1CutsceneScreen();
+
       Wc1BriefingCutsceneSetting setting = cutsceneSettings[idx];
       screen.setBackground(setting.getBackground());
       screen.setForeground(setting.getForeground());
       screen.setTextColor(setting.getFontColor());
       screen.setUnknown(setting.getUnknown());
+
+      String string = getString(cutsceneScript, setting.getCommandOffset(), setting.getTextOffset());
+      screen.setCommands(string);
+
+      string = getString(cutsceneScript, setting.getTextOffset(), setting.getPhoneticOffset());
+      screen.setText(string);
+
+      string = getString(cutsceneScript, setting.getPhoneticOffset(), setting.getFacialExpressionOffset());
+      screen.setPhonetic(string);
+
+      int to;
+      if (idx + 1 < cutsceneSettings.length) {
+        to = cutsceneSettings[idx + 1].getCommandOffset();
+      } else {
+        to = cutsceneScript.getScriptBytes().length;
+      }
+      string = getString(cutsceneScript, setting.getFacialExpressionOffset(), to);
+      screen.setFacialExpression(string);
+      screens.add(screen);
     }
 
     result.setScreens(screens);
@@ -105,28 +130,19 @@ public class Wc1CutsceneReadService {
     return result;
   }
 
-  private List<Wc1CutsceneScreen> extractCutsceneScreens(String source) {
-    List<Wc1CutsceneScreen> result = new ArrayList<>();
-
-    String[] parts = source.split("\0");
-    for (int partIndex = 0; partIndex < parts.length; partIndex += 4) {
-      Wc1CutsceneScreen screen = new Wc1CutsceneScreen();
-
-      screen.setFacialExpression(parts[partIndex]);
-      if (partIndex + 1 < parts.length) {
-        screen.setCommands(parts[partIndex + 1]);
-      }
-      if (partIndex + 2 < parts.length) {
-        screen.setText(parts[partIndex + 2]);
-      }
-      if (partIndex + 3 < parts.length) {
-        screen.setPhonetic(parts[partIndex + 3]);
-      }
-
-      result.add(screen);
+  private String getString(Wc1BriefingCutsceneScript cutsceneScript, int from, int to) {
+    if (to < from) {
+      logger.info("to {} > from {}", to, from);
+      return "";
     }
 
-    return result;
+    if (to > cutsceneScript.getScriptBytes().length) {
+      logger.info("to {} > data {}", to, cutsceneScript.getScriptBytes().length);
+      return "";
+    }
+
+    String string = new String(Arrays.copyOfRange(cutsceneScript.getScriptBytes(), from - 1, to));
+    return string;
   }
 
   public static Wc1CutsceneReadService getInstance() {
