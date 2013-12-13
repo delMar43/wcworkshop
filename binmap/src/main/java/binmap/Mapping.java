@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Mapping {
+  private String mappingFilename;
   private String className;
   private int size;
   private List<MappingProperty> mappingProperties;
@@ -11,14 +12,21 @@ public class Mapping {
   private boolean withFilesize;
   private Integer offsetStart;
 
-  public Mapping(String className, int size, List<MappingProperty> mappingProperties, Map<String, String> dynamicOffsets, boolean withFilesize,
-      Integer offsetStart) {
+  public Mapping(String mappingFilename, String className, int size, List<MappingProperty> mappingProperties,
+      Map<String, String> dynamicOffsets, boolean withFilesize, Integer offsetStart) {
+    this.mappingFilename = mappingFilename;
     this.className = className;
     this.size = size;
     this.mappingProperties = mappingProperties;
     this.dynamicOffsets = dynamicOffsets;
     this.withFilesize = withFilesize;
     this.offsetStart = offsetStart;
+  }
+
+  @Override
+  public String toString() {
+    return "map=" + mappingFilename + ",class=" + className + ",size=" + size + ",withFilesize=" + withFilesize + ",offsetStart="
+        + offsetStart;
   }
 
   public String getClassName() {
@@ -61,4 +69,7 @@ public class Mapping {
     }
   }
 
+  public String getMappingFilename() {
+    return mappingFilename;
+  }
 }

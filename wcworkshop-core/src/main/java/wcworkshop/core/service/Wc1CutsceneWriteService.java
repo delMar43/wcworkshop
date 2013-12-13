@@ -119,6 +119,9 @@ public class Wc1CutsceneWriteService {
 
       settings[idx++] = setting;
 
+      if (setting.getForeground() == (byte) 0xFE) {
+        break;
+      }
       scriptString.append(screen.getFacialExpression() + "\0");
       appendToScriptString(scriptString, screen.getCommands());
       appendToScriptString(scriptString, screen.getText());

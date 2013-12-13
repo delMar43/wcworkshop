@@ -23,7 +23,7 @@ public class MappingFactory {
     try {
       List<String> lines = readLines(filename);
 
-      Mapping mapping = buildMapping(lines);
+      Mapping mapping = buildMapping(filename, lines);
       return mapping;
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
@@ -41,7 +41,7 @@ public class MappingFactory {
     }
   }
 
-  private Mapping buildMapping(List<String> lines) {
+  private Mapping buildMapping(String filename, List<String> lines) {
     Class<?> clazz = null;
 
     String className = null;
@@ -85,7 +85,7 @@ public class MappingFactory {
           break;
       }
     }
-    Mapping mapping = new Mapping(className, size, properties, dynamicOffsets, withFilesize, offsetStart);
+    Mapping mapping = new Mapping(filename, className, size, properties, dynamicOffsets, withFilesize, offsetStart);
 
     return mapping;
   }
