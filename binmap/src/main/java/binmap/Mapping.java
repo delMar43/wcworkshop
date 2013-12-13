@@ -8,13 +8,16 @@ public class Mapping {
   private int size;
   private List<MappingProperty> mappingProperties;
   private Map<String, String> dynamicOffsets;
-  private int offsetStart;
+  private boolean withFilesize;
+  private Integer offsetStart;
 
-  public Mapping(String className, int size, List<MappingProperty> mappingProperties, Map<String, String> dynamicOffsets, int offsetStart) {
+  public Mapping(String className, int size, List<MappingProperty> mappingProperties, Map<String, String> dynamicOffsets, boolean withFilesize,
+      Integer offsetStart) {
     this.className = className;
     this.size = size;
     this.mappingProperties = mappingProperties;
     this.dynamicOffsets = dynamicOffsets;
+    this.withFilesize = withFilesize;
     this.offsetStart = offsetStart;
   }
 
@@ -34,12 +37,20 @@ public class Mapping {
     return dynamicOffsets;
   }
 
-  public int getOffsetStart() {
+  public Integer getOffsetStart() {
     return offsetStart;
+  }
+
+  public boolean hasOffsets() {
+    return offsetStart != null && offsetStart >= 0;
   }
 
   public boolean isWithDynamicOffsets() {
     return dynamicOffsets != null && !dynamicOffsets.isEmpty();
+  }
+
+  public boolean isWithFilesize() {
+    return withFilesize;
   }
 
   public String getDynamicOffset(String propertyName) {

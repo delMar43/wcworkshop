@@ -20,6 +20,8 @@ public class BinaryWriter {
   public byte[] toDynamicBinary(Object source, Mapping mapping) {
     List<Byte> byteList = new ArrayList<>();
 
+    List<Integer> offsets = new ArrayList<>();
+    int previousOffset = 0;
     for (MappingProperty property : mapping.getMappingProperties()) {
       String fieldName = getFieldName(property);
       Class<?> targetClass = binaryUtils.getClass(mapping.getClassName());
@@ -48,8 +50,8 @@ public class BinaryWriter {
 
       } else if (property instanceof StringMappingProperty) {
 
-        dynamicProperty = new StringMappingProperty(property.getProperty(), property.getOffset(),
-            ((StringMappingProperty) property).getLength(), property.getTimes());
+        dynamicProperty = new StringMappingProperty(property.getProperty(), property.getOffset(), ((StringMappingProperty) property).getLength(),
+            property.getTimes());
 
       } else {
 
@@ -61,12 +63,43 @@ public class BinaryWriter {
       for (byte b : propertyBytes) {
         byteList.add(b);
       }
+
+      if (mapping.hasOffsets()) {
+        offsets.add(previousOffset);
+        previousOffset += byteList.size();
+      }
     }
 
-    byte[] result = new byte[byteList.size()];
-    int idx = 0;
+    int resultSize;
+    if (mapping.isWithFilesize()) {
+      resultSize = byteList.size() + 4;
+    } else {
+      resultSize = byteList.size();
+    }
+
+    if (mapping.hasOffsets()) {
+      resultSize += offsets.size() * 4;
+    }
+
+    byte[] result = new byte[resultSize];
+
+    int targetIndex;
+    if (mapping.isWithFilesize()) {
+      targetIndex = 4;
+    } else {
+      targetIndex = 0;
+    }
+
+    int offsetFixed = offsets.size() * 4;
+    for (Integer offset : offsets) {
+      int offsetValue = offset + offsetFixed;
+      byte[] offsetBytes = binaryUtils.createIntegerBytes(offsetValue);
+      binaryUtils.copyIntoArray(offsetBytes, result, targetIndex);
+      targetIndex += 4;
+    }
+
     for (Byte b : byteList) {
-      result[idx++] = b.byteValue();
+      result[targetIndex++] = b.byteValue();
     }
 
     logger.debug("Done with dynamically mapping {} bytes to {}", result.length, mapping.getClassName());
@@ -100,6 +133,9 @@ public class BinaryWriter {
     Object value = binaryUtils.getValue(source, field);
     int times = property.getTimes();
     int offset = property.getOffset();
+    if (offset < 0) {
+      offset = 0;
+    }
 
     boolean propertyIsArray = property.getProperty().endsWith("[]");
 
@@ -109,7 +145,7 @@ public class BinaryWriter {
       StringMappingProperty smp = (StringMappingProperty) property;
       int propLength = smp.getLength();
       result = binaryUtils.createNullTerminatedFromString((String) value, propLength);
-      //      binaryUtils.copyIntoArray(bytes, result, offset);
+      // binaryUtils.copyIntoArray(bytes, result, offset);
 
     } else if (property instanceof SubMappingProperty) {
       SubMappingProperty smp = (SubMappingProperty) property;
@@ -131,8 +167,8 @@ public class BinaryWriter {
           for (byte b : bytes) {
             tempList.add(b);
           }
-          //          binaryUtils.copyIntoArray(bytes, result, offset);
-          offset += smp.getSubMapping().getSize();
+          // binaryUtils.copyIntoArray(bytes, result, offset);
+          offset += bytes.length;
         }
 
         result = new byte[tempList.size()];
@@ -149,7 +185,7 @@ public class BinaryWriter {
         } else {
           result = toBinary(sub, smp.getSubMapping());
         }
-        //        binaryUtils.copyIntoArray(bytes, result, offset);
+        // binaryUtils.copyIntoArray(bytes, result, offset);
 
       }
 
@@ -181,12 +217,12 @@ public class BinaryWriter {
           for (int time = 0; time < times; ++time) {
             byte[] bytes = binaryUtils.createShortBytes(array[time]);
             binaryUtils.copyIntoArray(bytes, result, time * 2);
-            //            binaryUtils.copyIntoArray(bytes, result, offset);
+            // binaryUtils.copyIntoArray(bytes, result, offset);
             offset += 2;
           }
         } else {
           result = binaryUtils.createShortBytes((Short) value);
-          //          binaryUtils.copyIntoArray(bytes, result, offset);
+          // binaryUtils.copyIntoArray(bytes, result, offset);
         }
 
       } else if (fieldTypeName.equals("int")) {
@@ -197,12 +233,12 @@ public class BinaryWriter {
           for (int time = 0; time < times; ++time) {
             byte[] bytes = binaryUtils.createIntegerBytes(array[time]);
             binaryUtils.copyIntoArray(bytes, result, time * 4);
-            //            binaryUtils.copyIntoArray(bytes, result, offset);
+            // binaryUtils.copyIntoArray(bytes, result, offset);
             offset += 4;
           }
         } else {
           result = binaryUtils.createIntegerBytes((Integer) value);
-          //          binaryUtils.copyIntoArray(bytes, result, offset);
+          // binaryUtils.copyIntoArray(bytes, result, offset);
         }
 
       } else {

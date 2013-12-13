@@ -46,7 +46,8 @@ public class MappingFactory {
 
     String className = null;
     int size = -1;
-    int offsetStart = 0;
+    Integer offsetStart = null;
+    boolean withFilesize = false;
     List<MappingProperty> properties = new ArrayList<>();
     Map<String, String> dynamicOffsets = new HashMap<>();
     for (String line : lines) {
@@ -70,7 +71,10 @@ public class MappingFactory {
           }
           break;
         case "offsetStart":
-          offsetStart = Integer.parseInt(keyValuePair[1]);
+          offsetStart = Integer.valueOf(keyValuePair[1]);
+          break;
+        case "filesize":
+          withFilesize = Boolean.valueOf(keyValuePair[1]);
           break;
         case "property":
           MappingProperty property = buildMappingProperty(clazz, line, dynamicOffsets);
@@ -81,7 +85,7 @@ public class MappingFactory {
           break;
       }
     }
-    Mapping mapping = new Mapping(className, size, properties, dynamicOffsets, offsetStart);
+    Mapping mapping = new Mapping(className, size, properties, dynamicOffsets, withFilesize, offsetStart);
 
     return mapping;
   }

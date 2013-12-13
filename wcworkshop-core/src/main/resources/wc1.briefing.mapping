@@ -1,6 +1,7 @@
 class=wcworkshop.core.binary.Wc1BriefingFile
 size=dynamic
 offsetStart=4
+filesize=true
 property=filesize,offset=0
 property=funeralData[],offset={0},times={currentBlock}
 property=halcyon[],offset={1},times={currentBlock}

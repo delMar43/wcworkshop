@@ -1,6 +1,5 @@
 class=wcworkshop.core.binary.Wc1BriefingCutsceneScript
 size=dynamic
-offsetStart=4
 #we only extract the script as byte[] because the binary mapper is unable to apply offsets which are defined in another mapping (ie cutsceneSetting)
 #extracting the bytes to strings accordingly will have to be done in the logic layer
 property=scriptBytes[],offset=0,times={all}
