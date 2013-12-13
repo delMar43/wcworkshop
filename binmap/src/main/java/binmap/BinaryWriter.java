@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class BinaryWriter {
       if (propertyIsArray) {
         times = Array.getLength(value);
       } else {
-        times = 1;
+        times = property.getTimes();
       }
 
       MappingProperty dynamicProperty;
@@ -60,23 +61,38 @@ public class BinaryWriter {
 
       }
 
-      List<byte[]> propertyByteList = handleProperty(source, mapping, dynamicProperty);
-      for (byte[] propertyBytes : propertyByteList) {
-        for (byte b : propertyBytes) {
-          byteList.add(b);
-        }
+      List<byte[]> propertyByteList;
+      if (property.getProperty().equals("empty")) {
+        propertyByteList = Collections.EMPTY_LIST;
+      } else {
+        propertyByteList = handleProperty(source, mapping, dynamicProperty);
+      }
+      if (propertyByteList.isEmpty()) {
 
         if (property.isBlockOffsetCreator()) {
           offsets.add(previousOffset);
         }
 
-        previousOffset += propertyBytes.length;
+      } else {
+        for (byte[] propertyBytes : propertyByteList) {
+          for (byte b : propertyBytes) {
+            byteList.add(b);
+          }
+
+          if (property.isBlockOffsetCreator()) {
+            offsets.add(previousOffset);
+          }
+
+          previousOffset += propertyBytes.length;
+        }
       }
     }
 
+    int addOffset = 0;
     int resultSize;
     if (mapping.isWithFilesize()) {
       resultSize = byteList.size() + 4;
+      addOffset += 4;
     } else {
       resultSize = byteList.size();
     }
@@ -94,7 +110,7 @@ public class BinaryWriter {
       targetIndex = 0;
     }
 
-    int offsetFixed = offsets.size() * 4;
+    int offsetFixed = offsets.size() * 4 + addOffset;
     for (Integer offset : offsets) {
       int offsetValue = offset + offsetFixed;
       byte[] offsetBytes = binaryUtils.createIntegerBytes(offsetValue);
