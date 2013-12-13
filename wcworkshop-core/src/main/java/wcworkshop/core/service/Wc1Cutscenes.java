@@ -2,10 +2,10 @@ package wcworkshop.core.service;
 
 import java.util.List;
 
-import wcworkshop.core.model.Wc1Cutscene;
-
 public class Wc1Cutscenes {
-  private Wc1Cutscene funeralCutscene;
+  private byte[] funeralData;
+  private byte[] halcyonData;
+  private byte[] medalCeremonyData;
   private List<Wc1MissionCutscenes> missionCutscenes;
 
   public List<Wc1MissionCutscenes> getMissionCutscenes() {
@@ -16,11 +16,28 @@ public class Wc1Cutscenes {
     this.missionCutscenes = missionCutscenes;
   }
 
-  public Wc1Cutscene getFuneralCutscene() {
-    return funeralCutscene;
+  public byte[] getFuneralData() {
+    return funeralData;
   }
 
-  public void setFuneralCutscene(Wc1Cutscene funeralCutscene) {
-    this.funeralCutscene = funeralCutscene;
+  public void setFuneralData(byte[] funeralData) {
+    this.funeralData = funeralData;
   }
+
+  public byte[] getHalcyonData() {
+    return halcyonData;
+  }
+
+  public void setHalcyonData(byte[] halcyonData) {
+    this.halcyonData = halcyonData;
+  }
+
+  public byte[] getMedalCeremonyData() {
+    return medalCeremonyData;
+  }
+
+  public void setMedalCeremonyData(byte[] medalCeremonyData) {
+    this.medalCeremonyData = medalCeremonyData;
+  }
+
 }

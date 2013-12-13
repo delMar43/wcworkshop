@@ -1,13 +1,11 @@
 package wcworkshop.core.service;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import wcworkshop.core.binary.Wc1BriefingCutsceneScript;
 import wcworkshop.core.binary.Wc1BriefingCutsceneSetting;
 import wcworkshop.core.binary.Wc1BriefingFile;
 import wcworkshop.core.binary.Wc1BriefingMissionData;
-import wcworkshop.core.config.Configuration;
 import wcworkshop.core.model.Wc1Cutscene;
 import wcworkshop.core.model.Wc1CutsceneScreen;
 import wcworkshop.core.reader.ReaderHelper;
@@ -46,23 +44,26 @@ public class Wc1CutsceneWriteService {
       }
     }
 
+    file.setFuneralData(source.getFuneralData());
+    file.setHalcyon(source.getHalcyonData());
+    file.setMedalCeremony(source.getMedalCeremonyData());
     file.setMissionData(missionDataArray);
 
-    byte[] donor = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "BRIEFING.000");
-    byte[] preface = new byte[14655];
-    binaryUtils.copyIntoArray(Arrays.copyOfRange(donor, 0, 14655), preface, 0);
+    //    byte[] donor = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "BRIEFING.000");
+    //    byte[] preface = new byte[14655];
+    //    binaryUtils.copyIntoArray(Arrays.copyOfRange(donor, 0, 14655), preface, 0);
 
     Mapping mapping = mappingFactory.createMapping("wc1.briefing.mapping");
     byte[] newContents = binaryWriter.toDynamicBinary(file, mapping);
 
-    byte[] result = new byte[preface.length + newContents.length];
-    binaryUtils.copyIntoArray(preface, result, 0);
-    binaryUtils.copyIntoArray(newContents, result, 14655);
+    //    byte[] result = new byte[preface.length + newContents.length];
+    //    binaryUtils.copyIntoArray(preface, result, 0);
+    //    binaryUtils.copyIntoArray(newContents, result, 14655);
 
-    int length = result.length;
-    binaryUtils.copyIntoArray(binaryUtils.createIntegerBytes(length), result, 0);
+    int length = newContents.length;
+    binaryUtils.copyIntoArray(binaryUtils.createIntegerBytes(length), newContents, 0);
 
-    return result;
+    return newContents;
   }
 
   private void fillMissionData(Wc1BriefingMissionData missionData, Map<Wc1CutsceneType, Wc1Cutscene> cutscenes, Wc1CutsceneType cutsceneType) {
@@ -122,10 +123,10 @@ public class Wc1CutsceneWriteService {
       if (setting.getForeground() == (byte) 0xFE) {
         break;
       }
+      scriptString.append(screen.getCommands() + "\0");
+      scriptString.append(screen.getText() + "\0");
+      scriptString.append(screen.getPhonetic() + "\0");
       scriptString.append(screen.getFacialExpression() + "\0");
-      appendToScriptString(scriptString, screen.getCommands());
-      appendToScriptString(scriptString, screen.getText());
-      appendToScriptString(scriptString, screen.getPhonetic());
     }
     script.setScriptBytes(scriptString.toString().getBytes());
   }

@@ -38,6 +38,9 @@ public class Wc1CutsceneReadService {
     Wc1BriefingFile file = BinaryReader.getInstance().toJava(data, mapper, Wc1BriefingFile.class);
 
     Wc1Cutscenes result = new Wc1Cutscenes();
+    result.setFuneralData(file.getFuneralData());
+    result.setHalcyonData(file.getHalcyon());
+    result.setMedalCeremonyData(file.getMedalCeremony());
 
     // Wc1Cutscene funeralCutscene = extractCutscene(file.getFuneralData().getFuneralCutsceneSettings(), file.getFuneralData()
     // .getFuneralCutsceneScript());
@@ -138,7 +141,7 @@ public class Wc1CutsceneReadService {
     }
 
     try {
-      String string = new String(Arrays.copyOfRange(cutsceneScript.getScriptBytes(), from - 1, to));
+      String string = new String(Arrays.copyOfRange(cutsceneScript.getScriptBytes(), from, to));
       return string;
     } catch (Exception e) {
       System.out.println();
