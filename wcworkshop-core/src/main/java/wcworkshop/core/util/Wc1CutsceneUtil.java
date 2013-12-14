@@ -350,21 +350,6 @@ public class Wc1CutsceneUtil {
     return result;
   }
 
-  public String getConditionString(byte[] conditions) {
-    if (conditions == null || conditions.length == 0) {
-      return "";
-    }
-    StringBuilder sb = new StringBuilder();
-    for (byte b : conditions) {
-      if (b == 0x2c) {
-        sb.append("<hr/>");
-      } else {
-        sb.append(getCondition(b) + "<br/>");
-      }
-    }
-    return sb.toString();
-  }
-
   public static Wc1CutsceneUtil getInstance() {
     return instance;
   }
