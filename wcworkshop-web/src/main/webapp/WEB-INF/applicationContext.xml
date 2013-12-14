@@ -3,48 +3,4 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-    <property name="securityManager" ref="securityManager"/>
-    <!-- override these for application-specific URLs if you like:-->
-    <property name="loginUrl" value="/login.html"/>
-    <property name="successUrl" value="/index.html"/>
-    <property name="unauthorizedUrl" value="/welcome.html"/>
-    <property name="filterChainDefinitions">
-      <value>
-        /logout.html = logout
-        /welcome.html = noSessionCreation, anon
-        /** = authc
-      </value>
-    </property>
-  </bean>
-  
-  <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
-    <property name="cookie" ref="rememberMeCookie" />
-  </bean>
-  <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-    <constructor-arg value="JSESSIONID" />
-    <property name="httpOnly" value="false" />
-    <property name="maxAge" value="1209600" />
-  </bean>
-  <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-    <constructor-arg value="JSESSIONID_REMEMBER" />
-    <property name="httpOnly" value="false" />
-    <property name="maxAge" value="1209600" />
-  </bean>
-  
-  <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-    <property name="sessionIdCookieEnabled" value="true" />
-    <property name="sessionIdCookie" ref="sessionIdCookie" />
-  </bean>
-  
-  <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-      <property name="realm" ref="fileRealm"/>
-      <property name="sessionManager" ref="sessionManager" />
-      <property name="rememberMeManager" ref="rememberMeManager" />
-  </bean>
-  <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-  
-  <bean id="fileRealm" class="org.apache.shiro.realm.text.PropertiesRealm">
-    <property name="resourcePath" value="d:/wcworkshop/security.properties" />
-  </bean>
 </beans>

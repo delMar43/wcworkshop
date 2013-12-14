@@ -80,3 +80,16 @@ td {
 .leftMargin {
   margin-left: 50px;
 }
+
+#headLeft {
+  float:left;
+}
+
+#headRight {
+  float:right;
+}
+
+#headCenter {
+  margin: 0 auto;
+  width: 100%;
+}
