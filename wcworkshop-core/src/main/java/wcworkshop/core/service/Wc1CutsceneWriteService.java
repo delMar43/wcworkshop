@@ -86,7 +86,7 @@ public class Wc1CutsceneWriteService {
   }
 
   private void fillSettingsAndScripts(Wc1Cutscene cutscene, Wc1BriefingCutsceneSetting[] settings, Wc1BriefingCutsceneScript script) {
-    StringBuilder scriptString = new StringBuilder();
+    StringBuilder scriptString = new StringBuilder("\0");
     int idx = 0;
     int offset = 1;
     for (Wc1CutsceneScreen screen : cutscene.getScreens()) {
@@ -129,13 +129,6 @@ public class Wc1CutsceneWriteService {
       result = 0;
     }
     return result;
-  }
-
-  private void appendToScriptString(StringBuilder scriptString, String content) {
-    if (content == null) {
-      content = "";
-    }
-    scriptString.append(content + "\0");
   }
 
   public static Wc1CutsceneWriteService getInstance() {
