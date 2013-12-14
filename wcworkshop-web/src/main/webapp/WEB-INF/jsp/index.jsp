@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -131,20 +132,13 @@
   </head>
   
   <body>
-    <div class="ui-layout-north" style="position:relative">
-      <h1 class="heading">WC Workshop</h1>
-      <div class="centered">
-        <button style="font-family: Orbitron; font-weight: 700" onclick="openSavegameEditor();">Open Savegame Editor</button>
-      </div>
+    <div class="ui-layout-north" style="position:relative;clear: both;">
+      <%@include file="north.jsp" %>
     </div>
     <div class="ui-layout-center">
       <div id="editorTabs" class="scrollableTab">
         <ul>
-          <li class="editorTab" id="tab_welcome"><a href="#tab-welcome">Welcome</a></li>
         </ul>
-        <div id="tab-welcome" class="editorTabContent">
-          <%@include file="welcome.jsp" %>
-        </div>
       </div>
     </div>
     <div class="ui-layout-west">
