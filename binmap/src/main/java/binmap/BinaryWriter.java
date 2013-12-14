@@ -32,7 +32,7 @@ public class BinaryWriter {
 
       Object value = binaryUtils.getValue(source, field);
       if (value == null) {
-        offsets.add(previousOffset);
+        // offsets.add(previousOffset);
         continue;
       }
       boolean propertyIsArray = property.getProperty().endsWith("[]");
@@ -47,13 +47,12 @@ public class BinaryWriter {
       if (property instanceof SubMappingProperty) {
 
         Mapping subMapping = ((SubMappingProperty) property).getSubMapping();
-        dynamicProperty = new SubMappingProperty(property.getProperty(), property.getOffset(), subMapping, times,
-            property.isBlockOffsetCreator());
+        dynamicProperty = new SubMappingProperty(property.getProperty(), property.getOffset(), subMapping, times, property.isBlockOffsetCreator());
 
       } else if (property instanceof StringMappingProperty) {
 
-        dynamicProperty = new StringMappingProperty(property.getProperty(), property.getOffset(),
-            ((StringMappingProperty) property).getLength(), property.getTimes(), property.isBlockOffsetCreator());
+        dynamicProperty = new StringMappingProperty(property.getProperty(), property.getOffset(), ((StringMappingProperty) property).getLength(),
+            property.getTimes(), property.isBlockOffsetCreator());
 
       } else {
 
