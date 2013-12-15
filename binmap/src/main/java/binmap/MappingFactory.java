@@ -48,7 +48,6 @@ public class MappingFactory {
     int size = -1;
     Integer offsetStart = null;
     boolean withFilesize = false;
-    int blockOffsetCreators = 0;
     List<MappingProperty> properties = new ArrayList<>();
     Map<String, String> dynamicOffsets = new HashMap<>();
     for (String line : lines) {
@@ -56,7 +55,6 @@ public class MappingFactory {
         continue;
       }
 
-      boolean isBlockOffsetCreator = false;
       String[] commands = line.split(",");
       String type = commands[0];
       String[] keyValuePair = type.split("=");

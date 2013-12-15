@@ -1,0 +1,4 @@
+class=wcworkshop.core.binary.Wc1VgaBlock
+size=dynamic
+offsetStart=0
+property=data[],offset=0,times={all}

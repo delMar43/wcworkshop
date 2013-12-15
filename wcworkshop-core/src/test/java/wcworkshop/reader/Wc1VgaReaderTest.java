@@ -9,21 +9,19 @@ import binmap.BinaryReader;
 import binmap.Mapping;
 import binmap.MappingFactory;
 
-public class WcaVxxReaderTest {
+public class Wc1VgaReaderTest {
 
-  // private WcaVxxReader reader = WcaVxxReader.getInstance();
   private Configuration config = Configuration.getInstance();
   private MappingFactory mappingFactory = MappingFactory.getInstance();
   private ReaderHelper readerHelper = ReaderHelper.getInstance();
+  private BinaryReader binaryReader = BinaryReader.getInstance();
 
   @Test
   public void read() {
-    // reader.read(config.getResourcePath() + "PLANETS.VGA");
-
     Mapping mapper = mappingFactory.createMapping("wc1.vga.mapping");
-    byte[] data = readerHelper.readFile(Configuration.getInstance().getResourcePath() + "PLANETS.VGA");
-    Wc1VgaFile file = BinaryReader.getInstance().toJava(data, mapper, Wc1VgaFile.class);
+    byte[] data = readerHelper.readFile(config.getResourcePath() + "ARROW.VGA");
+    Wc1VgaFile file = binaryReader.toJava(data, mapper, Wc1VgaFile.class);
 
-    System.out.println("done");
+    System.out.println("done with file " + readerHelper.byteArrayToHexString(file.getBlocks()[0].getData()));
   }
 }
