@@ -9,7 +9,7 @@
 <body>
   <div>authenticated: ${isAuthenticated}</div>
   <div>remembered: ${isRemembered}</div>
-  <form method="POST">
+  <form method="POST" action="login.html">
      Username: <input type="text" name="username"/> <br/>
      Password: <input type="password" name="password"/>
      <input type="checkbox" name="rememberMe" value="true"/>Remember Me?<br/>
