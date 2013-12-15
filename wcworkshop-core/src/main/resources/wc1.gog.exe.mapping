@@ -1,2 +1,2 @@
-class=Wc1Exe
+class=wcworkshop.core.binary.Wc1Exe
 property=pilotEntries[],offset=85276,times=9,mapping=savegame_scoreboard_entry
