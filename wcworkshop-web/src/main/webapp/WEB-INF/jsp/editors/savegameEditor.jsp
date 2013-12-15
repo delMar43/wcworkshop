@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
 <html>
   <head>
     <%@ include file="../scriptsAndStyles.jsp" %>
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/styles/validationEngine.jquery.css" type="text/css"/>
-    <script src="<%=request.getContextPath() %>/scripts/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
-    <script src="<%=request.getContextPath() %>/scripts/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+    <%@ include file="../validation.jsp" %>
     <script type="text/javascript">
       var savegameTabs;
       
