@@ -6,7 +6,7 @@
 <div id="headRight">
   <shiro:authenticated>
     <shiro:principal/><br/>
-    <a href="<%=request.getContextPath()%>/logout.jsp">logout</a>
+    <a href="<%=request.getContextPath()%>/logout.html">logout</a>
   </shiro:authenticated>
   <shiro:guest>
     <a href="#">Login or Signup</a>

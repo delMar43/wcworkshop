@@ -37,7 +37,6 @@
   <filter-mapping>
     <filter-name>shiroFilter</filter-name>
     <url-pattern>*.html</url-pattern>
-    <url-pattern>*.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
