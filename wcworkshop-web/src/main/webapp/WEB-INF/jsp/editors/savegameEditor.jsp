@@ -81,10 +81,45 @@
               <span style="float:left">
                 <table class="withoutBorders ui-widget">
                   <tbody class="withoutBorders">
-                    <tr><td class="withoutBorders">Bhurak:</td><td class="withoutBorders"><input class="validate[required,custom[integer],min[0]]" maxlength="2" name="savegames[${savegameStatus.index}].ace1" value="${savegame.ace1}" size="3"></input></td></tr>
-                    <tr><td class="withoutBorders">Dakhath:</td><td class="withoutBorders"><input class="validate[required,custom[integer],min[0]]" maxlength="2" name="savegames[${savegameStatus.index}].ace2" value="${savegame.ace2}" size="3"></input></td></tr>
-                    <tr><td class="withoutBorders">Khajja:</td><td class="withoutBorders"><input class="validate[required,custom[integer],min[0]]" maxlength="2" name="savegames[${savegameStatus.index}].ace3" value="${savegame.ace3}" size="3"></input></td></tr>
-                    <tr><td class="withoutBorders">Baktosh:</td><td class="withoutBorders"><input class="validate[required,custom[integer],min[0]]" maxlength="2" name="savegames[${savegameStatus.index}].ace4" value="${savegame.ace4}" size="3"></input></td></tr>
+                    <tr>
+                      <td class="withoutBorders">Bhurak:</td>
+                      <td class="withoutBorders">
+                        <select name="savegames[${savegameStatus.index}].ace1">
+                          <option <c:if test="${savegame.ace1 == 1}">selected</c:if> value="1">Not seen</option>
+                          <option <c:if test="${savegame.ace1 == 10}">selected</c:if> value="10">KIA</option>
+                          <option <c:if test="${savegame.ace1 == 41}">selected</c:if> value="41">Fled</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="withoutBorders">Dakhath:</td><td class="withoutBorders">
+                        <select name="savegames[${savegameStatus.index}].ace2">
+                          <option <c:if test="${savegame.ace2 == 1}">selected</c:if> value="1">Not seen</option>
+                          <option <c:if test="${savegame.ace2 == 10}">selected</c:if> value="10">KIA</option>
+                          <option <c:if test="${savegame.ace2 == 41}">selected</c:if> value="41">Fled</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="withoutBorders">Khajja:</td>
+                      <td class="withoutBorders">
+                        <select name="savegames[${savegameStatus.index}].ace3">
+                          <option <c:if test="${savegame.ace3 == 1}">selected</c:if> value="1">Not seen</option>
+                          <option <c:if test="${savegame.ace3 == 10}">selected</c:if> value="10">KIA</option>
+                          <option <c:if test="${savegame.ace3 == 41}">selected</c:if> value="41">Fled</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="withoutBorders">Baktosh:</td>
+                      <td class="withoutBorders">
+                        <select name="savegames[${savegameStatus.index}].ace4">
+                          <option <c:if test="${savegame.ace4 == 1}">selected</c:if> value="1">Not seen</option>
+                          <option <c:if test="${savegame.ace4 == 10}">selected</c:if> value="10">KIA</option>
+                          <option <c:if test="${savegame.ace4 == 41}">selected</c:if> value="41">Fled</option>
+                        </select>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </span>
@@ -108,7 +143,16 @@
                 <tbody>
                   <c:forEach items="${savegame.scoreboardEntries}" var="entry" varStatus="entryStatus">
                     <tr>
-                      <td><input class="validate[required,custom[integer],min[0],max[4]]" name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].rank" value="${entry.rank}"></td>
+                      <td>
+                        <select name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].rank">
+                          <option value="0" <c:if test="${entry.rank == 0}">selected</c:if>>2nd Lt.</option>
+                          <option value="1" <c:if test="${entry.rank == 1}">selected</c:if>>1st Lt.</option>
+                          <option value="2" <c:if test="${entry.rank == 2}">selected</c:if>>Captain</option>
+                          <option value="3" <c:if test="${entry.rank == 3}">selected</c:if>>Major</option>
+                          <option value="4" <c:if test="${entry.rank == 4}">selected</c:if>>Lt.Col.</option>
+                        </select>
+                        <%-- input class="validate[required,custom[integer],min[0],max[4]]" value="${entry.rank}" --%>
+                      </td>
                       <td><input class="validate[required]" maxlength="14" name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].name" value="${entry.name}"></td>
                       <td><input class="validate[required]" maxlength="14" name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].callsign" value="${entry.callsign}"></td>
                       <td><input class="validate[required,custom[integer],min[0]]" name="savegames[${savegameStatus.index}].scoreboardEntries[${entryStatus.index}].sorties" value="${entry.sorties}"></td>
