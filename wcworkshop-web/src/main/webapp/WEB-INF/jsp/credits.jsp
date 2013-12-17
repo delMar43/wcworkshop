@@ -1,5 +1,7 @@
+<h3>This is really not a one man show</h3>
+
 <p>
-<span style="font-weight:bold">Flashpoint, HCl, Quarto, ZOmegaZ</span><br/>
+<span style="font-weight:bold">Flashpoint, HCl, Quarto, ZOmegaZ (in alphabetical order)</span><br/>
 deciphered the resource files,<br/>
 documented and shared their results
 </p>
