@@ -63,7 +63,6 @@
           editorTabs.tabs( "refresh" );
           delete openTabs[li.attr("id")];
         });
-
       });
 
       // actual addTab function: adds new tab using the input from the form above
@@ -132,6 +131,10 @@
       var openCredits = function() {
         addStaticTab("credits", "Credits", "<iframe class='framed' src='<%=request.getContextPath()%>/credits.html'></iframe>");
       }
+      
+      var openProjectEditDialog = function() {
+        $("<div></div>").load("<%=request.getContextPath()%>/projectForm.html").dialog();
+      }
     </script>
   </head>
   
@@ -147,12 +150,12 @@
     </div>
     <div class="ui-layout-west">
       <div id="projectViewToolbar">
-        <button title="Start a new campaign">New</button>
-        <button title="Open an existing campaign">Open</button>
-        <button title="Close current campaign">Close</button>
-        <button title="Upload campaign files from filesystem">Upload</button>
-        <button title="Import campaign shared by another user">Import</button>
-        <button title="Share this campaign">Share</button>
+        <button onclick="openProjectEditDialog()" id="newCampaignButton" title="Start a new campaign">New</button>
+        <button id="openCampaignButton" title="Open an existing campaign">Open</button>
+        <button id="closeCampaignButton" title="Close current campaign">Close</button>
+        <button id="uploadCampaignButton" title="Upload campaign files from filesystem">Upload</button>
+        <button id="importCampaignButton" title="Import campaign shared by another user">Import</button>
+        <button id="shareCampaignButton" title="Share this campaign">Share</button>
       </div>
       <div id="projectViewTabs" class="scrollableTab">
         <ul>
