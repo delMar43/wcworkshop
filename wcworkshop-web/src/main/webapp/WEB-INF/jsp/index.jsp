@@ -128,6 +128,10 @@
       var openSavegameEditor = function() {
         addStaticTab("savegameEditor", "Savegame Generator", "<iframe class='framed' src='<%=request.getContextPath()%>/savegameEditor.html'></iframe>");
       };
+      
+      var openCredits = function() {
+        addStaticTab("credits", "Credits", "<iframe class='framed' src='<%=request.getContextPath()%>/credits.html'></iframe>");
+      }
     </script>
   </head>
   
@@ -142,12 +146,20 @@
       </div>
     </div>
     <div class="ui-layout-west">
+      <div id="projectViewToolbar">
+        <button title="Start a new campaign">New</button>
+        <button title="Open an existing campaign">Open</button>
+        <button title="Close current campaign">Close</button>
+        <button title="Upload campaign files from filesystem">Upload</button>
+        <button title="Import campaign shared by another user">Import</button>
+        <button title="Share this campaign">Share</button>
+      </div>
       <div id="projectViewTabs" class="scrollableTab">
         <ul>
           <!-- li><a href="#tab-allContents">All</a></li -->
-          <li><a href="#tab-campaignContents_000">WC</a></li>
-          <li><a href="#tab-campaignContents_001">SM1</a></li>
-          <li><a href="#tab-campaignContents_002">SM2</a></li>
+          <li><a href="#tab-campaignContents_000">WC</a><span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>
+          <li><a href="#tab-campaignContents_001">SM1</a><span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>
+          <li><a href="#tab-campaignContents_002">SM2</a><span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>
         </ul>
         <!-- div id="tab-allContents"></div -->
         <div id="tab-campaignContents_000"></div>

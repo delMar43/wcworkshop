@@ -1,0 +1,23 @@
+<p>
+<span style="font-weight:bold">Flashpoint, HCl, Quarto, ZOmegaZ</span><br/>
+deciphered the resource files,<br/>
+documented and shared their results
+</p>
+
+<p>
+<span style="font-weight:bold">CIC Staff</span><br/>
+gives Wing Commander a home,<br/>
+keeps the community thriving
+</p>
+
+<p>
+<span style="font-weight:bold">Chris Roberts and Origin</span><br/>
+created the Wing Commander series,<br/>
+original Creators of Worlds
+</p>
+
+<p>
+<span style="font-weight:bold">delMar</span><br/>
+gathered the available information,<br/>
+creates and hosts wcworkshop.net
+</p>
