@@ -6,8 +6,8 @@ documented and shared their results
 
 <p>
 <span style="font-weight:bold">CIC Staff</span><br/>
-gives Wing Commander a home,<br/>
-keeps the community thriving
+the home of the Wing Commander community,<br/>
+keeps the community thriving and the spirit alive
 </p>
 
 <p>
