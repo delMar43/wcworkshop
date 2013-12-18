@@ -19,8 +19,8 @@
       $(function() {
         var layout = $("body").layout({ applyDefaultStyles: true });
         layout.sizePane("west", 280);
-        projectTabs = $("#projectTabs").tabs();
-        editorTabs = $("#editorTabs").tabs();
+        projectTabs = $("#projectTabs").tabs({cache:true});
+        editorTabs = $("#editorTabs").tabs({cache:true});
         
         $(".ui-tabs-nav").sortable();
 

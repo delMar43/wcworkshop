@@ -1,4 +1,4 @@
-package wcworkshop.web.controller;
+package wcworkshop.web.controller.project;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package wcworkshop.web.controller;
+package wcworkshop.web.controller.editor;
 
 import java.util.List;
 

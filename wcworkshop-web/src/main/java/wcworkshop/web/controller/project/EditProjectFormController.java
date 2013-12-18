@@ -1,4 +1,4 @@
-package wcworkshop.web.controller;
+package wcworkshop.web.controller.project;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -19,7 +19,7 @@ public class EditProjectFormController {
 
   @RequestMapping(value = "/projectForm", method = RequestMethod.GET)
   public ModelAndView editOrCreateProject(@RequestParam(required = false) String projectTitle) {
-    ModelAndView result = new ModelAndView("editors/projectForm");
+    ModelAndView result = new ModelAndView("project/projectForm");
 
     Subject user = SecurityUtils.getSubject();
     String username = (String) user.getPrincipal();
