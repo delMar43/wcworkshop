@@ -6,8 +6,9 @@
       type: "POST",
       url: $("#editProjectForm").attr("action"),
       data: $("#editProjectForm").serialize(),
-      success: function() {
-        alert('done')
+      success: function(response) {
+        var respObj = $.parseJSON(response);
+        loadProject(respObj.projectId);
       }
     });
   }

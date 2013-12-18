@@ -1,5 +1,7 @@
 package wcworkshop.web.controller.project;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,13 +30,16 @@ public class EditProjectPostController {
 
     projectService.saveProject(project);
 
-    return "{success:true}";
+    return "{\"success\":true,\"projectId\":\"" + project.getTitle() + "\"}";
   }
 
   private Project commandToProject(ProjectCommand command) {
     Project project = new Project();
 
-    project.setOwner("delMar");
+    Subject subject = SecurityUtils.getSubject();
+    String username = (String) subject.getPrincipal();
+
+    project.setOwner(username);
     project.setTitle(command.getTitle());
     project.setDescriptions(command.getDescriptions());
     project.setWebsite(command.getWebsite());

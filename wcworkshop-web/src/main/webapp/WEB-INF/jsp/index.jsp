@@ -58,6 +58,9 @@
         
         // close icon: removing the tab on click
         projectTabs.delegate( "span.ui-icon-close", "click", function() {
+          if (!confirm("Really close?")) {
+            return;
+          }
           var li = $( this ).closest( "li" );
           var panelId = li.remove().attr( "aria-controls" );
           $( "#" + panelId ).remove();
@@ -67,6 +70,10 @@
         
       });
 
+      var loadProject = function(id) {
+        addTab(id, id, "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=" + id, projectTabs, "projectTabs");
+      }
+      
       // actual addTab function: adds new tab using the input from the form above
       var addStaticTab = function(key, label, content, tabContainer, tabClass) {
         if (!tabAlreadyOpen(key)) {

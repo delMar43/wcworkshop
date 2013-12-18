@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="scrollablePane">
-  <h3>${gameData.campaignName}</h3>
+  <h3>${campaign}</h3>
   <ul class="campaignTree" id="campaignTree_${campaign}">
     <c:forEach items="${gameData.seriesSlots}" var="series" varStatus="seriesStatus">
       <li><a href="javascript:openSeriesEditor('${campaign}', ${seriesStatus.index})">Series ${seriesStatus.count} (${series.systemName})</a>

@@ -16,7 +16,7 @@ public class ProjectService {
   }
 
   public Project loadProject(String username, String projectTitle) {
-    return null;
+    return projectRepo.loadProject(username, projectTitle);
   }
 
   public static ProjectService getInstance() {
