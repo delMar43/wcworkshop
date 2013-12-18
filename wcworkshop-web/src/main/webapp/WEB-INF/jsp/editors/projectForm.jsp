@@ -6,7 +6,9 @@
       type: "POST",
       url: $("#editProjectForm").attr("action"),
       data: $("#editProjectForm").serialize(),
-      success: function() {alert('done')}
+      success: function() {
+        alert('done')
+      }
     });
   }
 </script>

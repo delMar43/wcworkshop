@@ -7,15 +7,15 @@ documented and shared their results
 </p>
 
 <p>
-<span style="font-weight:bold">CIC Staff</span><br/>
+<span style="font-weight:bold">Everybody at the <a href="http://www.wcnews.com" target="_blank">CIC</a></span><br/>
 the home of the Wing Commander community,<br/>
 keeps the community thriving and the spirit alive
 </p>
 
 <p>
 <span style="font-weight:bold">Chris Roberts and Origin</span><br/>
-created the Wing Commander series,<br/>
-original Creators of Worlds
+creator of the Wing Commander series,<br/>
+"Creators of Worlds"
 </p>
 
 <p>
