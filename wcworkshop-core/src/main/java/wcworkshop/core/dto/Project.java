@@ -1,13 +1,11 @@
 package wcworkshop.core.dto;
 
-import java.util.List;
 import java.util.Map;
 
 public class Project {
 
   private String owner;
   private String title;
-  private List<String> languages;
   private Map<String, String> descriptions;
   private String website;
   private EngineType engineType;
@@ -27,14 +25,6 @@ public class Project {
 
   public void setTitle(String title) {
     this.title = title;
-  }
-
-  public List<String> getLanguages() {
-    return languages;
-  }
-
-  public void setLanguages(List<String> languages) {
-    this.languages = languages;
   }
 
   public Map<String, String> getDescriptions() {

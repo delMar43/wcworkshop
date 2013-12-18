@@ -41,7 +41,6 @@ public class EditProjectFormController {
     ProjectCommand result = new ProjectCommand();
 
     result.setTitle(project.getTitle());
-    result.setLanguages(project.getLanguages());
     result.setDescriptions(project.getDescriptions());
     result.setWebsite(project.getWebsite());
 

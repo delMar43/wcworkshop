@@ -6,6 +6,8 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import wcworkshop.core.config.Configuration;
+
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -14,6 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AbstractJsonRepo<T> {
   private static final Logger logger = LoggerFactory.getLogger(AbstractJsonRepo.class);
   private static final ObjectMapper mapper = new ObjectMapper();
+
+  private Configuration config = Configuration.getInstance();
 
   protected void writeFile(String owner, String id, Object object) {
     String path = generatePath(owner, id, object.getClass());
@@ -49,6 +53,9 @@ public class AbstractJsonRepo<T> {
   }
 
   private String generatePath(String owner, String id, Class<?> clazz) {
-    return owner + File.separator + clazz.getSimpleName() + File.separator + id;
+    String path = config.getResourcePath() + "data" + File.separator + owner + File.separator + clazz.getSimpleName();
+    File directory = new File(path);
+    directory.mkdirs();
+    return path + File.separator + id + ".json";
   }
 }
