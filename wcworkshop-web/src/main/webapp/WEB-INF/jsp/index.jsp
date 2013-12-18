@@ -68,6 +68,9 @@
           delete openProjectTabs[li.attr("id")];
         });
         
+        <c:forEach items="${openProjects}" var="project">
+        loadProject('<c:out value="${project.title}"/>');
+        </c:forEach>
       });
 
       var loadProject = function(id) {

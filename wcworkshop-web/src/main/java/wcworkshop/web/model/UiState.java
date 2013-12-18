@@ -4,24 +4,17 @@ import java.util.List;
 
 public class UiState {
 
-  private String username;
-  private List<String> openCampaigns;
+  private List<String> openProjects;
   private List<String> openTabs;
+  private String currentProject;
+  private String currentTab;
 
-  public String getUsername() {
-    return username;
+  public List<String> getOpenProjects() {
+    return openProjects;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public List<String> getOpenCampaigns() {
-    return openCampaigns;
-  }
-
-  public void setOpenCampaigns(List<String> openCampaigns) {
-    this.openCampaigns = openCampaigns;
+  public void setOpenProjects(List<String> openProjects) {
+    this.openProjects = openProjects;
   }
 
   public List<String> getOpenTabs() {
@@ -32,4 +25,19 @@ public class UiState {
     this.openTabs = openTabs;
   }
 
+  public String getCurrentProject() {
+    return currentProject;
+  }
+
+  public void setCurrentProject(String currentProject) {
+    this.currentProject = currentProject;
+  }
+
+  public String getCurrentTab() {
+    return currentTab;
+  }
+
+  public void setCurrentTab(String currentTab) {
+    this.currentTab = currentTab;
+  }
 }

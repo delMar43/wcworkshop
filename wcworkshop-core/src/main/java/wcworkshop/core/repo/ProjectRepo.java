@@ -1,5 +1,7 @@
 package wcworkshop.core.repo;
 
+import java.util.List;
+
 import wcworkshop.core.dto.Project;
 
 public class ProjectRepo extends AbstractJsonRepo<Project> {
@@ -21,7 +23,12 @@ public class ProjectRepo extends AbstractJsonRepo<Project> {
     return false;
   }
 
+  public List<Project> loadProjects(String username) {
+    return loadFiles(username, Project.class);
+  }
+
   public static ProjectRepo getInstance() {
     return instance;
   }
+
 }

@@ -2,6 +2,8 @@ package wcworkshop.core.repo;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,10 +54,24 @@ public class AbstractJsonRepo<T> {
     }
   }
 
+  protected List<T> loadFiles(String owner, Class<T> clazz) {
+    String path = generatePath(owner, clazz);
+
+    List<T> result = new ArrayList<>();
+    for (String filename : new File(path).list()) {
+      filename = filename.replace(".json", "");
+      result.add(loadFile(owner, filename, clazz));
+    }
+    return result;
+  }
+
+  private String generatePath(String owner, Class<?> clazz) {
+    return config.getResourcePath() + "data" + File.separator + owner + File.separator + clazz.getSimpleName() + File.separator;
+  }
+
   private String generatePath(String owner, String id, Class<?> clazz) {
-    String path = config.getResourcePath() + "data" + File.separator + owner + File.separator + clazz.getSimpleName();
-    File directory = new File(path);
+    File directory = new File(generatePath(owner, clazz));
     directory.mkdirs();
-    return path + File.separator + id + ".json";
+    return directory + File.separator + id + ".json";
   }
 }

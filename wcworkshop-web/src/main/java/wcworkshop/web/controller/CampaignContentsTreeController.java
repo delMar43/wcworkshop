@@ -1,6 +1,8 @@
 package wcworkshop.web.controller;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,10 @@ public class CampaignContentsTreeController {
   @RequestMapping("/campaignContentsTree")
   public String renderTree(Model model, @RequestParam String campaign) {
 
-    String username = (String) SecurityUtils.getSubject().getPrincipal();
+    Subject subject = SecurityUtils.getSubject();
+    Session session = subject.getSession();
+
+    String username = (String) subject.getPrincipal();
     Project project = projectService.loadProject(username, campaign);
 
     model.addAttribute("project", project);

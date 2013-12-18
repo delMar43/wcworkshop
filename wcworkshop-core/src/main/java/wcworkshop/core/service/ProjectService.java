@@ -1,5 +1,7 @@
 package wcworkshop.core.service;
 
+import java.util.List;
+
 import wcworkshop.core.dto.Project;
 import wcworkshop.core.repo.ProjectRepo;
 
@@ -9,6 +11,10 @@ public class ProjectService {
   private ProjectRepo projectRepo = ProjectRepo.getInstance();
 
   private ProjectService() {
+  }
+
+  public List<Project> listProjects(String username) {
+    return projectRepo.loadProjects(username);
   }
 
   public void saveProject(Project project) {
