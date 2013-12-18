@@ -36,7 +36,6 @@
     </tr>
   </table>
 </form:form>
-<button id="submitButton" onclick="submitForm()">Create Project</button>
 
 <script type="text/javascript">
   $("#projectDescriptionTabs").tabs();

@@ -133,7 +133,22 @@
       }
       
       var openProjectEditDialog = function() {
-        $("<div></div>").load("<%=request.getContextPath()%>/projectForm.html").dialog();
+        $("<div></div>").load("<%=request.getContextPath()%>/projectForm.html").dialog({
+          height: 300,
+          width: 400,
+          buttons: {
+            "Create": function() {
+		      submitForm();
+              $(this).dialog("close");
+            },
+            Cancel: function() {
+              $(this).dialog("close");
+            }
+          },
+          close: function() {
+            $(this).dialog ('destroy').remove ();
+          }
+        });
       }
     </script>
   </head>
