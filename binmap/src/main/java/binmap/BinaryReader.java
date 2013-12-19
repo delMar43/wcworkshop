@@ -306,9 +306,9 @@ public class BinaryReader {
 
   private String getString(byte[] block, int offset, int length) {
     String result = new String(block, offset, length);
-    if (result.contains("\0")) {
-      result = result.substring(0, result.indexOf("\0"));
-    }
+    //    if (result.contains("\0")) {
+    //      result = result.substring(0, result.indexOf("\0"));
+    //    }
     return result;
   }
 
