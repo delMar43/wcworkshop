@@ -47,12 +47,13 @@ public class BinaryWriter {
       if (property instanceof SubMappingProperty) {
 
         Mapping subMapping = ((SubMappingProperty) property).getSubMapping();
-        dynamicProperty = new SubMappingProperty(property.getProperty(), property.getOffset(), subMapping, times, property.isBlockOffsetCreator());
+        dynamicProperty = new SubMappingProperty(property.getProperty(), property.getOffset(), subMapping, times,
+            property.isBlockOffsetCreator());
 
       } else if (property instanceof StringMappingProperty) {
 
-        dynamicProperty = new StringMappingProperty(property.getProperty(), property.getOffset(), ((StringMappingProperty) property).getLength(),
-            property.getTimes(), property.isBlockOffsetCreator());
+        dynamicProperty = new StringMappingProperty(property.getProperty(), property.getOffset(),
+            ((StringMappingProperty) property).getLength(), property.getTimes(), property.isBlockOffsetCreator());
 
       } else {
 
@@ -214,7 +215,7 @@ public class BinaryWriter {
           byte[] array = (byte[]) value;
           result = new byte[property.getTimes()];
           for (int time = 0; time < property.getTimes(); ++time) {
-            result[offset] = array[time];
+            result[time] = array[time];
             ++offset;
           }
         } else {
