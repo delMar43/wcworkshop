@@ -2,7 +2,7 @@ package wcworkshop.core.service;
 
 import java.util.Map;
 
-import wcworkshop.core.model.Wc1Cutscene;
+import wcworkshop.core.dto.Wc1Cutscene;
 
 public class Wc1MissionCutscenes {
 

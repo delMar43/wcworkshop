@@ -13,11 +13,17 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import wcworkshop.core.config.Configuration;
 import wcworkshop.core.workdata.Block;
+import binmap.BinaryReader;
+import binmap.Mapping;
+import binmap.MappingFactory;
 
 public class ReaderHelper {
   private static final Logger logger = LoggerFactory.getLogger(ReaderHelper.class);
   private static final ReaderHelper INSTANCE = new ReaderHelper();
+
+  private MappingFactory mappingFactory = MappingFactory.getInstance();
 
   private ReaderHelper() {
   }
@@ -129,6 +135,14 @@ public class ReaderHelper {
       result = result.substring(0, result.indexOf("\0"));
     }
     return result;
+  }
+
+  public <T> T read(String binaryName, String mappingName, Class<T> clazz) {
+    Mapping mapper = mappingFactory.createMapping(mappingName);
+    byte[] data = readFile(Configuration.getInstance().getResourcePath() + binaryName);
+    T file = BinaryReader.getInstance().toJava(data, mapper, clazz);
+
+    return file;
   }
 
   public static ReaderHelper getInstance() {

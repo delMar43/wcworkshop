@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import wcworkshop.core.model.Wc1Cutscene;
+import wcworkshop.core.dto.Wc1Cutscene;
 import wcworkshop.core.service.Wc1CutsceneReadService;
 import wcworkshop.core.service.Wc1CutsceneType;
 import wcworkshop.core.service.Wc1Cutscenes;

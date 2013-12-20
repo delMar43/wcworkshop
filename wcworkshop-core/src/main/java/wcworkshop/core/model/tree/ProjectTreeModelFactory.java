@@ -11,9 +11,9 @@ public class ProjectTreeModelFactory {
   private ProjectTreeModelFactory() {
   }
 
-  private ProjectNode createProjectNode(Project project) {
+  public ProjectNode createProjectNode(Project project) {
+    ProjectNode projectNode = new ProjectNode(project.getTitle());
     Wc1Campaign campaign = project.getCampaign();
-    ProjectNode projectNode = new ProjectNode(campaign.getTitle());
 
     for (Wc1Series series : campaign.getSeries()) {
       SeriesNode seriesNode = new SeriesNode(series.getId());

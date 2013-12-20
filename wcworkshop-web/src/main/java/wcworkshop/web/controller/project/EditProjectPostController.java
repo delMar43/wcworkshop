@@ -1,5 +1,8 @@
 package wcworkshop.web.controller.project;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import wcworkshop.core.dto.EngineType;
 import wcworkshop.core.dto.Project;
+import wcworkshop.core.dto.Wc1Campaign;
+import wcworkshop.core.dto.Wc1Series;
 import wcworkshop.core.service.ProjectService;
 import wcworkshop.web.command.ProjectCommand;
 
@@ -35,6 +40,7 @@ public class EditProjectPostController {
 
   private Project commandToProject(ProjectCommand command) {
     Project project = new Project();
+    project.setTitle("New Project");
 
     Subject subject = SecurityUtils.getSubject();
     String username = (String) subject.getPrincipal();
@@ -44,6 +50,16 @@ public class EditProjectPostController {
     project.setDescriptions(command.getDescriptions());
     project.setWebsite(command.getWebsite());
     project.setEngineType(EngineType.WC1);
+
+    Wc1Campaign campaign = new Wc1Campaign();
+    project.setCampaign(campaign);
+
+    List<Wc1Series> seriesList = new ArrayList<>();
+    Wc1Series series = new Wc1Series();
+    series.setId("Series 1");
+    seriesList.add(series);
+
+    campaign.setSeries(seriesList);
 
     return project;
   }

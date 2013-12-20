@@ -1,4 +1,4 @@
-package wcworkshop.core.model;
+package wcworkshop.core.dto;
 
 public enum Wc1CutsceneTextColor {
   // TODO: replace hardcoded pilot strings with some pattern to handle them dynamically on the ui

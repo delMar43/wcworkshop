@@ -4,20 +4,11 @@ import java.util.List;
 
 public class Wc1Campaign implements Campaign {
 
-  private String title;
   private List<Wc1Series> series;
   private List<Wc1Pilot> pilots;
   private List<Wc1Ship> ships;
   private Wc1Funeral funeral;
   private Wc1MedalCeremony medalCeremony;
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
 
   public List<Wc1Series> getSeries() {
     return series;

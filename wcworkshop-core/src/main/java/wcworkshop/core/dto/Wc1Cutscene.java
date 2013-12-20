@@ -1,4 +1,4 @@
-package wcworkshop.core.model;
+package wcworkshop.core.dto;
 
 import java.util.List;
 

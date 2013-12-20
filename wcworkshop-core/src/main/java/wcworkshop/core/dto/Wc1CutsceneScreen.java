@@ -1,4 +1,4 @@
-package wcworkshop.core.model;
+package wcworkshop.core.dto;
 
 public class Wc1CutsceneScreen {
 

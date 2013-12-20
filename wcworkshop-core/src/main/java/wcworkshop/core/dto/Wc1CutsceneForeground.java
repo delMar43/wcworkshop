@@ -1,4 +1,4 @@
-package wcworkshop.core.model;
+package wcworkshop.core.dto;
 
 public enum Wc1CutsceneForeground {
   //@formatter:off

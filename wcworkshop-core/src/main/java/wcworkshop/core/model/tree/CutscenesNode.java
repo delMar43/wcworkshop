@@ -1,5 +1,5 @@
 package wcworkshop.core.model.tree;
 
-public class CutsceneNode {
+public class CutscenesNode {
 
 }

@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import wcworkshop.core.model.Wc1Cutscene;
-import wcworkshop.core.model.Wc1CutsceneBackground;
-import wcworkshop.core.model.Wc1CutsceneForeground;
-import wcworkshop.core.model.Wc1CutsceneScreen;
-import wcworkshop.core.model.Wc1CutsceneTextColor;
+import wcworkshop.core.dto.Wc1Cutscene;
+import wcworkshop.core.dto.Wc1CutsceneBackground;
+import wcworkshop.core.dto.Wc1CutsceneForeground;
+import wcworkshop.core.dto.Wc1CutsceneScreen;
+import wcworkshop.core.dto.Wc1CutsceneTextColor;
 import wcworkshop.core.service.Wc1CutsceneReadService;
 import wcworkshop.core.service.Wc1CutsceneType;
 import wcworkshop.core.service.Wc1CutsceneWriteService;

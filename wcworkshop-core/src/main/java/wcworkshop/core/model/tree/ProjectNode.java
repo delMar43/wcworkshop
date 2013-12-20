@@ -1,5 +1,7 @@
 package wcworkshop.core.model.tree;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,4 +17,7 @@ public class ProjectNode extends AbstractNode {
     seriesNodes.put(id, seriesNode);
   }
 
+  public Collection<SeriesNode> getSeriesNodes() {
+    return Collections.unmodifiableCollection(seriesNodes.values());
+  }
 }

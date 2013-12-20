@@ -9,7 +9,8 @@
     <meta name="keywords" content="Wing Commander, Secret Missions, WC, SM, SM1, SM2, WC2, SO1, SO2, WCA, Academy, Armada, Kilrathi, Tiger's Claw, Victory, Concordia, Caernavon" />
     <%@ include file="scriptsAndStyles.jsp" %>
     <script src="<%=request.getContextPath() %>/scripts/jquery.layout-latest.min.js"></script>
-    <script src="<%=request.getContextPath() %>/scripts/jquery.jstree.js"></script>
+    <link href="<%=request.getContextPath() %>/styles/ui-fancytree.css" rel="stylesheet" type="text/css">
+    <script src="<%=request.getContextPath() %>/scripts/jquery.fancytree-all.min.js" type="text/javascript"></script>
     <script>
       var editorTabs;
       var projectTabs;
@@ -67,15 +68,21 @@
           projectTabs.tabs( "refresh" );
           delete openProjectTabs[li.attr("id")];
         });
-        
-        <c:forEach items="${openProjects}" var="project">
+  
+        <%-- c:forEach items="${openProjects}" var="project">
         loadProject('<c:out value="${project.title}"/>');
-        </c:forEach>
+        </c:forEach --%>
+        
+        $("#tab-projects").load("<%=request.getContextPath()%>/projectTree.html", function() {
+          $("#tab-projects").fancytree();
+        });
       });
 
+      <%--
       var loadProject = function(id) {
-        addTab(id, id, "<%=request.getContextPath()%>/projectTree.html?campaign=" + id, projectTabs, "projectTabs");
+        addTab(id, id, "<%=request.getContextPath()%>/projectTree.html", projectTabs, "projectTabs");
       }
+      --%>
       
       // actual addTab function: adds new tab using the input from the form above
       var addStaticTab = function(key, label, content, tabContainer, tabClass) {
@@ -150,7 +157,26 @@
           width: 400,
           buttons: {
             "Create": function() {
-		      submitForm();
+		      submitProjectEditForm();
+              $(this).dialog("close");
+            },
+            Cancel: function() {
+              $(this).dialog("close");
+            }
+          },
+          close: function() {
+            $(this).dialog ('destroy').remove ();
+          }
+        });
+      }
+      
+      var openProjectUploadDialog = function() {
+        $("<div></div>").load("<%=request.getContextPath()%>/uploadForm.html").dialog({
+          height: 300,
+          width: 400,
+          buttons: {
+            "Create": function() {
+		      submitProjectUploadForm();
               $(this).dialog("close");
             },
             Cancel: function() {
@@ -180,17 +206,20 @@
         <button onclick="openProjectEditDialog()" id="newCampaignButton" title="Start a new campaign">New</button>
         <button id="openCampaignButton" title="Open an existing campaign">Open</button>
         <button id="closeCampaignButton" title="Close current campaign">Close</button>
-        <button id="uploadCampaignButton" title="Upload campaign files from filesystem">Upload</button>
+        <button onclick="openProjectUploadDialog()" id="uploadCampaignButton" title="Upload campaign files from filesystem">Upload</button>
         <button id="importCampaignButton" title="Import campaign shared by another user">Import</button>
         <button id="shareCampaignButton" title="Share this campaign">Share</button>
       </div>
       <div id="projectTabs" class="scrollableTab">
         <ul>
+          <li><a href="#tab-projects">My Projects</a>
           <!-- li><a href="#tab-allContents">All</a></li>
           <li><a href="#tab-campaignContents_000">WC</a><span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>
           <li><a href="#tab-campaignContents_001">SM1</a><span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>
           <li><a href="#tab-campaignContents_002">SM2</a><span class='ui-icon ui-icon-close' role='presentation'>Close</span></li -->
         </ul>
+        <div id="tab-projects">
+        </div>
         <!-- div id="tab-allContents"></div>
         <div id="tab-campaignContents_000"></div>
         <div id="tab-campaignContents_001"></div>
