@@ -1,6 +1,7 @@
 package wcworkshop.core.repo;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AbstractJsonRepo<T> {
   private static final Logger logger = LoggerFactory.getLogger(AbstractJsonRepo.class);
   private static final ObjectMapper mapper = new ObjectMapper();
+  private static final FilenameFilter jsonFilter = new FilenameFilter() {
+
+    @Override
+    public boolean accept(File dir, String name) {
+      return name != null && name.endsWith(".json");
+    }
+
+  };
 
   private Configuration config = Configuration.getInstance();
 
@@ -58,7 +67,7 @@ public class AbstractJsonRepo<T> {
     String path = generatePath(owner, clazz);
 
     List<T> result = new ArrayList<>();
-    for (String filename : new File(path).list()) {
+    for (String filename : new File(path).list(jsonFilter)) {
       filename = filename.replace(".json", "");
       result.add(loadFile(owner, filename, clazz));
     }
