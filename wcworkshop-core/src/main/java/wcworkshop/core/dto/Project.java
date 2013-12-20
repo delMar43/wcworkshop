@@ -9,7 +9,7 @@ public class Project {
   private Map<String, String> descriptions;
   private String website;
   private EngineType engineType;
-  private Campaign campaign;
+  private Wc1Campaign campaign;
 
   public String getOwner() {
     return owner;
@@ -51,11 +51,11 @@ public class Project {
     this.engineType = engineType;
   }
 
-  public Campaign getCampaign() {
+  public Wc1Campaign getCampaign() {
     return campaign;
   }
 
-  public void setCampaign(Campaign campaign) {
+  public void setCampaign(Wc1Campaign campaign) {
     this.campaign = campaign;
   }
 }

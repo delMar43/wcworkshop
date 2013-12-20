@@ -3,6 +3,7 @@ package wcworkshop.core.dto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class ProjectFactory {
   private static final ProjectFactory instance = new ProjectFactory();
@@ -10,8 +11,7 @@ public class ProjectFactory {
   private ProjectFactory() {
   }
 
-  public Project createProject(String owner, String title, List<String> languages, Map<String, String> description, String website,
-      EngineType engineType) {
+  public Project createProject(String owner, String title, List<String> languages, Map<String, String> description, String website, EngineType engineType) {
     Project project = new Project();
     project.setOwner(owner);
     project.setTitle(title);
@@ -21,7 +21,7 @@ public class ProjectFactory {
 
     Wc1Campaign campaign = new Wc1Campaign();
     List<Wc1Series> series = new ArrayList<>();
-    series.add(new Wc1Series());
+    series.add(new Wc1Series(UUID.randomUUID().toString()));
     campaign.setSeries(series);
 
     return project;

@@ -74,7 +74,7 @@
       });
 
       var loadProject = function(id) {
-        addTab(id, id, "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=" + id, projectTabs, "projectTabs");
+        addTab(id, id, "<%=request.getContextPath()%>/projectTree.html?campaign=" + id, projectTabs, "projectTabs");
       }
       
       // actual addTab function: adds new tab using the input from the form above
