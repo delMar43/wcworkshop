@@ -8,7 +8,11 @@ import wcworkshop.core.binary.Wc1BriefingMissionData;
 import wcworkshop.core.binary.Wc1CampFile;
 import wcworkshop.core.binary.Wc1CampMissionData;
 import wcworkshop.core.binary.Wc1CampSeriesBlock;
+import wcworkshop.core.binary.Wc1ModuleAutopilotShips;
 import wcworkshop.core.binary.Wc1ModuleFile;
+import wcworkshop.core.binary.Wc1ModuleMissionShipData;
+import wcworkshop.core.binary.Wc1ModuleNavPointData;
+import wcworkshop.core.binary.Wc1ModuleNavPointMapData;
 import wcworkshop.core.dto.Wc1Campaign;
 import wcworkshop.core.dto.Wc1Mission;
 import wcworkshop.core.dto.Wc1Series;
@@ -67,6 +71,11 @@ public class CampaignTransformer {
   }
 
   private void fillCampaignWithModuleData(Wc1Campaign result, Wc1ModuleFile moduleFile) {
+    Wc1ModuleAutopilotShips[] autopilotShips = moduleFile.getBlock1().getAutopilotShips();
+    Wc1ModuleNavPointData[] navPointData = moduleFile.getBlock2().getNavPointData();
+    Wc1ModuleNavPointMapData[] navPointMapData = moduleFile.getBlock3().getNavPointMapData();
+    Wc1ModuleMissionShipData[] missionShipData = moduleFile.getBlock4().getMissionShipData();
+
     for (int seriesIdx = 0; seriesIdx < 13; ++seriesIdx) {
       String systemName = moduleFile.getSystemNames()[seriesIdx];
       Wc1Series series = result.getSeries().get(seriesIdx);
@@ -82,6 +91,8 @@ public class CampaignTransformer {
 
         Wc1Mission mission = series.getMissions().get(missionIdx);
         mission.setWingName(wingName);
+
+        Wc1ModuleNavPointData curNavPointData = navPointData[totalIdx];
       }
 
     }
