@@ -7,6 +7,13 @@
       <ul>
         <c:forEach items="${projectNode.seriesNodes}" var="seriesNode" varStatus="seriesNodesStatus">
           <li>${seriesNode.label}
+          <ul>
+          <c:forEach items="${seriesNode.missionNodes}" var="missionNode" varStatus="missionNodeStatus">
+            <li>${missionNode.label}
+            
+            </li>
+          </c:forEach>
+          </ul>
           <%--
             <ul>
               <li>Nav Points

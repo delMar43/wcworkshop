@@ -1,5 +1,7 @@
 package wcworkshop.core.model.tree;
 
-public class MissionNode {
-
+public class MissionNode extends AbstractNode {
+  public MissionNode(String label) {
+    super(label);
+  }
 }

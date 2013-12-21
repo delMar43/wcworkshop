@@ -2,6 +2,10 @@ package wcworkshop.core.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Wc1Series implements Series {
 
   private String id;
@@ -24,14 +28,6 @@ public class Wc1Series implements Series {
     this.id = id;
   }
 
-  public String getSystem() {
-    return systemName;
-  }
-
-  public void setSystem(String system) {
-    this.systemName = system;
-  }
-
   public String getSystemName() {
     return systemName;
   }
@@ -48,6 +44,7 @@ public class Wc1Series implements Series {
     this.wingman = wingman;
   }
 
+  @JsonIgnore
   public byte getNrOfMissions() {
     if (missions == null) {
       return (byte) 0;
