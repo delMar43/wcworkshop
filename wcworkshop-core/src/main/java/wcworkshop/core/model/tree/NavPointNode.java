@@ -3,11 +3,11 @@ package wcworkshop.core.model.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MissionNode extends AbstractNode {
+public class NavPointNode extends AbstractNode {
 
   private List<NavPointNode> navPointNodes = new ArrayList<>();
 
-  public MissionNode(String label) {
+  public NavPointNode(String label) {
     super(label);
   }
 

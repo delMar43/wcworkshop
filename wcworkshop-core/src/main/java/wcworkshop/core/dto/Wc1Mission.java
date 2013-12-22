@@ -1,5 +1,6 @@
 package wcworkshop.core.dto;
 
+import java.util.List;
 import java.util.Map;
 
 import wcworkshop.core.service.Wc1CutsceneType;
@@ -13,8 +14,11 @@ public class Wc1Mission {
   private short medal;
   private short requiredMedalPoints;
   private short[] victoryPointsPerObjective; //TODO save victorypoint with the objective
+  private short[] autopilotShips;
 
   private Map<Wc1CutsceneType, Wc1Cutscene> cutscenes;
+  private List<Wc1NavPoint> navPoints;
+  private List<Wc1ShipAssignment> shipAssignments;
 
   public String getWingName() {
     return wingName;
@@ -78,5 +82,29 @@ public class Wc1Mission {
 
   public void setCutscenes(Map<Wc1CutsceneType, Wc1Cutscene> cutscenes) {
     this.cutscenes = cutscenes;
+  }
+
+  public List<Wc1NavPoint> getNavPoints() {
+    return navPoints;
+  }
+
+  public void setNavPoints(List<Wc1NavPoint> navPoints) {
+    this.navPoints = navPoints;
+  }
+
+  public void setAutopilotShips(short[] autopilotShips) {
+    this.autopilotShips = autopilotShips;
+  }
+
+  public short[] getAutopilotShips() {
+    return autopilotShips;
+  }
+
+  public List<Wc1ShipAssignment> getShipAssignments() {
+    return shipAssignments;
+  }
+
+  public void setShipAssignments(List<Wc1ShipAssignment> shipAssignments) {
+    this.shipAssignments = shipAssignments;
   }
 }

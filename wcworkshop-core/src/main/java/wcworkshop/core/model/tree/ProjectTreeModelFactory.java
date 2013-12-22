@@ -3,6 +3,7 @@ package wcworkshop.core.model.tree;
 import wcworkshop.core.dto.Project;
 import wcworkshop.core.dto.Wc1Campaign;
 import wcworkshop.core.dto.Wc1Mission;
+import wcworkshop.core.dto.Wc1NavPoint;
 import wcworkshop.core.dto.Wc1Series;
 
 public class ProjectTreeModelFactory {
@@ -25,6 +26,12 @@ public class ProjectTreeModelFactory {
         MissionNode missionNode = new MissionNode(missionCount + " [" + mission.getWingName() + "]");
         seriesNode.addMissionNode(series.getId() + "_" + missionCount, missionNode);
         ++missionCount;
+
+        int navPointIdx = 0;
+        for (Wc1NavPoint navPoint : mission.getNavPoints()) {
+          NavPointNode navPointNode = new NavPointNode(navPointIdx++ + " [" + navPoint.getId() + "]");
+          missionNode.addNavPointNode(navPointNode);
+        }
       }
     }
 

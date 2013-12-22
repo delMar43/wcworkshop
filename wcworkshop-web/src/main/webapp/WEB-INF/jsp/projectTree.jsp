@@ -10,7 +10,24 @@
           <ul>
           <c:forEach items="${seriesNode.missionNodes}" var="missionNode" varStatus="missionNodeStatus">
             <li>${missionNode.label}
-            
+              <ul>
+                <li>Cutscenes
+                  <ul>
+                    <li>Briefing</li>
+                    <li>Debriefing</li>
+                    <li>Shotglass</li>
+                    <li>Left</li>
+                    <li>Right</li>
+                  </ul>
+                </li>
+                <li>Nav Points
+                  <ul>
+                    <c:forEach items="${missionNode.navPointNodes}" var="navPointNode" varStatus="navPointStatus">
+                      <li>${navPointNode.label}</li>
+                    </c:forEach>
+                  </ul>
+                </li>
+              </ul>
             </li>
           </c:forEach>
           </ul>

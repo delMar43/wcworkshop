@@ -15,7 +15,9 @@ import wcworkshop.core.binary.Wc1ModuleNavPointData;
 import wcworkshop.core.binary.Wc1ModuleNavPointMapData;
 import wcworkshop.core.dto.Wc1Campaign;
 import wcworkshop.core.dto.Wc1Mission;
+import wcworkshop.core.dto.Wc1NavPoint;
 import wcworkshop.core.dto.Wc1Series;
+import wcworkshop.core.dto.Wc1ShipAssignment;
 
 public class CampaignTransformer {
   private static final CampaignTransformer instance = new CampaignTransformer();
@@ -91,8 +93,35 @@ public class CampaignTransformer {
 
         Wc1Mission mission = series.getMissions().get(missionIdx);
         mission.setWingName(wingName);
+        mission.setAutopilotShips(autopilotShips[totalIdx].getData());
 
-        Wc1ModuleNavPointData curNavPointData = navPointData[totalIdx];
+        List<Wc1NavPoint> navPoints = new ArrayList<>(16);
+        for (int navIdx = 0; navIdx < 16; ++navIdx) {
+          int curNavIdx = 16 * totalIdx + navIdx;
+          Wc1ModuleNavPointData curNavPointData = navPointData[curNavIdx];
+          if (curNavPointData.getType() == (short) 0) {
+            continue;
+          }
+
+          Wc1NavPoint navPoint = new Wc1NavPoint();
+          navPoint.setId(curNavPointData.getId());
+          navPoint.setType(curNavPointData.getType());
+
+          Wc1ModuleNavPointMapData curNavPointMapData = navPointMapData[curNavIdx];
+          navPoint.setShipOrPoint(curNavPointMapData.getShipOrPoint());
+          navPoint.setIconValue(curNavPointMapData.getIconValue());
+          navPoint.setText(curNavPointMapData.getText());
+
+          navPoints.add(navPoint);
+        }
+        mission.setNavPoints(navPoints);
+
+        List<Wc1ShipAssignment> shipAssignments = new ArrayList<>(32);
+        for (int shipIdx = 0; shipIdx < 32; ++shipIdx) {
+          int curShipIdx = 32 * totalIdx + shipIdx;
+          Wc1ModuleMissionShipData curMissionShipData = missionShipData[curShipIdx];
+        }
+        mission.setShipAssignments(shipAssignments);
       }
 
     }
