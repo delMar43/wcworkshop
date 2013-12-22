@@ -10,9 +10,15 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import wcworkshop.core.dto.Project;
+import binmap.BinaryWriter;
+import binmap.Mapping;
+import binmap.MappingFactory;
+
 public class WriterHelper {
   private static final Logger logger = LoggerFactory.getLogger(WriterHelper.class);
   private static final WriterHelper instance = new WriterHelper();
+  private MappingFactory mappingFactory = MappingFactory.getInstance();
 
   private WriterHelper() {
   }
@@ -25,6 +31,11 @@ public class WriterHelper {
     }
   }
 
+  /**
+   * writes a byte-array to a file
+   * @param data
+   * @param filename
+   */
   public void writeFile(byte[] data, String filename) {
     FileOutputStream fos = null;
     try {
@@ -38,6 +49,13 @@ public class WriterHelper {
     }
   }
 
+  /**
+   * writes a string into a byte-array at the given offset
+   * @param data
+   * @param target
+   * @param offset
+   * @param length
+   */
   public void writeToBinary(String data, byte[] target, int offset, int length) {
     byte[] name = data.getBytes();
     byte[] toWrite = new byte[length];
@@ -53,6 +71,12 @@ public class WriterHelper {
     for (int targetIndex = offset; targetIndex < offset + length; ++targetIndex) {
       target[targetIndex] = toWrite[sourceIndex++];
     }
+  }
+
+  public void writeProject(String binaryName, String mappingName, Project source) {
+    Mapping mapping = mappingFactory.createMapping(mappingName);
+    byte[] binary = BinaryWriter.getInstance().toBinary(source, mapping);
+
   }
 
   public static WriterHelper getInstance() {

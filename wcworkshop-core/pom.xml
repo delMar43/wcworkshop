@@ -8,8 +8,9 @@
     <version>0.1.0-SNAPSHOT</version>
     <relativePath>../wcworkshop/pom.xml</relativePath>
   </parent>
-  
+
   <properties>
+    <dozer.version>5.4.0</dozer.version>
     <jackson.version>2.3.0</jackson.version>
   </properties>
 
@@ -35,6 +36,12 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>${jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.dozer</groupId>
+      <artifactId>dozer</artifactId>
+      <version>${dozer.version}</version>
     </dependency>
 
   </dependencies>

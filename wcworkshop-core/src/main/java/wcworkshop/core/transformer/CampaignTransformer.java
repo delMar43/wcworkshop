@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
+
 import wcworkshop.core.binary.Wc1BriefingFile;
 import wcworkshop.core.binary.Wc1BriefingMissionData;
 import wcworkshop.core.binary.Wc1CampFile;
@@ -23,6 +26,8 @@ import wcworkshop.core.dto.Wc1ShipAssignment;
 public class CampaignTransformer {
   private static final CampaignTransformer instance = new CampaignTransformer();
 
+  private Mapper dozer = new DozerBeanMapper();
+
   public Wc1Campaign binaryToCampaign(Wc1ModuleFile moduleFile, Wc1BriefingFile briefingFile, Wc1CampFile campFile) {
     Wc1Campaign result = new Wc1Campaign();
 
@@ -38,26 +43,16 @@ public class CampaignTransformer {
     for (int seriesIdx = 0; seriesIdx < campFile.getSeriesBlocks().length; ++seriesIdx) {
       Wc1CampSeriesBlock seriesBlock = campFile.getSeriesBlocks()[seriesIdx];
 
-      Wc1Series series = new Wc1Series();
+      Wc1Series series = dozer.map(seriesBlock, Wc1Series.class);
       series.setId(UUID.randomUUID().toString());
       series.setSeriesNr(seriesIdx + 1);
-      series.setWingman(seriesBlock.getWingman());
-      series.setLossDestination(seriesBlock.getLossDestination());
-      series.setLossShip(seriesBlock.getLossShip());
-      series.setMissionTreeLevel(seriesBlock.getMissionTreeLevel());
-      series.setVictoryDestination(seriesBlock.getVictoryDestination());
-      series.setVictoryShip(seriesBlock.getVictoryShip());
-      series.setVictoryPoints(seriesBlock.getVictoryPoints());
 
       List<Wc1Mission> missionList = new ArrayList<>();
       for (int missionIdx = 0; missionIdx < seriesBlock.getNrOfMissions(); ++missionIdx) {
         Wc1CampMissionData missionData = seriesBlock.getMissionData()[missionIdx];
 
-        Wc1Mission mission = new Wc1Mission();
+        Wc1Mission mission = dozer.map(missionData, Wc1Mission.class);
         mission.setId(UUID.randomUUID().toString());
-        mission.setMedal(missionData.getMedal());
-        mission.setRequiredMedalPoints(missionData.getRequiredMedalPoints());
-        mission.setVictoryPointsPerObjective(missionData.getVictoryPointsPerObjective());
         missionList.add(mission);
       }
       series.setMissions(missionList);
