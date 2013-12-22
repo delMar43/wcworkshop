@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import wcworkshop.core.dto.Project;
 import wcworkshop.core.dto.Wc1Series;
 import wcworkshop.core.service.ProjectService;
+import wcworkshop.web.command.SeriesCommand;
 
 @Controller
 public class SeriesEditorFormController {
@@ -17,15 +17,18 @@ public class SeriesEditorFormController {
   private ProjectService projectService = ProjectService.getInstance();
 
   @RequestMapping(value = "/seriesEditor.html", method = RequestMethod.GET)
-  public ModelAndView renderEditor(@RequestParam String campaign, @RequestParam int seriesIndex) {
+  public ModelAndView renderEditor(@RequestParam String projectId, @RequestParam String seriesId) {
     ModelAndView result = new ModelAndView("editors/seriesEditor");
 
     String username = (String) SecurityUtils.getSubject().getPrincipal();
 
-    Project project = projectService.loadProject(username, campaign);
-    Wc1Series series = project.getCampaign().getSeries().get(seriesIndex);
+    Wc1Series series = projectService.loadSeries(username, projectId, seriesId);
 
-    result.addObject("command", series);
+    SeriesCommand command = new SeriesCommand();
+    command.setProjectId(projectId);
+    command.setSeries(series);
+
+    result.addObject("command", command);
 
     return result;
   }

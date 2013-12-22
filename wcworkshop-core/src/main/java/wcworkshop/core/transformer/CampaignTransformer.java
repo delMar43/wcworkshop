@@ -2,6 +2,7 @@ package wcworkshop.core.transformer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import wcworkshop.core.binary.Wc1BriefingFile;
 import wcworkshop.core.binary.Wc1BriefingMissionData;
@@ -38,7 +39,8 @@ public class CampaignTransformer {
       Wc1CampSeriesBlock seriesBlock = campFile.getSeriesBlocks()[seriesIdx];
 
       Wc1Series series = new Wc1Series();
-      series.setId("Series " + (seriesIdx + 1));
+      series.setId(UUID.randomUUID().toString());
+      series.setSeriesNr(seriesIdx + 1);
       series.setWingman(seriesBlock.getWingman());
       series.setLossDestination(seriesBlock.getLossDestination());
       series.setLossShip(seriesBlock.getLossShip());
@@ -52,6 +54,7 @@ public class CampaignTransformer {
         Wc1CampMissionData missionData = seriesBlock.getMissionData()[missionIdx];
 
         Wc1Mission mission = new Wc1Mission();
+        mission.setId(UUID.randomUUID().toString());
         mission.setMedal(missionData.getMedal());
         mission.setRequiredMedalPoints(missionData.getRequiredMedalPoints());
         mission.setVictoryPointsPerObjective(missionData.getVictoryPointsPerObjective());
@@ -79,7 +82,7 @@ public class CampaignTransformer {
     Wc1ModuleMissionShipData[] missionShipData = moduleFile.getBlock4().getMissionShipData();
 
     for (int seriesIdx = 0; seriesIdx < 13; ++seriesIdx) {
-      String systemName = moduleFile.getSystemNames()[seriesIdx];
+      String systemName = moduleFile.getSystemNames()[seriesIdx].replaceAll("\0", "");
       Wc1Series series = result.getSeries().get(seriesIdx);
       series.setSystemName(systemName);
 

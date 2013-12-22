@@ -9,8 +9,8 @@ public class ProjectNode extends AbstractNode {
 
   private Map<String, SeriesNode> seriesNodes = new LinkedHashMap<>();
 
-  public ProjectNode(String label) {
-    super(label);
+  public ProjectNode(String id, String label) {
+    super(id, label);
   }
 
   public void addSeriesNode(String id, SeriesNode seriesNode) {

@@ -14,22 +14,22 @@ public class ProjectTreeModelFactory {
   }
 
   public ProjectNode createProjectNode(Project project) {
-    ProjectNode projectNode = new ProjectNode(project.getTitle());
+    ProjectNode projectNode = new ProjectNode(project.getId(), project.getTitle());
     Wc1Campaign campaign = project.getCampaign();
 
     for (Wc1Series series : campaign.getSeries()) {
-      SeriesNode seriesNode = new SeriesNode(series.getId() + " [" + series.getSystemName() + "]");
+      SeriesNode seriesNode = new SeriesNode(series.getId(), "Series " + series.getSeriesNr() + " [" + series.getSystemName() + "]");
       projectNode.addSeriesNode(series.getId(), seriesNode);
 
       int missionCount = 1;
       for (Wc1Mission mission : series.getMissions()) {
-        MissionNode missionNode = new MissionNode(missionCount + " [" + mission.getWingName() + "]");
+        MissionNode missionNode = new MissionNode(mission.getId(), missionCount + " [" + mission.getWingName() + "]");
         seriesNode.addMissionNode(series.getId() + "_" + missionCount, missionNode);
         ++missionCount;
 
         int navPointIdx = 0;
         for (Wc1NavPoint navPoint : mission.getNavPoints()) {
-          NavPointNode navPointNode = new NavPointNode(navPointIdx++ + " [" + navPoint.getId() + "]");
+          NavPointNode navPointNode = new NavPointNode(navPoint.getId(), navPointIdx++ + " [" + navPoint.getId() + "]");
           missionNode.addNavPointNode(navPointNode);
         }
       }

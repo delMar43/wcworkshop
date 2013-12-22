@@ -50,9 +50,9 @@
           $("#tab-projects").fancytree({
             click: function(event, data) {
               var extraClass = data.node.extraClasses;
-              if (extraClass.indexOf("series_") == 0) {
-                var seriesIndex = extraClass.split("_")[1];
-                openSeriesEditor("Wing Commander", seriesIndex);
+              if (extraClass.indexOf("series") >= 0) {
+                var seriesId = extraClass.split(" ")[1];
+                openSeriesEditor("Wing Commander", seriesId);
               }
             }
           });
@@ -94,10 +94,10 @@
         return ("tab_" + key) in openTabs;
       }
       
-      var openSeriesEditor = function(campaign, seriesIndex) {
-    	var key = "C" + campaign + "S" + (seriesIndex+1);
-    	var label = campaign + " Series " + (seriesIndex +1);
-        addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex, editorTabs, "editorTab");
+      var openSeriesEditor = function(projectId, seriesIndex) {
+    	var key = "C" + projectId + "S" + (seriesIndex+1);
+    	var label = "Series " + (seriesIndex +1);
+        addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?projectId=" + projectId + "&seriesIndex=" + seriesIndex, editorTabs, "editorTab");
       };
       
       var openMissionEditor = function(campaign, seriesIndex, missionIndex) {

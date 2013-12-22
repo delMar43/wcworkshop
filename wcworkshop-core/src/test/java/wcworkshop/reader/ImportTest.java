@@ -1,5 +1,7 @@
 package wcworkshop.reader;
 
+import java.util.UUID;
+
 import org.junit.Test;
 
 import wcworkshop.core.binary.Wc1BriefingFile;
@@ -29,6 +31,7 @@ public class ImportTest {
     Wc1Campaign campaign = campaignTransformer.binaryToCampaign(moduleFile, briefingFile, campFile);
 
     Project newProject = new Project();
+    newProject.setId(UUID.randomUUID().toString());
     newProject.setOwner("delMar");
     newProject.setTitle("Wing Commander");
     newProject.setCampaign(campaign);

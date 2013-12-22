@@ -2,6 +2,7 @@ package wcworkshop.web.controller.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -40,7 +41,13 @@ public class EditProjectPostController {
 
   private Project commandToProject(ProjectCommand command) {
     Project project = new Project();
-    project.setTitle("New Project");
+    String projectId;
+    if (command.getId() == null || command.getId().length() == 0) {
+      projectId = UUID.randomUUID().toString();
+    } else {
+      projectId = command.getId();
+    }
+    project.setId(projectId);
 
     Subject subject = SecurityUtils.getSubject();
     String username = (String) subject.getPrincipal();

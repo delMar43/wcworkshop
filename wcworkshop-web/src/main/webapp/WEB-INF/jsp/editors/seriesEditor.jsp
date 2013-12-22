@@ -3,39 +3,41 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <h2>Campaign ${campaign}, Series ${seriesIndex +1}</h2>
 <form:form action="saveSeries.html" method="POST">
+  <form:hidden path="projectId" />
+  <form:hidden path="series.id" />
   <table>
     <tbody>
       <tr>
         <th>System</th>
-        <td><form:input path="systemName" /></td>
+        <td><form:input path="series.systemName" /></td>
       </tr>
       <tr>
         <th>Wingman</th>
-        <td><form:input path="wingman" /></td>
+        <td><form:input path="series.wingman" /></td>
       </tr>
       <tr>
         <th>Victory Points</th>
-        <td><form:input path="victoryPoints" /></td>
+        <td><form:input path="series.victoryPoints" /></td>
       </tr>
       <tr>
         <th>Missiontree Level</th>
-        <td><form:input path="missionTreeLevel" /></td>
+        <td><form:input path="series.missionTreeLevel" /></td>
       </tr>
       <tr>
         <th>Victory Destination</th>
-        <td><form:input path="victoryDestination" /></td>
+        <td><form:input path="series.victoryDestination" /></td>
       </tr>
       <tr>
         <th>Victory Ship</th>
-        <td><form:input path="victoryShip" /></td>
+        <td><form:input path="series.victoryShip" /></td>
       </tr>
       <tr>
         <th>Loss Destination</th>
-        <td><form:input path="lossDestination" /></td>
+        <td><form:input path="series.lossDestination" /></td>
       </tr>
       <tr>
         <th>Loss Ship</th>
-        <td><form:input path="lossShip" /></td>
+        <td><form:input path="series.lossShip" /></td>
       </tr>
     </tbody>
   </table>

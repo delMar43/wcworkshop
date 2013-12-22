@@ -3,10 +3,10 @@
 
 <ul class="projectTree" id="projectTree">
   <c:forEach items="${projectNodes}" var="projectNode" varStatus="projectStatus">
-    <li>${projectNode.label}
+    <li class="project ${projectNode.id}">${projectNode.label}
       <ul>
         <c:forEach items="${projectNode.seriesNodes}" var="seriesNode" varStatus="seriesNodeStatus">
-          <li class="series_${seriesNodeStatus.count}">${seriesNode.label}
+          <li class="series ${seriesNode.id}">${seriesNode.label}
           <ul>
           <c:forEach items="${seriesNode.missionNodes}" var="missionNode" varStatus="missionNodeStatus">
             <li>${missionNode.label}

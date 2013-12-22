@@ -4,9 +4,18 @@ import java.util.Map;
 
 public class ProjectCommand {
 
+  private String id;
   private String title;
   private Map<String, String> descriptions;
   private String website;
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
 
   public String getTitle() {
     return title;

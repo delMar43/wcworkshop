@@ -10,6 +10,7 @@ public class Wc1Series implements Series {
 
   private String id;
   private String systemName;
+  private int seriesNr;
   private short wingman;
   private short victoryPoints;
   private byte missionTreeLevel;
@@ -34,6 +35,14 @@ public class Wc1Series implements Series {
 
   public void setSystemName(String systemName) {
     this.systemName = systemName;
+  }
+
+  public int getSeriesNr() {
+    return seriesNr;
+  }
+
+  public void setSeriesNr(int seriesNr) {
+    this.seriesNr = seriesNr;
   }
 
   public short getWingman() {

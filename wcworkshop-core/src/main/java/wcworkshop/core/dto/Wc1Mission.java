@@ -7,6 +7,7 @@ import wcworkshop.core.service.Wc1CutsceneType;
 
 public class Wc1Mission {
 
+  private String id;
   private String wingName;
   private short[] stellarBackgrounds;
   private byte leftPilot;
@@ -19,6 +20,14 @@ public class Wc1Mission {
   private Map<Wc1CutsceneType, Wc1Cutscene> cutscenes;
   private List<Wc1NavPoint> navPoints;
   private List<Wc1ShipAssignment> shipAssignments;
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
 
   public String getWingName() {
     return wingName;

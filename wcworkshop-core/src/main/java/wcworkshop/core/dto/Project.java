@@ -7,12 +7,21 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
 
+  private String id;
   private String owner;
   private String title;
   private Map<String, String> descriptions;
   private String website;
   private EngineType engineType;
   private Wc1Campaign campaign;
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
 
   public String getOwner() {
     return owner;
