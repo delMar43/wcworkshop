@@ -1,8 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<script type="text/javascript">
+var submitSeriesEditForm = function() {
+  $.ajax({
+    type: "POST",
+    url: $("#seriesEditForm").attr("action"),
+    data: $("#seriesEditForm").serialize(),
+    success: function(response) {
+      var respObj = $.parseJSON(response);
+      alert(response);
+    }
+  });
+}
+</script>
 <h2>Campaign ${campaign}, Series ${seriesIndex +1}</h2>
-<form:form action="saveSeries.html" method="POST">
+<form:form action="saveSeries.html" method="POST" id="seriesEditForm">
   <form:hidden path="projectId" />
   <form:hidden path="series.id" />
   <table>
@@ -42,3 +55,4 @@
     </tbody>
   </table>
 </form:form>
+<button onclick="submitSeriesEditForm()">Save</button>

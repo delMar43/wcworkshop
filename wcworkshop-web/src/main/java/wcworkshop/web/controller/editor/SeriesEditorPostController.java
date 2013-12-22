@@ -1,5 +1,6 @@
 package wcworkshop.web.controller.editor;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,10 @@ public class SeriesEditorPostController {
   public String saveSeries(@ModelAttribute("command") SeriesCommand command) {
     Wc1Series series = command.getSeries();
     String seriesId = series.getId();
+
+    String username = (String) SecurityUtils.getSubject().getPrincipal();
+
+    projectService.updateSeries(username, command.getProjectId(), series);
 
     return "{\"status\":\"ok\"}";
   }
