@@ -25,29 +25,6 @@
         
         $(".ui-tabs-nav").sortable();
 
-        <%--
-        $.ajax({
-          url: "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=000",
-          success: function(data, textStatus, jqXHR) {
-            $("#tab-campaignContents_000").html(data);
-          }
-        });
-
-        $.ajax({
-          url: "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=001",
-          success: function(data, textStatus, jqXHR) {
-            $("#tab-campaignContents_001").html(data);
-          }
-        });
-        
-        $.ajax({
-          url: "<%=request.getContextPath()%>/campaignContentsTree.html?campaign=002",
-          success: function(data, textStatus, jqXHR) {
-            $("#tab-campaignContents_002").html(data);
-          }
-        });
-        --%>
-        
         // close icon: removing the tab on click
         editorTabs.delegate( "span.ui-icon-close", "click", function() {
           var li = $( this ).closest( "li" );
@@ -69,21 +46,19 @@
           delete openProjectTabs[li.attr("id")];
         });
   
-        <%-- c:forEach items="${openProjects}" var="project">
-        loadProject('<c:out value="${project.title}"/>');
-        </c:forEach --%>
-        
         $("#tab-projects").load("<%=request.getContextPath()%>/projectTree.html", function() {
-          $("#tab-projects").fancytree();
+          $("#tab-projects").fancytree({
+            click: function(event, data) {
+              var extraClass = data.node.extraClasses;
+              if (extraClass.indexOf("series_") == 0) {
+                var seriesIndex = extraClass.split("_")[1];
+                openSeriesEditor("Wing Commander", seriesIndex);
+              }
+            }
+          });
         });
       });
 
-      <%--
-      var loadProject = function(id) {
-        addTab(id, id, "<%=request.getContextPath()%>/projectTree.html", projectTabs, "projectTabs");
-      }
-      --%>
-      
       // actual addTab function: adds new tab using the input from the form above
       var addStaticTab = function(key, label, content, tabContainer, tabClass) {
         if (!tabAlreadyOpen(key)) {

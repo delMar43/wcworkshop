@@ -5,8 +5,8 @@
   <c:forEach items="${projectNodes}" var="projectNode" varStatus="projectStatus">
     <li>${projectNode.label}
       <ul>
-        <c:forEach items="${projectNode.seriesNodes}" var="seriesNode" varStatus="seriesNodesStatus">
-          <li>${seriesNode.label}
+        <c:forEach items="${projectNode.seriesNodes}" var="seriesNode" varStatus="seriesNodeStatus">
+          <li class="series_${seriesNodeStatus.count}">${seriesNode.label}
           <ul>
           <c:forEach items="${seriesNode.missionNodes}" var="missionNode" varStatus="missionNodeStatus">
             <li>${missionNode.label}
