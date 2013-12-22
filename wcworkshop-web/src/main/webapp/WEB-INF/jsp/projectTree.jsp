@@ -3,52 +3,34 @@
 
 <ul class="projectTree" id="projectTree">
   <c:forEach items="${projectNodes}" var="projectNode" varStatus="projectStatus">
-    <li class="project ${projectNode.id}">${projectNode.label}
+    <li class="project=${projectNode.id}">${projectNode.label}
       <ul>
         <c:forEach items="${projectNode.seriesNodes}" var="seriesNode" varStatus="seriesNodeStatus">
-          <li class="series ${seriesNode.id}">${seriesNode.label}
-          <ul>
-          <c:forEach items="${seriesNode.missionNodes}" var="missionNode" varStatus="missionNodeStatus">
-            <li>${missionNode.label}
-              <ul>
-                <li>Cutscenes
-                  <ul>
-                    <li>Briefing</li>
-                    <li>Debriefing</li>
-                    <li>Shotglass</li>
-                    <li>Left</li>
-                    <li>Right</li>
-                  </ul>
-                </li>
-                <li>Nav Points
-                  <ul>
-                    <c:forEach items="${missionNode.navPointNodes}" var="navPointNode" varStatus="navPointStatus">
-                      <li>${navPointNode.label}</li>
-                    </c:forEach>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </c:forEach>
-          </ul>
-          <%--
+          <li class="series=${seriesNode.id} project=${projectNode.id}">${seriesNode.label}
             <ul>
-              <li>Nav Points
+            <c:forEach items="${seriesNode.missionNodes}" var="missionNode" varStatus="missionNodeStatus">
+              <li class="mission=${missionNode.id} project=${projectNode.id}">${missionNode.label}
                 <ul>
-                  <c:forEach items="${mission.navPoints}" var="navPoint" varStatus="navPointStatus">
-                    <li><a href="javascript:openNavPointEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, ${navPointStatus.index})">
-                      [N] ${navPointStatus.index}: ${navPoint.id}
-                    </a></li>
-                  </c:forEach>
+                  <li>Cutscenes
+                    <ul>
+                      <li class="mission=${missionNode.id} cutscene=briefing project=${projectNode.id}">Briefing</li>
+                      <li class="mission=${missionNode.id} cutscene=debriefing project=${projectNode.id}">Debriefing</li>
+                      <li class="mission=${missionNode.id} cutscene=shotglass project=${projectNode.id}">Shotglass</li>
+                      <li class="mission=${missionNode.id} cutscene=left project=${projectNode.id}">Left</li>
+                      <li class="mission=${missionNode.id} cutscene=right project=${projectNode.id}">Right</li>
+                    </ul>
+                  </li>
+                  <li>Nav Points
+                    <ul>
+                      <c:forEach items="${missionNode.navPointNodes}" var="navPointNode" varStatus="navPointStatus">
+                        <li class="navPoint=${navPointNode.id} project=${projectNode.id}">${navPointNode.label}</li>
+                      </c:forEach>
+                    </ul>
+                  </li>
                 </ul>
               </li>
-              <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'SHOTGLASS')">[C] Shotglass</a></li>
-              <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'LEFT_SEAT')">[C] Left Seat</a></li>
-              <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'RIGHT_SEAT')">[C] Right Seat</a></li>
-              <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'BRIEFING')">[C] Briefing</a></li>
-              <li><a href="javascript:openCutsceneEditor('${campaign}', ${seriesStatus.index}, ${missionStatus.index}, 'DEBRIEFING')">[C] Debriefing</a></li>
+            </c:forEach>
             </ul>
-             --%>
           </li>
         </c:forEach>
       </ul>

@@ -50,10 +50,28 @@
           $("#tab-projects").fancytree({
             click: function(event, data) {
               var extraClass = data.node.extraClasses;
-              if (extraClass.indexOf("series") >= 0) {
-                var seriesId = extraClass.split(" ")[1];
-                openSeriesEditor("Wing Commander", seriesId);
+              var infoArray = extraClass.split(" ");
+              var infoMap = {};
+
+              var type;
+              
+              var infoIndex = 0;
+              infoArray.forEach(function(keyValue) {
+                var keyValueArray = keyValue.split("=");
+                var key = keyValueArray[0];
+                var value = keyValueArray[1];
+                
+                if (infoIndex++ == 0) {
+                  type = key;
+                }
+                
+                infoMap[key] = value;
+              });
+              
+              if (type == "series") {
+                openSeriesEditor(infoMap["project"], infoMap["series"]);
               }
+              
             }
           });
         });
@@ -94,10 +112,10 @@
         return ("tab_" + key) in openTabs;
       }
       
-      var openSeriesEditor = function(projectId, seriesIndex) {
-    	var key = "C" + projectId + "S" + (seriesIndex+1);
-    	var label = "Series " + (seriesIndex +1);
-        addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?projectId=" + projectId + "&seriesIndex=" + seriesIndex, editorTabs, "editorTab");
+      var openSeriesEditor = function(projectId, seriesId) {
+    	var key = "C" + projectId + "S" + seriesId;
+    	var label = "Series " + seriesId;
+        addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?projectId=" + projectId + "&seriesId=" + seriesId, editorTabs, "editorTab");
       };
       
       var openMissionEditor = function(campaign, seriesIndex, missionIndex) {

@@ -11,11 +11,11 @@ public class ProjectRepo extends AbstractJsonRepo<Project> {
   }
 
   public void saveProject(Project project) {
-    writeFile(project.getOwner(), project.getTitle(), project);
+    writeFile(project.getOwner(), project.getId(), project);
   }
 
-  public Project loadProject(String owner, String title) {
-    Project project = loadFile(owner, title, Project.class);
+  public Project loadProject(String owner, String id) {
+    Project project = loadFile(owner, id, Project.class);
     return project;
   }
 
