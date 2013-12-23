@@ -23,7 +23,7 @@ var submitSeriesEditForm = function() {
     <tbody>
       <tr>
         <th>System</th>
-        <td><form:input path="series.systemName" /></td>
+        <td><form:input path="series.systemName" readonly="true" disabled="true" /></td>
       </tr>
       <tr>
         <th>Wingman</th>

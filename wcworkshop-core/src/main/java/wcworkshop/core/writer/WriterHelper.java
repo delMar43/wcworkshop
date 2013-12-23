@@ -10,7 +10,6 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import wcworkshop.core.dto.Project;
 import binmap.BinaryWriter;
 import binmap.Mapping;
 import binmap.MappingFactory;
@@ -38,6 +37,10 @@ public class WriterHelper {
    */
   public void writeFile(byte[] data, String filename) {
     FileOutputStream fos = null;
+    File parentDir = new File(filename).getParentFile();
+    if (!parentDir.exists()) {
+      parentDir.mkdirs();
+    }
     try {
       fos = new FileOutputStream(filename);
       IOUtils.write(data, fos);
@@ -73,10 +76,16 @@ public class WriterHelper {
     }
   }
 
-  public void writeProject(String binaryName, String mappingName, Project source) {
+  public void write(String binaryName, String mappingName, Object source) {
     Mapping mapping = mappingFactory.createMapping(mappingName);
     byte[] binary = BinaryWriter.getInstance().toBinary(source, mapping);
+    writeFile(binary, binaryName);
+  }
 
+  public void writeDynamic(String binaryName, String mappingName, Object source) {
+    Mapping mapping = mappingFactory.createMapping(mappingName);
+    byte[] binary = BinaryWriter.getInstance().toDynamicBinary(source, mapping);
+    writeFile(binary, binaryName);
   }
 
   public static WriterHelper getInstance() {

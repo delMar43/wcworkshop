@@ -12,6 +12,7 @@
     <link href="<%=request.getContextPath() %>/styles/ui-fancytree.css" rel="stylesheet" type="text/css">
     <script src="<%=request.getContextPath() %>/scripts/jquery.fancytree-all.min.js" type="text/javascript"></script>
     <script>
+      var currentProject;
       var editorTabs;
       var projectTabs;
       var openTabs = {};
@@ -113,24 +114,28 @@
       }
       
       var openSeriesEditor = function(projectId, seriesId) {
+        currentProject = projectId;
     	var key = "C" + projectId + "S" + seriesId;
     	var label = "Series " + seriesId;
         addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?projectId=" + projectId + "&seriesId=" + seriesId, editorTabs, "editorTab");
       };
       
       var openMissionEditor = function(campaign, seriesIndex, missionIndex) {
+        currentProject = campaign;
     	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1);
     	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1);
         addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex, editorTabs, "editorTab");
       };
       
       var openCutsceneEditor = function(campaign, seriesIndex, missionIndex, cutsceneIndex) {
+        currentProject = campaign;
     	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "C" + cutsceneIndex;
     	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " " + cutsceneIndex;
         addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex, editorTabs, "editorTab");
       };
       
       var openNavPointEditor = function(campaign, seriesIndex, missionIndex, navPointIndex) {
+        currentProject = campaign;
     	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "N" + navPointIndex;
     	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " Nav " + navPointIndex;
         addTab(key, label, "<%=request.getContextPath()%>/navPointEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&navPointIndex=" + navPointIndex, editorTabs, "editorTab");
@@ -183,7 +188,9 @@
       }
       
       var generateBinaryFiles = function() {
-        
+        var key = "download";
+        var label = "Download"
+        addTab(key, label, "<%=request.getContextPath()%>/generateProject.html?projectId=" + currentProject, editorTabs, "editorTab");
       }
     </script>
   </head>
