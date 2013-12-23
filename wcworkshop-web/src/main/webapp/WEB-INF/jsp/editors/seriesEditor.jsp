@@ -18,6 +18,7 @@ var submitSeriesEditForm = function() {
 <form:form action="saveSeries.html" method="POST" id="seriesEditForm">
   <form:hidden path="projectId" />
   <form:hidden path="series.id" />
+  <form:hidden path="series.seriesNr" />
   <table>
     <tbody>
       <tr>

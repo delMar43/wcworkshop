@@ -2,6 +2,8 @@ package wcworkshop.core.service;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
+
 import wcworkshop.core.dto.Project;
 import wcworkshop.core.dto.Wc1Series;
 import wcworkshop.core.repo.ProjectRepo;
@@ -41,7 +43,7 @@ public class ProjectService {
 
     int seriesIndex = findSeriesIndex(project, series.getId());
     Wc1Series oldSeries = project.getCampaign().getSeries().get(seriesIndex);
-    oldSeries.setWingman(series.getWingman());
+    BeanUtils.copyProperties(series, oldSeries, new String[] { "missions" });
 
     //    project.getCampaign().getSeries().set(seriesIndex, oldSeries);
 
