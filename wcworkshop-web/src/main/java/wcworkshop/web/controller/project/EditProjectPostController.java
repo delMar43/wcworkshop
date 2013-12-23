@@ -1,8 +1,6 @@
 package wcworkshop.web.controller.project;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.Collections;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -16,8 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import wcworkshop.core.dto.EngineType;
 import wcworkshop.core.dto.Project;
-import wcworkshop.core.dto.Wc1Campaign;
-import wcworkshop.core.dto.Wc1Series;
+import wcworkshop.core.dto.ProjectFactory;
 import wcworkshop.core.service.ProjectService;
 import wcworkshop.web.command.ProjectCommand;
 
@@ -26,6 +23,7 @@ public class EditProjectPostController {
   private static final Logger logger = LoggerFactory.getLogger(EditProjectPostController.class);
 
   private ProjectService projectService = ProjectService.getInstance();
+  private ProjectFactory projectFactory = ProjectFactory.getInstance();
 
   @ResponseBody
   @RequestMapping(value = "/editProject", method = RequestMethod.POST)
@@ -40,33 +38,21 @@ public class EditProjectPostController {
   }
 
   private Project commandToProject(ProjectCommand command) {
-    Project project = new Project();
-    String projectId;
-    if (command.getId() == null || command.getId().length() == 0) {
-      projectId = UUID.randomUUID().toString();
-    } else {
-      projectId = command.getId();
-    }
-    project.setId(projectId);
-
     Subject subject = SecurityUtils.getSubject();
     String username = (String) subject.getPrincipal();
 
-    project.setOwner(username);
-    project.setTitle(command.getTitle());
-    project.setDescriptions(command.getDescriptions());
-    project.setWebsite(command.getWebsite());
-    project.setEngineType(EngineType.WC1);
+    Project project;
+    if (command.getId() == null || command.getId().length() == 0) {
+      project = projectFactory.createProject(username, command.getTitle(), Collections.singletonList("en"), command.getDescriptions(),
+          command.getWebsite(), EngineType.WC1);
+    } else {
+      project = projectService.loadProject(username, command.getId());
 
-    Wc1Campaign campaign = new Wc1Campaign();
-    project.setCampaign(campaign);
-
-    List<Wc1Series> seriesList = new ArrayList<>();
-    Wc1Series series = new Wc1Series();
-    series.setId("Series 1");
-    seriesList.add(series);
-
-    campaign.setSeries(seriesList);
+      project.setOwner(username);
+      project.setTitle(command.getTitle());
+      project.setDescriptions(command.getDescriptions());
+      project.setWebsite(command.getWebsite());
+    }
 
     return project;
   }
