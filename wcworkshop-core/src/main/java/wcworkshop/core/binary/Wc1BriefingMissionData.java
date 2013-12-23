@@ -2,6 +2,8 @@ package wcworkshop.core.binary;
 
 public class Wc1BriefingMissionData {
 
+  public static final Wc1BriefingMissionData EMPTY = new Wc1BriefingMissionData();
+
   private int[] offsets;
   private Wc1BriefingCutsceneSetting[] briefingCutsceneSettings;
   private Wc1BriefingCutsceneScript briefingCutsceneScript;

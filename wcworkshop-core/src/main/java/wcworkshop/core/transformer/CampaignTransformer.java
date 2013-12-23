@@ -270,7 +270,107 @@ public class CampaignTransformer {
   }
 
   private Wc1BriefingFile generateBriefingFile(Wc1Campaign source) {
-    return null;
+    Wc1BriefingFile sink = new Wc1BriefingFile();
+    Wc1BriefingMissionData[] missionDataArray = new Wc1BriefingMissionData[52];
+
+    for (int seriesIdx = 0; seriesIdx < 13; ++seriesIdx) {
+      Wc1Series series = source.getSeries().get(seriesIdx);
+      for (int missionIdx = 0; missionIdx < 4; ++missionIdx) {
+        Wc1BriefingMissionData missionData;
+        if (missionIdx < series.getMissions().size()) {
+          Wc1Mission mission = series.getMissions().get(missionIdx);
+          missionData = new Wc1BriefingMissionData();
+
+          for (Wc1CutsceneType cutsceneType : Wc1CutsceneType.values()) {
+            fillMissionData(missionData, mission.getCutscenes(), cutsceneType);
+          }
+
+        } else {
+          missionData = Wc1BriefingMissionData.EMPTY;
+        }
+
+        int totalIdx = seriesIdx * 4 + missionIdx;
+        missionDataArray[totalIdx] = missionData;
+      }
+    }
+    sink.setMissionData(missionDataArray);
+
+    return sink;
+  }
+
+  private void fillMissionData(Wc1BriefingMissionData missionData, Map<Wc1CutsceneType, Wc1Cutscene> cutscenes, Wc1CutsceneType cutsceneType) {
+    Wc1Cutscene cutscene = cutscenes.get(cutsceneType);
+    fromModelToBinaryBeans(missionData, cutscene, cutsceneType);
+  }
+
+  private void fromModelToBinaryBeans(Wc1BriefingMissionData missionData, Wc1Cutscene cutscene, Wc1CutsceneType cutsceneType) {
+    Wc1BriefingCutsceneSetting[] settings = new Wc1BriefingCutsceneSetting[cutscene.getScreens().size()];
+    Wc1BriefingCutsceneScript script = new Wc1BriefingCutsceneScript();
+
+    fillSettingsAndScripts(cutscene, settings, script);
+
+    if (cutsceneType == Wc1CutsceneType.BRIEFING) {
+      missionData.setBriefingCutsceneSettings(settings);
+      missionData.setBriefingCutsceneScript(script);
+    } else if (cutsceneType == Wc1CutsceneType.DEBRIEFING) {
+      missionData.setDebriefingCutsceneSettings(settings);
+      missionData.setDebriefingCutsceneScript(script);
+    } else if (cutsceneType == Wc1CutsceneType.SHOTGLASS) {
+      missionData.setShotglassCutsceneSettings(settings);
+      missionData.setShotglassCutsceneScript(script);
+    } else if (cutsceneType == Wc1CutsceneType.LEFT_SEAT) {
+      missionData.setLeftSeatCutsceneSettings(settings);
+      missionData.setLeftSeatCutsceneScript(script);
+    } else if (cutsceneType == Wc1CutsceneType.RIGHT_SEAT) {
+      missionData.setRightSeatCutsceneSettings(settings);
+      missionData.setRightSeatCutsceneScript(script);
+    }
+  }
+
+  private void fillSettingsAndScripts(Wc1Cutscene cutscene, Wc1BriefingCutsceneSetting[] settings, Wc1BriefingCutsceneScript script) {
+    StringBuilder scriptString = new StringBuilder("\0");
+    int idx = 0;
+    int offset = 1;
+    for (Wc1CutsceneScreen screen : cutscene.getScreens()) {
+      Wc1BriefingCutsceneSetting setting = new Wc1BriefingCutsceneSetting();
+      setting.setForeground(screen.getForeground());
+      setting.setBackground(screen.getBackground());
+      setting.setFontColor(screen.getTextColor());
+      setting.setUnknown(screen.getUnknown());
+
+      setting.setCommandOffset((short) offset);
+      offset += getLength(screen.getCommands()) + 1;
+
+      setting.setTextOffset((short) offset);
+      offset += getLength(screen.getText()) + 1;
+
+      setting.setPhoneticOffset((short) offset);
+      offset += getLength(screen.getPhonetic()) + 1;
+
+      setting.setFacialExpressionOffset((short) offset);
+      offset += getLength(screen.getFacialExpression()) + 1;
+
+      settings[idx++] = setting;
+
+      if (setting.getForeground() == (byte) 0xFE) {
+        break;
+      }
+      scriptString.append(screen.getCommands() + "\0");
+      scriptString.append(screen.getText() + "\0");
+      scriptString.append(screen.getPhonetic() + "\0");
+      scriptString.append(screen.getFacialExpression() + "\0");
+    }
+    script.setScriptBytes(scriptString.toString().getBytes());
+  }
+
+  private short getLength(String string) {
+    short result;
+    if (string != null) {
+      result = (short) string.length();
+    } else {
+      result = 0;
+    }
+    return result;
   }
 
   private Wc1ModuleFile generateModuleFile(Wc1Campaign source) {
