@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import wcworkshop.core.config.Configuration;
 import wcworkshop.web.command.SignupCommand;
 
 @Controller
@@ -30,7 +31,8 @@ public class SignupPostController {
 
       String line = "user." + signupCommand.getUsername() + " = " + signupCommand.getPassword() + ", user";
       try {
-        FileUtils.writeLines(new File("d:/wcworkshop/security.properties"), Collections.singletonList(line), true);
+        FileUtils.writeLines(new File(Configuration.getInstance().getResourcePath() + "/data/security.properties"),
+            Collections.singletonList(line), true);
       } catch (IOException e) {
         logger.error("Exception while trying to write registration to properties file: {}", e.getMessage());
       }

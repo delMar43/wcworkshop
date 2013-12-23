@@ -67,10 +67,14 @@ public class AbstractJsonRepo<T> {
     String path = generatePath(owner, clazz);
 
     List<T> result = new ArrayList<>();
-    for (String filename : new File(path).list(jsonFilter)) {
-      filename = filename.replace(".json", "");
-      result.add(loadFile(owner, filename, clazz));
+    File directory = new File(path);
+    if (directory.exists()) {
+      for (String filename : directory.list(jsonFilter)) {
+        filename = filename.replace(".json", "");
+        result.add(loadFile(owner, filename, clazz));
+      }
     }
+
     return result;
   }
 

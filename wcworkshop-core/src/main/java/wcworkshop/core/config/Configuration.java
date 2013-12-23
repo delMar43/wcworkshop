@@ -1,5 +1,7 @@
 package wcworkshop.core.config;
 
+import java.io.File;
+
 public class Configuration {
   private static final Configuration instance = new Configuration();
 
@@ -14,6 +16,10 @@ public class Configuration {
       result = "/opt/wcworkshop/";
     }
     return result;
+  }
+
+  public String getGeneratedPath(String username) {
+    return getResourcePath() + "/" + "data" + File.separator + username + File.separator + "generated" + File.separator;
   }
 
   private String getOs() {
