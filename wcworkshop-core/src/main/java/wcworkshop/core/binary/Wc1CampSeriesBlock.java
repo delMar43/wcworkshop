@@ -2,6 +2,8 @@ package wcworkshop.core.binary;
 
 public class Wc1CampSeriesBlock {
 
+  public static final Wc1CampSeriesBlock EMPTY = new Wc1CampSeriesBlock();
+
   private short wingman;
   private byte nrOfMissions;
   private short victoryPoints;

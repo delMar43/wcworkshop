@@ -12,6 +12,7 @@ import wcworkshop.core.binary.Wc1BriefingMissionData;
 import wcworkshop.core.binary.Wc1CampFile;
 import wcworkshop.core.binary.Wc1CampMissionData;
 import wcworkshop.core.binary.Wc1CampSeriesBlock;
+import wcworkshop.core.binary.Wc1GameFiles;
 import wcworkshop.core.binary.Wc1ModuleAutopilotShips;
 import wcworkshop.core.binary.Wc1ModuleFile;
 import wcworkshop.core.binary.Wc1ModuleMissionShipData;
@@ -28,12 +29,12 @@ public class CampaignTransformer {
 
   private Mapper dozer = new DozerBeanMapper();
 
-  public Wc1Campaign binaryToCampaign(Wc1ModuleFile moduleFile, Wc1BriefingFile briefingFile, Wc1CampFile campFile) {
+  public Wc1Campaign binaryToCampaign(Wc1GameFiles gameFiles) {
     Wc1Campaign result = new Wc1Campaign();
 
-    fillCampaignWithCampData(result, campFile);
-    fillCampaignWithBriefingData(result, briefingFile);
-    fillCampaignWithModuleData(result, moduleFile);
+    fillCampaignWithCampData(result, gameFiles.getCampFile());
+    fillCampaignWithBriefingData(result, gameFiles.getBriefingFile());
+    fillCampaignWithModuleData(result, gameFiles.getModuleFile());
 
     return result;
   }
@@ -123,6 +124,57 @@ public class CampaignTransformer {
       }
 
     }
+  }
+
+  public Wc1GameFiles campaignToBinary(Wc1Campaign source) {
+    Wc1CampFile campFile = generateCampFile(source);
+    Wc1BriefingFile briefingFile = generateBriefingFile(source);
+    Wc1ModuleFile moduleFile = generateModuleFile(source);
+
+    return new Wc1GameFiles(moduleFile, campFile, briefingFile);
+  }
+
+  private Wc1CampFile generateCampFile(Wc1Campaign source) {
+    Wc1CampFile sink = new Wc1CampFile();
+    Wc1CampSeriesBlock[] seriesBlocks = new Wc1CampSeriesBlock[13];
+    for (int seriesIdx = 0; seriesIdx < 13; ++seriesIdx) {
+      Wc1Series series = source.getSeries().get(seriesIdx);
+
+      Wc1CampSeriesBlock seriesBlock;
+      if (seriesIdx < source.getSeries().size()) {
+        seriesBlock = dozer.map(series, Wc1CampSeriesBlock.class);
+        seriesBlock.setNrOfMissions(series.getNrOfMissions());
+      } else {
+        seriesBlock = Wc1CampSeriesBlock.EMPTY;
+      }
+
+      Wc1CampMissionData[] missionDataArray = new Wc1CampMissionData[4];
+      for (int missionIdx = 0; missionIdx < 4; ++missionIdx) {
+        Wc1CampMissionData missionData;
+        if (missionIdx < series.getMissions().size()) {
+          Wc1Mission mission = series.getMissions().get(missionIdx);
+          missionData = dozer.map(mission, Wc1CampMissionData.class);
+        } else {
+          missionData = Wc1CampMissionData.EMPTY;
+        }
+        missionDataArray[missionIdx] = missionData;
+      }
+      seriesBlock.setMissionData(missionDataArray);
+
+      seriesBlocks[seriesIdx] = seriesBlock;
+    }
+
+    sink.setSeriesBlocks(seriesBlocks);
+
+    return sink;
+  }
+
+  private Wc1BriefingFile generateBriefingFile(Wc1Campaign source) {
+    return null;
+  }
+
+  private Wc1ModuleFile generateModuleFile(Wc1Campaign source) {
+    return null;
   }
 
   private CampaignTransformer() {
