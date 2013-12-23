@@ -93,6 +93,14 @@ public class BinaryWriter {
       }
     }
 
+    byte[] result = addOffsets(mapping, byteList, offsets);
+
+    logger.debug("Done with dynamically mapping {} bytes to {}", result.length, mapping.getClassName());
+
+    return result;
+  }
+
+  private byte[] addOffsets(Mapping mapping, List<Byte> byteList, List<Integer> offsets) {
     int addOffset = 0;
     int resultSize;
     if (mapping.isWithFilesize()) {
@@ -126,9 +134,6 @@ public class BinaryWriter {
     for (Byte b : byteList) {
       result[targetIndex++] = b.byteValue();
     }
-
-    logger.debug("Done with dynamically mapping {} bytes to {}", result.length, mapping.getClassName());
-
     return result;
   }
 
@@ -136,13 +141,37 @@ public class BinaryWriter {
     logger.debug("Entering mapping " + mapping.getClassName());
 
     byte[] result = new byte[mapping.getSize()];
+    List<Integer> offsets = new ArrayList<>();
 
     int offset = 0;
+    if (mapping.isWithFilesize()) {
+      offset += 4;
+    }
+
+    for (MappingProperty property : mapping.getMappingProperties()) {
+      if (property.isBlockOffsetCreator() != null) {
+        offsets.add(property.getOffset());
+        offset += 4;
+      }
+    }
+
     for (MappingProperty property : mapping.getMappingProperties()) {
       List<byte[]> propertyByteList = handleProperty(source, mapping, property);
       for (byte[] propertyBytes : propertyByteList) {
         binaryUtils.copyIntoArray(propertyBytes, result, offset);
         offset += propertyBytes.length;
+      }
+    }
+
+    if (mapping.isWithFilesize()) {
+      binaryUtils.copyIntoArray(binaryUtils.createIntegerBytes(mapping.getSize()), result, 0);
+    }
+
+    Integer offsetIdx = mapping.getOffsetStart();
+    if (offsetIdx != null) {
+      for (Integer curOffset : offsets) {
+        binaryUtils.copyIntoArray(binaryUtils.createIntegerBytes(curOffset), result, offsetIdx);
+        offsetIdx += 4;
       }
     }
 
