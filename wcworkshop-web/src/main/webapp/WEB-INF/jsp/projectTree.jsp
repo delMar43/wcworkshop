@@ -16,8 +16,8 @@
                       <li class="cutscene=briefing mission=${missionNode.id} project=${projectNode.id}">Briefing</li>
                       <li class="cutscene=debriefing mission=${missionNode.id} project=${projectNode.id}">Debriefing</li>
                       <li class="cutscene=shotglass mission=${missionNode.id} project=${projectNode.id}">Shotglass</li>
-                      <li class="cutscene=left mission=${missionNode.id} project=${projectNode.id}">Left</li>
-                      <li class="cutscene=right mission=${missionNode.id} project=${projectNode.id}">Right</li>
+                      <li class="cutscene=left_seat mission=${missionNode.id} project=${projectNode.id}">Left</li>
+                      <li class="cutscene=right_seat mission=${missionNode.id} project=${projectNode.id}">Right</li>
                     </ul>
                   </li>
                   <li>Nav Points
