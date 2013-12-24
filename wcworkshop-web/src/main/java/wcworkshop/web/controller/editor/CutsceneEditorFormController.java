@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import wcworkshop.core.dto.Wc1Cutscene;
+import wcworkshop.core.dto.Wc1CutsceneBackground;
+import wcworkshop.core.dto.Wc1CutsceneForeground;
+import wcworkshop.core.dto.Wc1CutsceneTextColor;
 import wcworkshop.core.dto.Wc1Mission;
 import wcworkshop.core.service.ProjectService;
 import wcworkshop.core.service.Wc1CutsceneType;
@@ -35,6 +38,9 @@ public class CutsceneEditorFormController {
     model.addAttribute("campaign", projectId);
     model.addAttribute("command", cutscene);
     model.addAttribute("cutsceneUtil", cutsceneUtil);
+    model.addAttribute("foregrounds", Wc1CutsceneForeground.values());
+    model.addAttribute("backgrounds", Wc1CutsceneBackground.values());
+    model.addAttribute("textColors", Wc1CutsceneTextColor.values());
 
     return "editors/cutsceneEditor";
   }

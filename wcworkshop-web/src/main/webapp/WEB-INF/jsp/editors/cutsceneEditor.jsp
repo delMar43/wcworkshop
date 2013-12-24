@@ -30,9 +30,27 @@
   <c:forEach items="${command.screens}" var="screen" varStatus="screenStatus">
         <tr>
           <td>${screenStatus.count}</td>
-          <td>${cutsceneUtil.getForeground(screen.foreground)}</td>
-          <td>${cutsceneUtil.getBackground(screen.background)}</td>
-          <td>${cutsceneUtil.getTextColor(screen.textColor)}</td>
+          <td>
+            <select name="screens[screenStatus.index].foreground">
+              <c:forEach items="${foregrounds}" var="foreground">
+                <option label="${foreground.label}" value="${foreground.value}" <c:if test="${foreground.value == command.screens[screenStatus.index].foreground}">selected="selected"</c:if>></option>
+              </c:forEach>
+            </select>
+          </td>
+          <td>
+            <select name="screens[screenStatus.index].background">
+              <c:forEach items="${backgrounds}" var="background">
+                <option label="${background.label}" value="${background.value}" <c:if test="${background.value == command.screens[screenStatus.index].background}">selected="selected"</c:if>></option>
+              </c:forEach>
+            </select>
+          </td>
+          <td>
+            <select name="screens[screenStatus.index].textColor">
+              <c:forEach items="${textColors}" var="textColor">
+                <option label="${textColor.label}" value="${textColor.value}" <c:if test="${textColor.value == command.screens[screenStatus.index].textColor}">selected="selected"</c:if>></option>
+              </c:forEach>
+            </select>
+          </td>
           <td>${screen.commands}</td>
           <td>${screen.text}</td>
           <td>${screen.facialExpression}</td>
