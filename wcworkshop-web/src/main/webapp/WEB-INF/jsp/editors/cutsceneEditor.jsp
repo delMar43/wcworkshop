@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <div class="scrollablePane">
   <h2>
@@ -8,6 +9,7 @@
     <a href="javascript:openMissionEditor('${campaign}', ${seriesIndex +0}, ${missionIndex +0})">Mission ${missionIndex +1}</a>: ${cutsceneIndex} --%>
   </h2>
   
+  <form:form action="saveCutscene.html" method="POST">
   <div>
     <h3>Screens</h3>
     <table>
@@ -41,4 +43,5 @@
       </tbody>
     </table>
   </div>
+  </form:form>
 </div>

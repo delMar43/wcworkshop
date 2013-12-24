@@ -16,7 +16,7 @@ public class SeriesEditorPostController {
 
   private ProjectService projectService = ProjectService.getInstance();
 
-  @RequestMapping(value = "saveSeries", method = RequestMethod.POST)
+  @RequestMapping(value = "/saveSeries", method = RequestMethod.POST)
   public ModelAndView saveSeries(@ModelAttribute("command") SeriesCommand command) {
     Wc1Series series = command.getSeries();
     String seriesId = series.getId();
