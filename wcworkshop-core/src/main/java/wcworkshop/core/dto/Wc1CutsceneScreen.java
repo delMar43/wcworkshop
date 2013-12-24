@@ -1,5 +1,7 @@
 package wcworkshop.core.dto;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Wc1CutsceneScreen {
 
   private byte sequence;
@@ -33,7 +35,7 @@ public class Wc1CutsceneScreen {
   }
 
   public void setText(String text) {
-    this.text = text;
+    this.text = StringUtils.replace(text, "\r\n", "\n");
   }
 
   public String getPhonetic() {

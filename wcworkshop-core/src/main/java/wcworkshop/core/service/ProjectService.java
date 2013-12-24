@@ -11,6 +11,7 @@ import wcworkshop.core.binary.Wc1GameFiles;
 import wcworkshop.core.binary.Wc1ModuleFile;
 import wcworkshop.core.dto.Project;
 import wcworkshop.core.dto.Wc1Campaign;
+import wcworkshop.core.dto.Wc1Cutscene;
 import wcworkshop.core.dto.Wc1Mission;
 import wcworkshop.core.dto.Wc1Series;
 import wcworkshop.core.reader.Wc1BriefingReader;
@@ -52,6 +53,10 @@ public class ProjectService {
 
   public Wc1Mission loadMission(String username, String projectId, String missionId) {
     Project project = loadProject(username, projectId);
+    return findMission(project, missionId);
+  }
+
+  private Wc1Mission findMission(Project project, String missionId) {
     for (Wc1Series series : project.getCampaign().getSeries()) {
       for (Wc1Mission mission : series.getMissions()) {
         if (mission.getId().equals(missionId)) {
@@ -69,8 +74,6 @@ public class ProjectService {
     Wc1Series oldSeries = project.getCampaign().getSeries().get(seriesIndex);
     BeanUtils.copyProperties(series, oldSeries, new String[] { "missions" });
 
-    //    project.getCampaign().getSeries().set(seriesIndex, oldSeries);
-
     saveProject(project);
   }
 
@@ -82,6 +85,15 @@ public class ProjectService {
       }
     }
     throw new RuntimeException("Unable to find index of id " + idToFind);
+  }
+
+  public void updateCutscene(String username, String projectId, String missionId, Wc1Cutscene cutscene, Wc1CutsceneType cutsceneType) {
+    Project project = loadProject(username, projectId);
+
+    Wc1Mission oldMission = findMission(project, missionId);
+    oldMission.getCutscenes().put(cutsceneType, cutscene);
+
+    saveProject(project);
   }
 
   public void importProjectFromBinaries(String username) {
