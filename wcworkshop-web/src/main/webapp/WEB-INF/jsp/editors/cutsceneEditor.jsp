@@ -4,8 +4,8 @@
 <div class="scrollablePane">
   <h2>
     Campaign ${campaign}, 
-    <a href="javascript:openSeriesEditor('${campaign}', ${seriesIndex +0})">Series ${seriesIndex +1}</a>,
-    <a href="javascript:openMissionEditor('${campaign}', ${seriesIndex +0}, ${missionIndex +0})">Mission ${missionIndex +1}</a>: ${cutsceneIndex}
+    <%-- a href="javascript:openSeriesEditor('${campaign}', ${seriesIndex +0})">Series ${seriesIndex +1}</a>,
+    <a href="javascript:openMissionEditor('${campaign}', ${seriesIndex +0}, ${missionIndex +0})">Mission ${missionIndex +1}</a>: ${cutsceneIndex} --%>
   </h2>
   
   <div>
@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-  <c:forEach items="${cutscene.screens}" var="screen" varStatus="screenStatus">
+  <c:forEach items="${command.screens}" var="screen" varStatus="screenStatus">
         <tr>
           <td>${screenStatus.count}</td>
           <td>${cutsceneUtil.getForeground(screen.foreground)}</td>

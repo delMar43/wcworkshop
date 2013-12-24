@@ -71,6 +71,8 @@
               
               if (type == "series") {
                 openSeriesEditor(infoMap["project"], infoMap["series"]);
+              } else if (type == "cutscene") {
+                openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"])
               }
               
             }
@@ -127,11 +129,11 @@
         addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex, editorTabs, "editorTab");
       };
       
-      var openCutsceneEditor = function(campaign, seriesIndex, missionIndex, cutsceneIndex) {
-        currentProject = campaign;
-    	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "C" + cutsceneIndex;
-    	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " " + cutsceneIndex;
-        addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&cutsceneIndex=" + cutsceneIndex, editorTabs, "editorTab");
+      var openCutsceneEditor = function(projectId, missionId, cutsceneIndex) {
+        currentProject = projectId;
+    	var key = "C" + projectId + "M" + missionId + "C" + cutsceneIndex;
+    	var label = projectId + " M" + missionId + " " + cutsceneIndex;
+        addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?projectId=" + projectId + "&missionId=" + missionId + "&cutsceneIndex=" + cutsceneIndex, editorTabs, "editorTab");
       };
       
       var openNavPointEditor = function(campaign, seriesIndex, missionIndex, navPointIndex) {
@@ -218,17 +220,9 @@
       <div id="projectTabs" class="scrollableTab">
         <ul>
           <li><a href="#tab-projects">My Projects</a>
-          <!-- li><a href="#tab-allContents">All</a></li>
-          <li><a href="#tab-campaignContents_000">WC</a><span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>
-          <li><a href="#tab-campaignContents_001">SM1</a><span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>
-          <li><a href="#tab-campaignContents_002">SM2</a><span class='ui-icon ui-icon-close' role='presentation'>Close</span></li -->
         </ul>
         <div id="tab-projects">
         </div>
-        <!-- div id="tab-allContents"></div>
-        <div id="tab-campaignContents_000"></div>
-        <div id="tab-campaignContents_001"></div>
-        <div id="tab-campaignContents_002"></div -->
       </div>
     </div>
   </body>

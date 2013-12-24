@@ -13,11 +13,11 @@
                 <ul>
                   <li>Cutscenes
                     <ul>
-                      <li class="mission=${missionNode.id} cutscene=briefing project=${projectNode.id}">Briefing</li>
-                      <li class="mission=${missionNode.id} cutscene=debriefing project=${projectNode.id}">Debriefing</li>
-                      <li class="mission=${missionNode.id} cutscene=shotglass project=${projectNode.id}">Shotglass</li>
-                      <li class="mission=${missionNode.id} cutscene=left project=${projectNode.id}">Left</li>
-                      <li class="mission=${missionNode.id} cutscene=right project=${projectNode.id}">Right</li>
+                      <li class="cutscene=briefing mission=${missionNode.id} project=${projectNode.id}">Briefing</li>
+                      <li class="cutscene=debriefing mission=${missionNode.id} project=${projectNode.id}">Debriefing</li>
+                      <li class="cutscene=shotglass mission=${missionNode.id} project=${projectNode.id}">Shotglass</li>
+                      <li class="cutscene=left mission=${missionNode.id} project=${projectNode.id}">Left</li>
+                      <li class="cutscene=right mission=${missionNode.id} project=${projectNode.id}">Right</li>
                     </ul>
                   </li>
                   <li>Nav Points

@@ -11,6 +11,7 @@ import wcworkshop.core.binary.Wc1GameFiles;
 import wcworkshop.core.binary.Wc1ModuleFile;
 import wcworkshop.core.dto.Project;
 import wcworkshop.core.dto.Wc1Campaign;
+import wcworkshop.core.dto.Wc1Mission;
 import wcworkshop.core.dto.Wc1Series;
 import wcworkshop.core.reader.Wc1BriefingReader;
 import wcworkshop.core.reader.Wc1CampReader;
@@ -44,6 +45,18 @@ public class ProjectService {
     for (Wc1Series series : project.getCampaign().getSeries()) {
       if (series.getId().equals(seriesId)) {
         return series;
+      }
+    }
+    throw new RuntimeException("Unable to find series");
+  }
+
+  public Wc1Mission loadMission(String username, String projectId, String missionId) {
+    Project project = loadProject(username, projectId);
+    for (Wc1Series series : project.getCampaign().getSeries()) {
+      for (Wc1Mission mission : series.getMissions()) {
+        if (mission.getId().equals(missionId)) {
+          return mission;
+        }
       }
     }
     throw new RuntimeException("Unable to find series");
