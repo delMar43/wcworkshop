@@ -1,11 +1,13 @@
 package wcworkshop.core.dto;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 
 public class Wc1CutsceneScreen {
 
   private byte sequence;
-  private String commands;
+  private List<Wc1CutsceneCommand> commands;
   private String text;
   private String phonetic;
   private String facialExpression;
@@ -22,11 +24,11 @@ public class Wc1CutsceneScreen {
     this.sequence = sequence;
   }
 
-  public String getCommands() {
+  public List<Wc1CutsceneCommand> getCommands() {
     return commands;
   }
 
-  public void setCommands(String commands) {
+  public void setCommands(List<Wc1CutsceneCommand> commands) {
     this.commands = commands;
   }
 

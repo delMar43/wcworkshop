@@ -25,6 +25,7 @@ import wcworkshop.core.binary.Wc1ModuleNavPointData;
 import wcworkshop.core.binary.Wc1ModuleNavPointMapData;
 import wcworkshop.core.dto.Wc1Campaign;
 import wcworkshop.core.dto.Wc1Cutscene;
+import wcworkshop.core.dto.Wc1CutsceneCommand;
 import wcworkshop.core.dto.Wc1CutsceneScreen;
 import wcworkshop.core.dto.Wc1Mission;
 import wcworkshop.core.dto.Wc1NavPoint;
@@ -135,10 +136,10 @@ public class CampaignTransformer {
       screen.setUnknown(setting.getUnknown());
 
       if (cutsceneScript.getScriptBytes().length >= 2) {
-        String string = getNullTerminatedString(cutsceneScript, setting.getCommandOffset());
-        screen.setCommands(string);
+        byte[] commandBytes = getBytes(cutsceneScript, setting.getCommandOffset());
+        screen.setCommands(extractCommands(commandBytes));
 
-        string = getNullTerminatedString(cutsceneScript, setting.getTextOffset());
+        String string = getNullTerminatedString(cutsceneScript, setting.getTextOffset());
         screen.setText(string);
 
         string = getNullTerminatedString(cutsceneScript, setting.getPhoneticOffset());
@@ -156,8 +157,36 @@ public class CampaignTransformer {
     return result;
   }
 
-  private String getNullTerminatedString(Wc1BriefingCutsceneScript cutsceneScript, int from) {
-    byte[] bytes = cutsceneScript.getScriptBytes();
+  private List<Wc1CutsceneCommand> extractCommands(byte[] commandBytes) {
+    List<Wc1CutsceneCommand> result = new ArrayList<>();
+
+    Wc1CutsceneCommand cmd = new Wc1CutsceneCommand();
+    for (byte command : commandBytes) {
+      if (isNonPrintable(command)) {
+        cmd.setCode(command);
+
+      } else if (isSeparator(command)) {
+        result.add(cmd);
+        cmd = new Wc1CutsceneCommand();
+
+      } else { //should be a parameter then
+        cmd.appendParameter(new String(new byte[] { command }));
+      }
+    }
+
+    return result;
+  }
+
+  private boolean isNonPrintable(byte command) {
+    return command <= 0x1F;
+  }
+
+  private boolean isSeparator(byte command) {
+    return command == (byte) 0x2C;
+  }
+
+  private byte[] getBytes(Wc1BriefingCutsceneScript script, int from) {
+    byte[] bytes = script.getScriptBytes();
 
     int to;
     for (to = from; to < bytes.length; ++to) {
@@ -166,8 +195,12 @@ public class CampaignTransformer {
       }
     }
 
+    return Arrays.copyOfRange(script.getScriptBytes(), from, to);
+  }
+
+  private String getNullTerminatedString(Wc1BriefingCutsceneScript cutsceneScript, int from) {
     try {
-      String string = new String(Arrays.copyOfRange(cutsceneScript.getScriptBytes(), from, to));
+      String string = new String(getBytes(cutsceneScript, from));
       return string;
     } catch (Exception e) {
       System.out.println();
@@ -338,8 +371,10 @@ public class CampaignTransformer {
       setting.setFontColor(screen.getTextColor());
       setting.setUnknown(screen.getUnknown());
 
+      String commandString = generateCommandString(screen.getCommands());
+
       setting.setCommandOffset((short) offset);
-      offset += getLength(screen.getCommands()) + 1;
+      offset += getLength(commandString) + 1;
 
       setting.setTextOffset((short) offset);
       offset += getLength(screen.getText()) + 1;
@@ -355,12 +390,27 @@ public class CampaignTransformer {
       if (setting.getForeground() == (byte) 0xFE) {
         break;
       }
-      scriptString.append(screen.getCommands() + "\0");
+      scriptString.append(commandString + "\0");
       scriptString.append(screen.getText() + "\0");
       scriptString.append(screen.getPhonetic() + "\0");
       scriptString.append(screen.getFacialExpression() + "\0");
     }
     script.setScriptBytes(scriptString.toString().getBytes());
+  }
+
+  private String generateCommandString(List<Wc1CutsceneCommand> commands) {
+    StringBuilder result;
+    if (commands == null || commands.size() == 0) {
+      result = new StringBuilder("");
+    } else {
+      result = new StringBuilder();
+      for (Wc1CutsceneCommand command : commands) {
+        result.append((char) command.getCode());
+        result.append(command.getParameters());
+        result.append(",");
+      }
+    }
+    return result.toString();
   }
 
   private short getLength(String string) {

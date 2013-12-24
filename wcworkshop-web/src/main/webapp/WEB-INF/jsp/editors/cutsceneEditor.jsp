@@ -70,7 +70,7 @@ var submitCutsceneEditForm = function() {
               </c:forEach>
             </select>
           </td>
-          <td><%-- input name="screens[screenStatus.index].commands" value="${command.screens[screenStatus.index].commands" --%></td>
+          <td><input name="screens[screenStatus.index].commands" value="${command.screens[screenStatus.index].commands"></td>
           <td><textarea name="screens[${screenStatus.index}].text" cols="80" rows="2">${command.screens[screenStatus.index].text}</textarea></td>
           <td><input name="screens[${screenStatus.index}].facialExpression" value="${command.screens[screenStatus.index].facialExpression}"></td>
           <td><input name="screens[${screenStatus.index}].phonetic" value="${command.screens[screenStatus.index].phonetic}"></td>
