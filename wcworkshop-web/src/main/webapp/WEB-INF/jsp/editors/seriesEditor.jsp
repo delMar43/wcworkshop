@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<div id="seriesDiv_${command.series.id}">
 <script type="text/javascript">
 var submitSeriesEditForm = function() {
   $.ajax({
@@ -23,7 +24,7 @@ var submitSeriesEditForm = function() {
     <tbody>
       <tr>
         <th>System</th>
-        <td><form:input path="series.systemName" readonly="true" disabled="true" /></td>
+        <td><form:input path="series.systemName" readonly="true" /></td>
       </tr>
       <tr>
         <th>Wingman</th>
@@ -57,3 +58,4 @@ var submitSeriesEditForm = function() {
   </table>
 </form:form>
 <button onclick="submitSeriesEditForm()">Save</button>
+</div>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import wcworkshop.core.config.Configuration;
+import wcworkshop.core.service.ProjectService;
 import wcworkshop.web.command.SignupCommand;
 
 @Controller
@@ -36,6 +37,8 @@ public class SignupPostController {
       } catch (IOException e) {
         logger.error("Exception while trying to write registration to properties file: {}", e.getMessage());
       }
+
+      ProjectService.getInstance().importProjectFromBinaries(signupCommand.getUsername());
 
       result = "redirect:/login.html";
     }

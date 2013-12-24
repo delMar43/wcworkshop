@@ -3,7 +3,6 @@ package wcworkshop.web.controller.editor;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,7 +15,7 @@ public class SeriesEditorFormController {
 
   private ProjectService projectService = ProjectService.getInstance();
 
-  @RequestMapping(value = "/seriesEditor.html", method = RequestMethod.GET)
+  @RequestMapping(value = "/seriesEditor")
   public ModelAndView renderEditor(@RequestParam String projectId, @RequestParam String seriesId) {
     ModelAndView result = new ModelAndView("editors/seriesEditor");
 
