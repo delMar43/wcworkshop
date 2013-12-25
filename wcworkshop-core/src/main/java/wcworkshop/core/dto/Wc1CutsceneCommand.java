@@ -20,4 +20,9 @@ public class Wc1CutsceneCommand {
   public String getParameters() {
     return parameters.toString();
   }
+
+  @Override
+  public String toString() {
+    return String.valueOf(code) + "(" + getParameters() + ")";
+  }
 }

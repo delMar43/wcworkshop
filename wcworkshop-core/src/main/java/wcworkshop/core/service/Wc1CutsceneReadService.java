@@ -110,7 +110,7 @@ public class Wc1CutsceneReadService {
 
       if (cutsceneScript.getScriptBytes().length >= 2) {
         String string = getNullTerminatedString(cutsceneScript, setting.getCommandOffset());
-        screen.setCommands(string);
+        //        screen.setCommands(string);
 
         string = getNullTerminatedString(cutsceneScript, setting.getTextOffset());
         screen.setText(string);

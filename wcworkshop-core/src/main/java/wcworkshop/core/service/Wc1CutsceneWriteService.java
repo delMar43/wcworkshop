@@ -97,7 +97,7 @@ public class Wc1CutsceneWriteService {
       setting.setUnknown(screen.getUnknown());
 
       setting.setCommandOffset((short) offset);
-      offset += getLength(screen.getCommands()) + 1;
+      //      offset += getLength(screen.getCommands()) + 1;
 
       setting.setTextOffset((short) offset);
       offset += getLength(screen.getText()) + 1;
