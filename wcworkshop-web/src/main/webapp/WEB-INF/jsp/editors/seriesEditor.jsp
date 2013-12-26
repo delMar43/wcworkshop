@@ -2,21 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <div id="seriesDiv_${command.series.id}">
-<script type="text/javascript">
-var submitSeriesEditForm = function() {
-  $.ajax({
-    type: "POST",
-    url: $("#seriesEditForm").attr("action"),
-    data: $("#seriesEditForm").serialize(),
-    success: function(response) {
-      var respObj = $.parseJSON(response);
-      alert(response);
-    }
-  });
-}
-</script>
 <h2>Campaign ${campaign}, Series ${seriesIndex +1}</h2>
-<form:form action="saveSeries.html" method="POST" id="seriesEditForm">
+<form:form action="saveSeries.html" method="POST" id="seriesEditForm_${command.series.id}">
   <form:hidden path="projectId" />
   <form:hidden path="series.id" />
   <form:hidden path="series.seriesNr" />
@@ -57,5 +44,5 @@ var submitSeriesEditForm = function() {
     </tbody>
   </table>
 </form:form>
-<button onclick="submitSeriesEditForm()">Save</button>
+<button onclick="submitSeriesEditForm('#seriesEditForm_${command.series.id}')">Save</button>
 </div>

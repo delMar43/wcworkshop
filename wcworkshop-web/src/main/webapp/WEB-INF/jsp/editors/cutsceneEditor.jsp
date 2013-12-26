@@ -1,23 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-
-<script type="text/javascript">
-var submitCutsceneEditForm = function(cutsceneId) {
-  var ajaxUrl = $("#cutsceneEditForm_" + cutsceneId).attr("action");
-  var ajaxData = $("#cutsceneEditForm_" + cutsceneId).serialize();
-  $.ajax({
-    type: "POST",
-    url: ajaxUrl,
-    data: ajaxData,
-    success: function(response) {
-      alert("done");
-    }
-  });
-  return false;
-}
-</script>
-
 <div class="scrollablePane">
   <h2>
     Campaign ${projectId}, 
@@ -89,5 +72,5 @@ var submitCutsceneEditForm = function(cutsceneId) {
     </table>
   </div>
   </form:form>
-  <button onclick="submitCutsceneEditForm('${cutsceneId}')">Save</button>
+  <button onclick="submitCutsceneEditForm('#cutsceneEditForm_${cutsceneId}')">Save</button>
 </div>

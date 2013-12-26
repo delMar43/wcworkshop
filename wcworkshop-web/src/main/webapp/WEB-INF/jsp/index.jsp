@@ -192,6 +192,33 @@
         var label = "Download"
         addTab(key, label, "<%=request.getContextPath()%>/generateProject.html?projectId=" + currentProject, editorTabs, "editorTab");
       }
+      
+      var submitCutsceneEditForm = function(formId) {
+        var ajaxUrl = $(formId).attr("action");
+        var ajaxData = $(formId).serialize();
+        $.ajax({
+          type: "POST",
+          url: ajaxUrl,
+          data: ajaxData,
+          success: function(response) {
+            alert("done");
+          }
+        });
+        return false;
+      }
+      
+      var submitSeriesEditForm = function(formId) {
+        var ajaxUrl = $(formId).attr("action");
+        var ajaxData = $(formId).serialize();
+        $.ajax({
+          type: "POST",
+          url: ajaxUrl,
+          data: ajaxData,
+          success: function(response) {
+            alert("done");
+          }
+        });
+      }
     </script>
   </head>
   
