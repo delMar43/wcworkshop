@@ -163,11 +163,12 @@ public class CampaignTransformer {
     Wc1CutsceneCommand cmd = new Wc1CutsceneCommand();
     for (byte command : commandBytes) {
       if (isNonPrintable(command)) {
+        cmd = new Wc1CutsceneCommand();
+        result.add(cmd);
         cmd.setCode(command);
 
-      } else if (isSeparator(command)) {
-        result.add(cmd);
-        cmd = new Wc1CutsceneCommand();
+        //      } else if (isSeparator(command)) {
+        //        result.add(cmd);
 
       } else { //should be a parameter then
         cmd.appendParameter(new String(new byte[] { command }));

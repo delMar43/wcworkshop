@@ -18,7 +18,6 @@ public class CutsceneEditorPostController {
 
   @RequestMapping(value = "/saveCutscene", method = RequestMethod.POST)
   public String saveCutscene(@ModelAttribute("command") CutsceneCommand command) {
-
     String username = (String) SecurityUtils.getSubject().getPrincipal();
 
     Wc1Cutscene cutscene = new Wc1Cutscene();
