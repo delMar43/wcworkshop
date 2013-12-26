@@ -1,6 +1,8 @@
 package wcworkshop.core.binary;
 
 public class Wc1BriefingCutsceneSetting {
+  public static final Wc1BriefingCutsceneSetting END_CONVERSATION_SETTING = new Wc1BriefingCutsceneSetting((byte) 0xFE);
+
   private byte foreground;
   private byte fontColor;
   private byte background;
@@ -9,6 +11,13 @@ public class Wc1BriefingCutsceneSetting {
   private short textOffset;
   private short phoneticOffset;
   private short facialExpressionOffset;
+
+  public Wc1BriefingCutsceneSetting() {
+  }
+
+  private Wc1BriefingCutsceneSetting(byte foreground) {
+    this.foreground = foreground;
+  }
 
   public byte getForeground() {
     return foreground;

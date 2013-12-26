@@ -410,9 +410,7 @@ public class CampaignTransformer {
       scriptString.append(screen.getFacialExpression() + "\0");
     }
 
-    Wc1BriefingCutsceneSetting endConvSetting = new Wc1BriefingCutsceneSetting();
-    endConvSetting.setForeground(Wc1CutsceneForeground.END_CONVERSATION.getValue());
-    settings[idx] = endConvSetting;
+    settings[idx] = Wc1BriefingCutsceneSetting.END_CONVERSATION_SETTING;
 
     script.setScriptBytes(scriptString.toString().getBytes());
   }
