@@ -133,6 +133,7 @@ public class CampaignTransformer {
         break;
       }
       Wc1CutsceneScreen screen = new Wc1CutsceneScreen();
+      screen.setSequence(idx + 1);
 
       screen.setBackground(setting.getBackground());
       screen.setForeground(setting.getForeground());

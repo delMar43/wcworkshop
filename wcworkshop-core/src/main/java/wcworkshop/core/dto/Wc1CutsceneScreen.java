@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class Wc1CutsceneScreen {
 
-  private byte sequence;
+  private int sequence;
   private List<Wc1CutsceneCommand> commands;
   private String text;
   private String phonetic;
@@ -16,11 +16,14 @@ public class Wc1CutsceneScreen {
   private byte background;
   private byte textColor;
 
-  public byte getSequence() {
+  public Wc1CutsceneScreen() {
+  }
+
+  public int getSequence() {
     return sequence;
   }
 
-  public void setSequence(byte sequence) {
+  public void setSequence(int sequence) {
     this.sequence = sequence;
   }
 

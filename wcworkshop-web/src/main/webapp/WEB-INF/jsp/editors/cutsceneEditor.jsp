@@ -23,11 +23,13 @@
     <table id="cutsceneEditTable_${cutsceneId}">
       <tbody>
         <tr>
-          <td>i</td><td colspan="4"><hr/></td>
+          <td title="Insert new line at this position">i</td><td colspan="4"><hr/></td>
         </tr>
   <c:forEach items="${command.screens}" var="screen" varStatus="screenStatus">
-        <tr>
-          <td title="Index of current line">${screenStatus.count}</td>
+        <tr class="screen_${command.missionId}_${screenStatus.index}">
+          <td title="Order of current line">
+            <input name="screens[${screenStatus.index}].sequence" value="${command.screens[screenStatus.index].sequence}" size="2" />
+          </td>
           <th>Commands</th>
           <td>
             <c:forEach items="${screen.commands}" var="screenCommand" varStatus="screenCommandStatus">
@@ -41,7 +43,7 @@
             <textarea name="screens[${screenStatus.index}].text" cols="80" rows="2">${command.screens[screenStatus.index].text}</textarea>
           </td>
         </tr>
-        <tr>
+        <tr class="screen_${command.missionId}_${screenStatus.index}">
           <td title="Move current line up">up</td>
           <th>Foreground</th>
           <td>
@@ -54,7 +56,7 @@
             </select>
           </td>
         </tr>
-        <tr>
+        <tr class="screen_${command.missionId}_${screenStatus.index}">
           <td title="Delete current line">del</td>
           <th>Background</th>
           <td>
@@ -69,7 +71,7 @@
             <textarea name="screens[${screenStatus.index}].phonetic" cols="80" rows="2">${command.screens[screenStatus.index].phonetic}</textarea>
           </td>
         </tr>
-        <tr>
+        <tr class="screen_${command.missionId}_${screenStatus.index}">
           <td title="Move current line down">down</td>
           <th>Text Color</th>
           <td>
@@ -80,7 +82,7 @@
             </select>
           </td>
         </tr>
-        <tr>
+        <tr class="screen_${command.missionId}_${screenStatus.index}">
           <td></td>
           <th>Facial Exp</th>
           <td>
@@ -91,8 +93,8 @@
             <input name="screens[${screenStatus.index}].unknown" value="${command.screens[screenStatus.index].unknown}" style="width:98%">
           </td>
         </tr>
-        <tr>
-          <td>i</td><td colspan="4"><hr/></td>
+        <tr class="screen_${command.missionId}_${screenStatus.index}">
+          <td title="Insert new line at this position">i</td><td colspan="4"><hr/></td>
         </tr>
   </c:forEach>
       </tbody>
