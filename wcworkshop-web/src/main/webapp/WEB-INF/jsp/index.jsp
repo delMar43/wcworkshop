@@ -51,7 +51,7 @@
           $("#tab-projects").fancytree({
             click: function(event, data) {
               var extraClass = data.node.extraClasses;
-              var infoArray = extraClass.split(",");
+              var infoArray = extraClass.split(" ");
               var infoMap = {};
 
               var type;
@@ -97,7 +97,7 @@
         if (!tabAlreadyOpen(key)) {
           var id = 'tab_' + key;
           var ul = tabContainer.find(".ui-tabs-nav");
-          $("<li id='" + id + "' class='" + tabClass + "'><a href='" + href + "'>" + label+ "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
+          $("<li id='" + id + "' class='" + tabClass + "'><a href='" + href + "'>" + label.replace(/_/g, ' ') + "</a> <span class='ui-icon ui-icon-close' role='presentation'>Close</span></li>").appendTo(ul);
           tabContainer.tabs("refresh");
           openTabs[id] = true;
         }

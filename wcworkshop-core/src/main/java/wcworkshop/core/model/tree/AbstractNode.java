@@ -1,5 +1,7 @@
 package wcworkshop.core.model.tree;
 
+import org.apache.commons.lang3.StringUtils;
+
 public abstract class AbstractNode {
 
   private String id;
@@ -16,5 +18,9 @@ public abstract class AbstractNode {
 
   public String getLabel() {
     return label;
+  }
+
+  public String getTabLabel() {
+    return StringUtils.replace(label, " ", "_");
   }
 }
