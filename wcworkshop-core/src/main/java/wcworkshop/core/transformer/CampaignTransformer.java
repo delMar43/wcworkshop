@@ -26,6 +26,7 @@ import wcworkshop.core.binary.Wc1ModuleNavPointMapData;
 import wcworkshop.core.dto.Wc1Campaign;
 import wcworkshop.core.dto.Wc1Cutscene;
 import wcworkshop.core.dto.Wc1CutsceneCommand;
+import wcworkshop.core.dto.Wc1CutsceneForeground;
 import wcworkshop.core.dto.Wc1CutsceneScreen;
 import wcworkshop.core.dto.Wc1Mission;
 import wcworkshop.core.dto.Wc1NavPoint;
@@ -127,9 +128,12 @@ public class CampaignTransformer {
     List<Wc1CutsceneScreen> screens = new ArrayList<>();
 
     for (int idx = 0; idx < cutsceneSettings.length; ++idx) {
+      Wc1BriefingCutsceneSetting setting = cutsceneSettings[idx];
+      if (setting.getForeground() == Wc1CutsceneForeground.END_CONVERSATION.getValue()) {
+        break;
+      }
       Wc1CutsceneScreen screen = new Wc1CutsceneScreen();
 
-      Wc1BriefingCutsceneSetting setting = cutsceneSettings[idx];
       screen.setBackground(setting.getBackground());
       screen.setForeground(setting.getForeground());
       screen.setTextColor(setting.getFontColor());
@@ -347,7 +351,7 @@ public class CampaignTransformer {
   }
 
   private void fromModelToBinaryBeans(Wc1BriefingMissionData missionData, Wc1Cutscene cutscene, Wc1CutsceneType cutsceneType) {
-    Wc1BriefingCutsceneSetting[] settings = new Wc1BriefingCutsceneSetting[cutscene.getScreens().size()];
+    Wc1BriefingCutsceneSetting[] settings = new Wc1BriefingCutsceneSetting[cutscene.getScreens().size() + 1]; //+1 because we add "end-conversation" flag
     Wc1BriefingCutsceneScript script = new Wc1BriefingCutsceneScript();
 
     fillSettingsAndScripts(cutscene, settings, script);
@@ -397,7 +401,7 @@ public class CampaignTransformer {
 
       settings[idx++] = setting;
 
-      if (setting.getForeground() == (byte) 0xFE) {
+      if (setting.getForeground() == Wc1CutsceneForeground.END_CONVERSATION.getValue()) {
         break;
       }
       scriptString.append(commandString + "\0");
@@ -405,6 +409,11 @@ public class CampaignTransformer {
       scriptString.append(screen.getPhonetic() + "\0");
       scriptString.append(screen.getFacialExpression() + "\0");
     }
+
+    Wc1BriefingCutsceneSetting endConvSetting = new Wc1BriefingCutsceneSetting();
+    endConvSetting.setForeground(Wc1CutsceneForeground.END_CONVERSATION.getValue());
+    settings[idx] = endConvSetting;
+
     script.setScriptBytes(scriptString.toString().getBytes());
   }
 

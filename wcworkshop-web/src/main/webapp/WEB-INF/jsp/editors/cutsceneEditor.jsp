@@ -37,7 +37,9 @@
           <td>
             <select name="screens[${screenStatus.index}].foreground">
               <c:forEach items="${foregrounds}" var="foreground">
-                <option label="${foreground.label}" value="${foreground.value}" <c:if test="${foreground.value == command.screens[screenStatus.index].foreground}">selected="selected"</c:if>></option>
+                <c:if test="${foreground.value != -2}">
+                  <option label="${foreground.label}" value="${foreground.value}" <c:if test="${foreground.value == command.screens[screenStatus.index].foreground}">selected="selected"</c:if>></option>
+                </c:if>
               </c:forEach>
             </select>
           </td>
