@@ -161,18 +161,27 @@ public class CampaignTransformer {
     List<Wc1CutsceneCommand> result = new ArrayList<>();
 
     Wc1CutsceneCommand cmd = new Wc1CutsceneCommand();
+    StringBuilder currentParameter = null;
+    boolean isFirst = true;
     for (byte command : commandBytes) {
-      if (isNonPrintable(command)) {
+      if (isFirst || isNonPrintable(command)) {
         cmd = new Wc1CutsceneCommand();
         result.add(cmd);
         cmd.setCode(command);
 
-        //      } else if (isSeparator(command)) {
-        //        result.add(cmd);
+      } else if (isSeparator(command)) {
+        if (currentParameter != null) {
+          cmd.appendParameter(currentParameter.toString());
+        }
+        currentParameter = new StringBuilder();
 
       } else { //should be a parameter then
-        cmd.appendParameter(new String(new byte[] { command }));
+        if (currentParameter == null) {
+          currentParameter = new StringBuilder();
+        }
+        currentParameter.append(new String(new byte[] { command }));
       }
+      isFirst = false;
     }
 
     return result;

@@ -23,23 +23,23 @@ public class CutsceneEditorFormController {
   private ProjectService projectService = ProjectService.getInstance();
 
   @RequestMapping("/cutsceneEditor")
-  public String render(@RequestParam String projectId, @RequestParam String missionId, @RequestParam String cutsceneIndex, Model model) {
+  public String render(@RequestParam String projectId, @RequestParam String missionId, @RequestParam String cutsceneType, Model model) {
 
     String username = (String) SecurityUtils.getSubject().getPrincipal();
     Wc1Mission mission = projectService.loadMission(username, projectId, missionId);
 
     Map<Wc1CutsceneType, Wc1Cutscene> cutscenes = mission.getCutscenes();
-    Wc1CutsceneType cutsceneType = Wc1CutsceneType.valueOf(cutsceneIndex.toUpperCase());
-    Wc1Cutscene cutscene = cutscenes.get(cutsceneType);
+    Wc1CutsceneType cutsceneTypeEnum = Wc1CutsceneType.valueOf(cutsceneType.toUpperCase());
+    Wc1Cutscene cutscene = cutscenes.get(cutsceneTypeEnum);
 
     CutsceneCommand command = new CutsceneCommand();
     command.setProjectId(projectId);
     command.setMissionId(missionId);
-    command.setCutsceneType(cutsceneType.toString());
+    command.setCutsceneType(cutsceneTypeEnum.toString());
     command.setScreens(cutscene.getScreens());
 
     model.addAttribute("missionId", missionId);
-    model.addAttribute("cutsceneIndex", cutsceneIndex);
+    model.addAttribute("cutsceneType", cutsceneTypeEnum);
     model.addAttribute("projectId", projectId);
     model.addAttribute("command", command);
     model.addAttribute("foregrounds", Wc1CutsceneForeground.values());

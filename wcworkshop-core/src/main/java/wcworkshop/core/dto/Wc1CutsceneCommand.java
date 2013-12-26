@@ -41,7 +41,7 @@ public class Wc1CutsceneCommand {
 
   @JsonIgnore
   public String getParameterString() {
-    return StringUtils.join(parameters, "");
+    return StringUtils.join(parameters, ",");
   }
 
   public void setParameterString(String paramString) {

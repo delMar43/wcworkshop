@@ -133,7 +133,7 @@
         currentProject = projectId;
     	var key = "C" + projectId + "M" + missionId + "C" + cutsceneIndex;
     	var label = projectId + " M" + missionId + " " + cutsceneIndex;
-        addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?projectId=" + projectId + "&missionId=" + missionId + "&cutsceneIndex=" + cutsceneIndex, editorTabs, "editorTab");
+        addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?projectId=" + projectId + "&missionId=" + missionId + "&cutsceneType=" + cutsceneIndex, editorTabs, "editorTab");
       };
       
       var openNavPointEditor = function(campaign, seriesIndex, missionIndex, navPointIndex) {
