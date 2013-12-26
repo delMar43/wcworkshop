@@ -45,6 +45,7 @@ public class CutsceneEditorFormController {
     model.addAttribute("foregrounds", Wc1CutsceneForeground.values());
     model.addAttribute("backgrounds", Wc1CutsceneBackground.values());
     model.addAttribute("textColors", Wc1CutsceneTextColor.values());
+    model.addAttribute("cutsceneId", projectId + "_" + missionId + "_" + cutsceneType);
 
     return "editors/cutsceneEditor";
   }
