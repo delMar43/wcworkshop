@@ -6,17 +6,14 @@
 var submitCutsceneEditForm = function(cutsceneId) {
   var ajaxUrl = $("#cutsceneEditForm_" + cutsceneId).attr("action");
   var ajaxData = $("#cutsceneEditForm_" + cutsceneId).serialize();
-  //alert("ajaxUrl: " + ajaxUrl + "\r\najaxData: " + ajaxData);
   $.ajax({
     type: "POST",
     url: ajaxUrl,
     data: ajaxData,
     success: function(response) {
-      //var respObj = $.parseJSON(response);
       alert("done");
     }
   });
-//  $.post(ajaxUrl, $('#cutsceneEditForm_${cutsceneId}').serialize());
   return false;
 }
 </script>
