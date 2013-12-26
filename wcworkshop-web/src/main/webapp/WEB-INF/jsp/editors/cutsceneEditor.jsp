@@ -14,7 +14,8 @@
         ie briefing backgrounds will not work in Shotglass'
       </li>
       <li>
-        The text length is limited. If too many characters are to be displayed on a page, the game will crash.
+        The text length is limited. If too many characters are to be displayed on a page, the game will crash.<br/>
+        If you find out, how many are allowed exactly, please let us know.
       </li>
       <li>
         If you find out, what the unknown values are intended for, please let us know.
