@@ -20,12 +20,19 @@
       <li>
         If you find out, what the unknown values are intended for, please let us know.
       </li>
+      <li>
+        To change the order, please update the values in the according fields.<br/>
+        If you enter invalid or ambiguous values, the result is unknown.
+      </li>
+      <li>
+        To remove a line, click the 'del' link.
+      </li>
     </ul>
     <table id="cutsceneEditTable_${cutsceneId}">
       <tbody>
-        <tr>
+        <%-- tr>
           <td title="Insert new line at this position">i</td><td colspan="4"><hr/></td>
-        </tr>
+        </tr --%>
   <c:forEach items="${command.screens}" var="screen" varStatus="screenStatus">
         <tr class="screen_${command.missionId}_${screenStatus.index}">
           <td title="Order of current line">
@@ -45,7 +52,7 @@
           </td>
         </tr>
         <tr class="screen_${command.missionId}_${screenStatus.index}">
-          <td title="Move current line up">up</td>
+          <td title="not implemented yet">up</td>
           <th>Foreground</th>
           <td>
             <select name="screens[${screenStatus.index}].foreground" style="width:98%">
@@ -58,7 +65,7 @@
           </td>
         </tr>
         <tr class="screen_${command.missionId}_${screenStatus.index}">
-          <td title="Delete current line">del</td>
+          <td title="Delete current line"><a href="javascript:removeScreen('screen_${command.missionId}_${screenStatus.index}')">del</a></td>
           <th>Background</th>
           <td>
             <select name="screens[${screenStatus.index}].background" style="width:98%">
@@ -73,7 +80,7 @@
           </td>
         </tr>
         <tr class="screen_${command.missionId}_${screenStatus.index}">
-          <td title="Move current line down">down</td>
+          <td title="not implemented yet">down</td>
           <th>Text Color</th>
           <td>
             <select name="screens[${screenStatus.index}].textColor" style="width:98%">
@@ -95,7 +102,7 @@
           </td>
         </tr>
         <tr class="screen_${command.missionId}_${screenStatus.index}">
-          <td title="Insert new line at this position">i</td><td colspan="4"><hr/></td>
+          <td colspan="5" style="border-left: 0px none;border-right: 0px none;">&nbsp;</td>
         </tr>
   </c:forEach>
       </tbody>

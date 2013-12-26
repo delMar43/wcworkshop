@@ -219,6 +219,10 @@
           }
         });
       }
+      
+      var removeScreen = function(screenId) {
+        $('.' + screenId).remove();
+      }
     </script>
   </head>
   

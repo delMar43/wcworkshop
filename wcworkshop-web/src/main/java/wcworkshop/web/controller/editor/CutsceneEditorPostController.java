@@ -1,5 +1,6 @@
 package wcworkshop.web.controller.editor;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,8 +38,18 @@ public class CutsceneEditorPostController {
     List<Wc1CutsceneScreen> screens = command.getScreens();
     Collections.sort(screens, seqComparator);
 
+    List<Wc1CutsceneScreen> newScreens = new ArrayList<>();
+    int sequence = 1;
+    for (Wc1CutsceneScreen screen : screens) {
+      if (screen.getSequence() <= 0) {
+        continue;
+      }
+      screen.setSequence(sequence++);
+      newScreens.add(screen);
+    }
+
     Wc1Cutscene cutscene = new Wc1Cutscene();
-    cutscene.setScreens(screens);
+    cutscene.setScreens(newScreens);
 
     Wc1CutsceneType cutsceneType = Wc1CutsceneType.valueOf(command.getCutsceneType());
     projectService.updateCutscene(username, command.getProjectId(), command.getMissionId(), cutscene, cutsceneType);
