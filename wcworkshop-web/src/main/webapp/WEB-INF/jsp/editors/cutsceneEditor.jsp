@@ -3,11 +3,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <script type="text/javascript">
-var submitCutsceneEditForm = function() {
-  var ajaxUrl = $("#cutsceneEditForm_${cutsceneId}").attr("action");
-  var ajaxData = $("#cutsceneEditForm_${cutsceneId}").serialize();
-  alert("ajaxUrl: " + ajaxUrl + "\r\najaxData: " + ajaxData);
-  /*
+var submitCutsceneEditForm = function(cutsceneId) {
+  var ajaxUrl = $("#cutsceneEditForm_" + cutsceneId).attr("action");
+  var ajaxData = $("#cutsceneEditForm_" + cutsceneId).serialize();
+  //alert("ajaxUrl: " + ajaxUrl + "\r\najaxData: " + ajaxData);
   $.ajax({
     type: "POST",
     url: ajaxUrl,
@@ -17,8 +16,7 @@ var submitCutsceneEditForm = function() {
       alert("done");
     }
   });
-  */
-  $.post(ajaxUrl, $('#cutsceneEditForm_${cutsceneId}').serialize())
+//  $.post(ajaxUrl, $('#cutsceneEditForm_${cutsceneId}').serialize());
   return false;
 }
 </script>
@@ -30,7 +28,7 @@ var submitCutsceneEditForm = function() {
     <a href="javascript:openMissionEditor('${campaign}', ${seriesIndex +0}, ${missionIndex +0})">Mission ${missionIndex +1}</a>: ${cutsceneIndex} --%>
   </h2>
   
-  <form:form id="cutsceneEditForm_${cutsceneId}" action="saveCutscene.html" method="POST" onsubmit="submitCutsceneEditForm()">
+  <form:form id="cutsceneEditForm_${cutsceneId}" action="saveCutscene.html" method="POST">
   <form:hidden path="projectId" />
   <form:hidden path="missionId" />
   <form:hidden path="cutsceneType" />
@@ -93,6 +91,6 @@ var submitCutsceneEditForm = function() {
       </tbody>
     </table>
   </div>
-  <button>Save</button>
   </form:form>
+  <button onclick="submitCutsceneEditForm('${cutsceneId}')">Save</button>
 </div>
