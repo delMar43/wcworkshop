@@ -3,6 +3,8 @@ package wcworkshop.core.dto;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import wcworkshop.core.service.Wc1CutsceneType;
 
 public class Wc1Mission {
@@ -34,7 +36,7 @@ public class Wc1Mission {
   }
 
   public void setWingName(String wingName) {
-    this.wingName = wingName;
+    this.wingName = StringUtils.trim(wingName);
   }
 
   public short[] getStellarBackgrounds() {

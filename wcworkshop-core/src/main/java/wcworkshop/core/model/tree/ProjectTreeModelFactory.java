@@ -18,12 +18,12 @@ public class ProjectTreeModelFactory {
     Wc1Campaign campaign = project.getCampaign();
 
     for (Wc1Series series : campaign.getSeries()) {
-      SeriesNode seriesNode = new SeriesNode(series.getId(), "Series " + series.getSeriesNr() + " [" + series.getSystemName() + "]");
+      SeriesNode seriesNode = new SeriesNode(series.getId(), "Ser " + series.getSeriesNr() + " [" + series.getSystemName() + "]");
       projectNode.addSeriesNode(series.getId(), seriesNode);
 
       int missionCount = 1;
       for (Wc1Mission mission : series.getMissions()) {
-        MissionNode missionNode = new MissionNode(mission.getId(), missionCount + " [" + mission.getWingName() + "]");
+        MissionNode missionNode = new MissionNode(mission.getId(), "Mis " + missionCount + " [" + mission.getWingName() + "]");
         seriesNode.addMissionNode(series.getId() + "_" + missionCount, missionNode);
         ++missionCount;
 

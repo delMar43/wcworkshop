@@ -2,6 +2,8 @@ package wcworkshop.core.dto;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -34,7 +36,7 @@ public class Wc1Series implements Series {
   }
 
   public void setSystemName(String systemName) {
-    this.systemName = systemName;
+    this.systemName = StringUtils.trim(systemName);
   }
 
   public int getSeriesNr() {

@@ -24,7 +24,7 @@
         projectTabs = $("#projectTabs").tabs({cache:true});
         editorTabs = $("#editorTabs").tabs({cache:true});
         
-        $(".ui-tabs-nav").sortable();
+        //$(".ui-tabs-nav").sortable();
 
         // close icon: removing the tab on click
         editorTabs.delegate( "span.ui-icon-close", "click", function() {
@@ -51,7 +51,7 @@
           $("#tab-projects").fancytree({
             click: function(event, data) {
               var extraClass = data.node.extraClasses;
-              var infoArray = extraClass.split(" ");
+              var infoArray = extraClass.split(",");
               var infoMap = {};
 
               var type;
@@ -70,9 +70,9 @@
               });
               
               if (type == "series") {
-                openSeriesEditor(infoMap["project"], infoMap["series"]);
+                openSeriesEditor(infoMap["project"], infoMap["series"],  infoMap["label"]);
               } else if (type == "cutscene") {
-                openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"])
+                openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"], infoMap["label"])
               }
               
             }
@@ -115,10 +115,9 @@
         return ("tab_" + key) in openTabs;
       }
       
-      var openSeriesEditor = function(projectId, seriesId) {
+      var openSeriesEditor = function(projectId, seriesId, label) {
         currentProject = projectId;
     	var key = "C" + projectId + "S" + seriesId;
-    	var label = "Series " + seriesId;
         addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?projectId=" + projectId + "&seriesId=" + seriesId, editorTabs, "editorTab");
       };
       
@@ -129,10 +128,9 @@
         addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex, editorTabs, "editorTab");
       };
       
-      var openCutsceneEditor = function(projectId, missionId, cutsceneIndex) {
+      var openCutsceneEditor = function(projectId, missionId, cutsceneIndex, label) {
         currentProject = projectId;
     	var key = "C" + projectId + "M" + missionId + "C" + cutsceneIndex;
-    	var label = projectId + " M" + missionId + " " + cutsceneIndex;
         addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?projectId=" + projectId + "&missionId=" + missionId + "&cutsceneType=" + cutsceneIndex, editorTabs, "editorTab");
       };
       

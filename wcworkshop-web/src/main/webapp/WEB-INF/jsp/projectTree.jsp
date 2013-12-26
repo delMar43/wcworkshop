@@ -6,18 +6,18 @@
     <li class="project=${projectNode.id}">${projectNode.label}
       <ul>
         <c:forEach items="${projectNode.seriesNodes}" var="seriesNode" varStatus="seriesNodeStatus">
-          <li class="series=${seriesNode.id} project=${projectNode.id}">${seriesNode.label}
+          <li class="series=${seriesNode.id},project=${projectNode.id},label=${seriesNode.label}">${seriesNode.label}
             <ul>
             <c:forEach items="${seriesNode.missionNodes}" var="missionNode" varStatus="missionNodeStatus">
-              <li class="mission=${missionNode.id} project=${projectNode.id}">${missionNode.label}
+              <li class="mission=${missionNode.id},project=${projectNode.id},label=${missionNode.label}">${missionNode.label}
                 <ul>
                   <li>Cutscenes
                     <ul>
-                      <li class="cutscene=briefing mission=${missionNode.id} project=${projectNode.id}">Briefing</li>
-                      <li class="cutscene=debriefing mission=${missionNode.id} project=${projectNode.id}">Debriefing</li>
-                      <li class="cutscene=shotglass mission=${missionNode.id} project=${projectNode.id}">Shotglass</li>
-                      <li class="cutscene=left_seat mission=${missionNode.id} project=${projectNode.id}">Left</li>
-                      <li class="cutscene=right_seat mission=${missionNode.id} project=${projectNode.id}">Right</li>
+                      <li class="cutscene=briefing,mission=${missionNode.id},project=${projectNode.id},label=${seriesNode.label}/${missionNode.label}/Briefing">Briefing</li>
+                      <li class="cutscene=debriefing,mission=${missionNode.id},project=${projectNode.id},label=${seriesNode.label}/${missionNode.label}/Debriefing">Debriefing</li>
+                      <li class="cutscene=shotglass,mission=${missionNode.id},project=${projectNode.id},label=${seriesNode.label}/${missionNode.label}/Shotglass">Shotglass</li>
+                      <li class="cutscene=left_seat,mission=${missionNode.id},project=${projectNode.id},label=${seriesNode.label}/${missionNode.label}/Left">Left</li>
+                      <li class="cutscene=right_seat,mission=${missionNode.id},project=${projectNode.id},label=${seriesNode.label}/${missionNode.label}/Right">Right</li>
                     </ul>
                   </li>
                   <li>Nav Points
