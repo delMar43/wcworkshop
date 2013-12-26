@@ -27,6 +27,9 @@
       <li>
         To remove a line, click the 'del' link.
       </li>
+      <li>
+        Invalid facial expressions will freeze the game.
+      </li>
     </ul>
     <table id="cutsceneEditTable_${cutsceneId}">
       <tbody>
