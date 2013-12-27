@@ -196,6 +196,10 @@
       }
       
       var generateBinaryFiles = function() {
+        if (typeof(currentProject) == "undefined") {
+          alert("Please select a project first");
+          return;
+        }
         $.ajax({
           url: "<%=request.getContextPath()%>/generateProject.html",
           data: "projectId=" + currentProject,
