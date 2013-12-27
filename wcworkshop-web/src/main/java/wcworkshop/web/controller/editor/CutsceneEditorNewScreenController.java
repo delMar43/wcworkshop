@@ -1,6 +1,6 @@
 package wcworkshop.web.controller.editor;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +31,9 @@ public class CutsceneEditorNewScreenController {
 
     Wc1CutsceneScreen screen = new Wc1CutsceneScreen();
     screen.setSequence(nextScreen);
-    command.setScreens(Collections.singletonList(screen));
+    Wc1CutsceneScreen[] screens = new Wc1CutsceneScreen[nextScreen];
+    screens[nextScreen - 1] = screen;
+    command.setScreens(Arrays.asList(screens));
 
     result.addObject("command", command);
     result.addObject("screenIndex", nextScreen);
