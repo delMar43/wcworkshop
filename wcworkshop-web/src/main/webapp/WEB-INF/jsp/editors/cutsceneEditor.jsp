@@ -42,7 +42,7 @@
         <%@ include file="cutsceneEditorLine.jsp" %>
     </c:forEach>
         <tr id="cutsceneEditTableLastLine_${cutsceneId}">
-          <td colspan="5"><a href="javascript:addScreen(${screenIndex+1})">Add Screen</a></td>
+          <td colspan="5"><a href="javascript:addScreen(nextScreenIndex)">Add Screen</a></td>
         </tr>
       </tbody>
     </table>
@@ -51,6 +51,7 @@
   <button onclick="submitCutsceneEditForm('#cutsceneEditForm_${cutsceneId}')">Save</button>
 </div>
 <script type="text/javascript">
+var nextScreenIndex = ${screenIndex+1};
 var addScreen = function(nextScreen) {
   var ajaxUrl = 'addScreen.html';
   var ajaxData = 'projectId=${command.projectId}&missionId=${command.missionId}&cutsceneType=${command.cutsceneType}&nextScreen=' + nextScreen;
@@ -60,6 +61,8 @@ var addScreen = function(nextScreen) {
     data: ajaxData,
     success: function(response) {
       $("#cutsceneEditTableLastLine_${cutsceneId}").before(response);
+      ++nextScreenIndex;
+      //alert(nextScreen);
     }
   });
 }

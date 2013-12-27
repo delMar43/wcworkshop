@@ -30,9 +30,10 @@ public class CutsceneEditorNewScreenController {
     command.setCutsceneType(cutsceneTypeEnum.toString());
 
     Wc1CutsceneScreen screen = new Wc1CutsceneScreen();
-    screen.setSequence(nextScreen);
-    Wc1CutsceneScreen[] screens = new Wc1CutsceneScreen[nextScreen];
-    screens[nextScreen - 1] = screen;
+    screen.setSequence(nextScreen + 1);
+    screen.setUnknown((short) 60);
+    Wc1CutsceneScreen[] screens = new Wc1CutsceneScreen[nextScreen + 1];
+    screens[nextScreen] = screen;
     command.setScreens(Arrays.asList(screens));
 
     result.addObject("command", command);
