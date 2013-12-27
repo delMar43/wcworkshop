@@ -67,10 +67,18 @@
                 }
                 
                 infoMap[key] = value;
+                
+                if (key == "project") {
+                  currentProject = value;
+                }
               });
               
-              if (type == "series") {
+              if (type == "project") {
+                
+              } else if (type == "series") {
                 openSeriesEditor(infoMap["project"], infoMap["series"],  infoMap["label"]);
+              } else if (type == "mission") {
+                
               } else if (type == "cutscene") {
                 openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"], infoMap["label"])
               }
@@ -116,26 +124,22 @@
       }
       
       var openSeriesEditor = function(projectId, seriesId, label) {
-        currentProject = projectId;
     	var key = "C" + projectId + "S" + seriesId;
         addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?projectId=" + projectId + "&seriesId=" + seriesId, editorTabs, "editorTab");
       };
       
       var openMissionEditor = function(campaign, seriesIndex, missionIndex) {
-        currentProject = campaign;
     	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1);
     	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1);
         addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex, editorTabs, "editorTab");
       };
       
       var openCutsceneEditor = function(projectId, missionId, cutsceneIndex, label) {
-        currentProject = projectId;
     	var key = "C" + projectId + "M" + missionId + "C" + cutsceneIndex;
         addTab(key, label, "<%=request.getContextPath()%>/cutsceneEditor.html?projectId=" + projectId + "&missionId=" + missionId + "&cutsceneType=" + cutsceneIndex, editorTabs, "editorTab");
       };
       
       var openNavPointEditor = function(campaign, seriesIndex, missionIndex, navPointIndex) {
-        currentProject = campaign;
     	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1) + "N" + navPointIndex;
     	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1) + " Nav " + navPointIndex;
         addTab(key, label, "<%=request.getContextPath()%>/navPointEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex + "&navPointIndex=" + navPointIndex, editorTabs, "editorTab");
@@ -147,6 +151,10 @@
       
       var openCredits = function() {
         addStaticTab("credits", "Credits", "<iframe class='framed' src='<%=request.getContextPath()%>/credits.html'></iframe>", editorTabs, "editorTab");
+      }
+      
+      var openDownloadTab = function() {
+        addTab('download', 'Download', '<%=request.getContextPath()%>/downloads.html', editorTabs, 'editorTab');
       }
       
       var openProjectEditDialog = function() {
@@ -188,9 +196,13 @@
       }
       
       var generateBinaryFiles = function() {
-        var key = "download";
-        var label = "Download"
-        addTab(key, label, "<%=request.getContextPath()%>/generateProject.html?projectId=" + currentProject, editorTabs, "editorTab");
+        $.ajax({
+          url: "<%=request.getContextPath()%>/generateProject.html",
+          data: "projectId=" + currentProject,
+          success: function(response) {
+            openDownloadTab();
+          }
+        })
       }
       
       var submitCutsceneEditForm = function(formId) {

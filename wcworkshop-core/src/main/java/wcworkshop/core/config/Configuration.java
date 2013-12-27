@@ -18,8 +18,9 @@ public class Configuration {
     return result;
   }
 
-  public String getGeneratedPath(String username) {
-    return getResourcePath() + "/" + "data" + File.separator + username + File.separator + "generated" + File.separator;
+  public String getGeneratedPath(String username, String projectId) {
+    return getResourcePath() + "/" + "data" + File.separator + username + File.separator + "generated" + File.separator + projectId
+        + File.separator;
   }
 
   private String getOs() {

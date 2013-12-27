@@ -1,7 +1,5 @@
 package wcworkshop.web.controller.project;
 
-import java.io.File;
-
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +21,8 @@ import wcworkshop.core.writer.Wc1BriefingWriter;
 import wcworkshop.core.writer.Wc1CampWriter;
 
 @Controller
-public class GenerateProjectFormController {
-  private static final Logger logger = LoggerFactory.getLogger(GenerateProjectFormController.class);
+public class GenerateProjectTriggerController {
+  private static final Logger logger = LoggerFactory.getLogger(GenerateProjectTriggerController.class);
 
   private ProjectService projectService = ProjectService.getInstance();
   private CampaignTransformer campaignTransformer = CampaignTransformer.getInstance();
@@ -37,14 +35,13 @@ public class GenerateProjectFormController {
   public ModelAndView render(@RequestParam String projectId) {
     String username = (String) SecurityUtils.getSubject().getPrincipal();
 
-    ModelAndView result = new ModelAndView("project/generateProject");
+    ModelAndView result = new ModelAndView("project/generate");
 
     Project project = projectService.loadProject(username, projectId);
     Wc1GameFiles gameFiles = campaignTransformer.campaignToBinary(project.getCampaign());
     fixMissingGameFileData(gameFiles);
 
-    String path = Configuration.getInstance().getResourcePath() + "data" + File.separator + username + File.separator + "generated"
-        + File.separator;
+    String path = Configuration.getInstance().getGeneratedPath(username, projectId);
 
     campWriter.write(path + "CAMP.000", gameFiles.getCampFile());
     briefingWriter.write(path + "BRIEFING.000", gameFiles.getBriefingFile());

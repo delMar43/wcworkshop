@@ -32,7 +32,7 @@ public class ImportTest {
 
     Project newProject = new Project();
     newProject.setId("d0ef5747-9a29-410c-ace7-f7dda5d7d0a0");
-    newProject.setOwner("sss");
+    newProject.setOwner("delMar");
     newProject.setTitle("Wing Commander");
     newProject.setCampaign(campaign);
 

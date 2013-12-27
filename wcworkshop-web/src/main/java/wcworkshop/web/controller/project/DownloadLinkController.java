@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import wcworkshop.core.config.Configuration;
 
 @Controller
-public class GenerateProjectDownloadController {
-  private static final Logger logger = LoggerFactory.getLogger(GenerateProjectDownloadController.class);
+public class DownloadLinkController {
+  private static final Logger logger = LoggerFactory.getLogger(DownloadLinkController.class);
 
   @ResponseBody
-  @RequestMapping(value = "/generated/{filename}.bin", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-  public byte[] deliverFile(@PathVariable String filename, HttpServletResponse response) {
+  @RequestMapping(value = "/generated/{projectId}/{filename}.bin", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+  public byte[] deliverFile(@PathVariable String projectId, @PathVariable String filename, HttpServletResponse response) {
     String username = (String) SecurityUtils.getSubject().getPrincipal();
 
-    String fullPath = Configuration.getInstance().getGeneratedPath(username) + filename;
+    String fullPath = Configuration.getInstance().getGeneratedPath(username, projectId) + filename;
     File file = new File(fullPath);
 
     byte[] data = readFileToByteArray(fullPath, file);
