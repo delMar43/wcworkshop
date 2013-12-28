@@ -59,7 +59,7 @@
       </tr --%>
     </table>
   </form:form>
-  <button onclick="submitMissionEditForm('#missionEditForm_${command.mission.id}')">Save</button>
+  <button onclick="submitAjaxForm('#missionEditForm_${command.mission.id}')">Save</button>
 </div>
 <%--
 <div>

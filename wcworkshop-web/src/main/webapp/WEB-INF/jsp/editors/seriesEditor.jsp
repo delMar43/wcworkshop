@@ -44,5 +44,5 @@
     </tbody>
   </table>
 </form:form>
-<button onclick="submitSeriesEditForm('#seriesEditForm_${command.series.id}')">Save</button>
+<button onclick="submitAjaxForm('#seriesEditForm_${command.series.id}')">Save</button>
 </div>

@@ -48,7 +48,7 @@
     </table>
   </div>
   </form:form>
-  <button onclick="submitCutsceneEditForm('#cutsceneEditForm_${cutsceneId}')">Save</button>
+  <button onclick="submitAjaxForm('#cutsceneEditForm_${cutsceneId}')">Save</button>
 </div>
 <script type="text/javascript">
 var nextScreenIndex = ${screenIndex+1};

@@ -194,40 +194,12 @@
           url: "<%=request.getContextPath()%>/generateProject.html",
           data: "projectId=" + project,
           success: function(response) {
-            //openDownloadTab();
             $("#downloadTabContent").html(response);
           }
         })
       }
       
-      var submitCutsceneEditForm = function(formId) {
-        var ajaxUrl = $(formId).attr("action");
-        var ajaxData = $(formId).serialize();
-        $.ajax({
-          type: "POST",
-          url: ajaxUrl,
-          data: ajaxData,
-          success: function(response) {
-            alert("done");
-          }
-        });
-        return false;
-      }
-      
-      var submitSeriesEditForm = function(formId) {
-        var ajaxUrl = $(formId).attr("action");
-        var ajaxData = $(formId).serialize();
-        $.ajax({
-          type: "POST",
-          url: ajaxUrl,
-          data: ajaxData,
-          success: function(response) {
-            alert("done");
-          }
-        });
-      }
-      
-      var submitMissionEditForm = function(formId) {
+      var submitAjaxForm = function(formId) {
         var ajaxUrl = $(formId).attr("action");
         var ajaxData = $(formId).serialize();
         $.ajax({
