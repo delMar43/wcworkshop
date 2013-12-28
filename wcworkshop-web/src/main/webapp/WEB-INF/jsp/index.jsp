@@ -258,8 +258,8 @@
     </div>
     <div class="ui-layout-west">
       <div id="projectViewToolbar">
-        <button onclick="openProjectEditDialog()" id="newCampaignButton" title="Start a new campaign">New</button>
-        <!-- button id="openCampaignButton" title="Open an existing campaign">Open</button>
+        <!-- button onclick="openProjectEditDialog()" id="newCampaignButton" title="Start a new campaign">New</button>
+        <button id="openCampaignButton" title="Open an existing campaign">Open</button>
         <button id="closeCampaignButton" title="Close current campaign">Close</button>
         <button onclick="openProjectUploadDialog()" id="uploadCampaignButton" title="Upload campaign files from filesystem">Upload</button>
         <button id="importCampaignButton" title="Import campaign shared by another user">Import</button>
