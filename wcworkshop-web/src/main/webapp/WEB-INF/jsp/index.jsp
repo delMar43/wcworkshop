@@ -12,7 +12,6 @@
     <link href="<%=request.getContextPath() %>/styles/ui-fancytree.css" rel="stylesheet" type="text/css">
     <script src="<%=request.getContextPath() %>/scripts/jquery.fancytree-all.min.js" type="text/javascript"></script>
     <script>
-      var currentProject;
       var editorTabs;
       var projectTabs;
       var openTabs = {};
@@ -67,10 +66,6 @@
                 }
                 
                 infoMap[key] = value;
-                
-                if (key == "project") {
-                  currentProject = value;
-                }
               });
               
               if (type == "project") {
@@ -78,7 +73,7 @@
               } else if (type == "series") {
                 openSeriesEditor(infoMap["project"], infoMap["series"],  infoMap["label"]);
               } else if (type == "mission") {
-                openMissionEditor(infoMap["project"], infoMap["mission"], infoMap["label"]);
+                //openMissionEditor(infoMap["project"], infoMap["mission"], infoMap["label"]);
               } else if (type == "cutscene") {
                 openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"], infoMap["label"])
               }
@@ -194,16 +189,13 @@
         });
       }
       
-      var generateBinaryFiles = function() {
-        if (typeof(currentProject) == "undefined") {
-          alert("Please select a project first");
-          return;
-        }
+      var generateBinaryFiles = function(project) {
         $.ajax({
           url: "<%=request.getContextPath()%>/generateProject.html",
-          data: "projectId=" + currentProject,
+          data: "projectId=" + project,
           success: function(response) {
-            openDownloadTab();
+            //openDownloadTab();
+            $("#downloadTabContent").html(response);
           }
         })
       }
@@ -272,7 +264,6 @@
         <button onclick="openProjectUploadDialog()" id="uploadCampaignButton" title="Upload campaign files from filesystem">Upload</button>
         <button id="importCampaignButton" title="Import campaign shared by another user">Import</button>
         <button id="shareCampaignButton" title="Share this campaign">Share</button -->
-        <button onclick="generateBinaryFiles()" id="generateButton" title="Generate binary files">Generate</button>
       </div>
       <div id="projectTabs" class="scrollableTab">
         <ul>

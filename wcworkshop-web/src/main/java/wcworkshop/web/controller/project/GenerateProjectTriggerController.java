@@ -35,7 +35,7 @@ public class GenerateProjectTriggerController {
   public ModelAndView render(@RequestParam String projectId) {
     String username = (String) SecurityUtils.getSubject().getPrincipal();
 
-    ModelAndView result = new ModelAndView("project/generate");
+    ModelAndView result = new ModelAndView("forward:/downloads.html");
 
     Project project = projectService.loadProject(username, projectId);
     Wc1GameFiles gameFiles = campaignTransformer.campaignToBinary(project.getCampaign());
