@@ -6,6 +6,8 @@
 <div>
   <h3>Mission Parameters</h3>
   <form:form id="missionEditForm_${command.mission.id}" method="POST" action="saveMission.html">
+    <form:hidden path="projectId" />
+    <form:hidden path="mission.id" />
     <table>
       <tr>
         <th>Wing</th>

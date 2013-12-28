@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import wcworkshop.core.service.ProjectService;
 import wcworkshop.web.command.MissionCommand;
 
 @Controller
 public class MissionEditorPostController {
+
+  private ProjectService projectService = ProjectService.getInstance();
 
   @RequestMapping(value = "/saveMission", method = RequestMethod.POST)
   public ModelAndView save(@ModelAttribute MissionCommand command) {

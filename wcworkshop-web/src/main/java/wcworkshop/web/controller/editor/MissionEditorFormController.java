@@ -33,6 +33,7 @@ public class MissionEditorFormController {
 
     MissionCommand command = new MissionCommand(projectId, mission);
     result.addObject("command", command);
+    result.addObject("projectId", projectId);
     result.addObject("pilots", pilotRepo.listAll());
     result.addObject("medals", medalRepo.listAll());
     result.addObject("pilotRepo", pilotRepo);
