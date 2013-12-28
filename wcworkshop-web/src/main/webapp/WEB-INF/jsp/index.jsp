@@ -20,8 +20,32 @@
       $(function() {
         var layout = $("body").layout({ applyDefaultStyles: true });
         layout.sizePane("west", 280);
-        projectTabs = $("#projectTabs").tabs({cache:true});
-        editorTabs = $("#editorTabs").tabs({cache:true});
+        
+        projectTabs = $("#projectTabs").tabs({
+          beforeLoad: function( event, ui ) {
+            if ( ui.tab.data( "loaded" ) ) {
+                event.preventDefault();
+                return;
+            }
+     
+            ui.jqXHR.success(function() {
+                ui.tab.data( "loaded", true );
+            });
+          }
+        });
+        
+        editorTabs = $("#editorTabs").tabs({
+          beforeLoad: function( event, ui ) {
+            if ( ui.tab.data( "loaded" ) ) {
+                event.preventDefault();
+                return;
+            }
+     
+            ui.jqXHR.success(function() {
+                ui.tab.data( "loaded", true );
+            });
+          }
+        });
         
         //$(".ui-tabs-nav").sortable();
 
