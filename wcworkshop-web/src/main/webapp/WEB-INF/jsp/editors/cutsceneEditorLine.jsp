@@ -26,7 +26,7 @@
       <select name="screens[${screenIndex}].foreground" style="width:98%">
         <c:forEach items="${foregrounds}" var="foreground">
           <c:if test="${foreground.value != -2}">
-            <option label="${foreground.label}" value="${foreground.value}" <c:if test="${foreground.value == command.screens[screenIndex].foreground}">selected="selected"</c:if>></option>
+            <option label="${foreground.label}" value="${foreground.value}" <c:if test="${foreground.value == command.screens[screenIndex].foreground}">selected="selected"</c:if>>${foreground.label}</option>
           </c:if>
         </c:forEach>
       </select>
@@ -38,7 +38,7 @@
     <td>
       <select name="screens[${screenIndex}].background" style="width:98%">
         <c:forEach items="${backgrounds}" var="background">
-          <option label="${background.label}" value="${background.value}" <c:if test="${background.value == command.screens[screenIndex].background}">selected="selected"</c:if>></option>
+          <option label="${background.label}" value="${background.value}" <c:if test="${background.value == command.screens[screenIndex].background}">selected="selected"</c:if>>${background.label}</option>
         </c:forEach>
       </select>
     </td>
@@ -53,7 +53,7 @@
     <td>
       <select name="screens[${screenIndex}].textColor" style="width:98%">
         <c:forEach items="${textColors}" var="textColor">
-          <option label="${textColor.label}" value="${textColor.value}" <c:if test="${textColor.value == command.screens[screenIndex].textColor}">selected="selected"</c:if>></option>
+          <option label="${textColor.label}" value="${textColor.value}" <c:if test="${textColor.value == command.screens[screenIndex].textColor}">selected="selected"</c:if>>${textColor.label}</option>
         </c:forEach>
       </select>
     </td>
