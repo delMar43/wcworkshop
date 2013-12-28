@@ -1,6 +1,7 @@
 package wcworkshop.core.model.tree;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class MissionNode extends AbstractNode {
@@ -15,7 +16,20 @@ public class MissionNode extends AbstractNode {
     navPointNodes.add(node);
   }
 
-  public List<NavPointNode> getChildren() {
+  @Override
+  public Collection<AbstractNode> getChildren() {
+    List<AbstractNode> result = new ArrayList<>();
+
+    result.add(new CutscenesNode("abc"));
+
+    NavPointsNode npn = new NavPointsNode("abc");
+    npn.setNavPointNodes(navPointNodes);
+    result.add(npn);
+
+    return result;
+  };
+
+  public List<NavPointNode> getNavPointNodes() {
     return navPointNodes;
   }
 }
