@@ -2,6 +2,8 @@ package wcworkshop.core.dto;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Wc1NavPoint {
   private short type;
   private String id;
@@ -32,7 +34,7 @@ public class Wc1NavPoint {
   }
 
   public void setId(String id) {
-    this.id = id;
+    this.id = StringUtils.trim(id);
   }
 
   public boolean isVisible() {
