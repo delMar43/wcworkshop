@@ -1,6 +1,7 @@
 package wcworkshop.core.repo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import wcworkshop.core.data.Wc1Medal;
@@ -23,6 +24,10 @@ public class Wc1MedalRepo {
       throw new RuntimeException("Unknown medal: " + value);
     }
     return medals.get(value);
+  }
+
+  public List<Wc1Medal> listAll() {
+    return Collections.unmodifiableList(medals);
   }
 
   public static Wc1MedalRepo getInstance() {

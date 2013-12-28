@@ -14,6 +14,7 @@ import wcworkshop.core.binary.Wc1BriefingCutsceneScript;
 import wcworkshop.core.binary.Wc1BriefingCutsceneSetting;
 import wcworkshop.core.binary.Wc1BriefingFile;
 import wcworkshop.core.binary.Wc1BriefingMissionData;
+import wcworkshop.core.binary.Wc1CampBarData;
 import wcworkshop.core.binary.Wc1CampFile;
 import wcworkshop.core.binary.Wc1CampMissionData;
 import wcworkshop.core.binary.Wc1CampSeriesBlock;
@@ -60,10 +61,14 @@ public class CampaignTransformer {
 
       List<Wc1Mission> missionList = new ArrayList<>();
       for (int missionIdx = 0; missionIdx < seriesBlock.getNrOfMissions(); ++missionIdx) {
+        int totalIdx = seriesIdx * 4 + missionIdx;
+        Wc1CampBarData barData = campFile.getBarData()[totalIdx];
         Wc1CampMissionData missionData = seriesBlock.getMissionData()[missionIdx];
 
         Wc1Mission mission = dozer.map(missionData, Wc1Mission.class);
         mission.setId(UUID.randomUUID().toString());
+        mission.setLeftPilot(barData.getLeftSeat());
+        mission.setRightPilot(barData.getRightSeat());
         missionList.add(mission);
       }
       series.setMissions(missionList);

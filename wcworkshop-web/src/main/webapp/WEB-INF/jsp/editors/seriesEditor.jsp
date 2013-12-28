@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <div id="seriesDiv_${command.series.id}">
-<h2>Campaign ${campaign}, Series ${seriesIndex +1}</h2>
+
 <form:form action="saveSeries.html" method="POST" id="seriesEditForm_${command.series.id}">
   <form:hidden path="projectId" />
   <form:hidden path="series.id" />

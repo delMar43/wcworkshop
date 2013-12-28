@@ -1,6 +1,7 @@
 package wcworkshop.core.repo;
 
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import wcworkshop.core.data.Wc1Pilot;
@@ -8,7 +9,7 @@ import wcworkshop.core.data.Wc1Pilot;
 public class Wc1PilotRepo {
   private static final Wc1PilotRepo instance = new Wc1PilotRepo();
 
-  private Map<Byte, Wc1Pilot> pilots = new HashMap<>();
+  private Map<Byte, Wc1Pilot> pilots = new LinkedHashMap<>();
 
   private Wc1PilotRepo() {
     pilots.put((byte) -1, new Wc1Pilot((byte) -1, "Empty"));
@@ -29,6 +30,10 @@ public class Wc1PilotRepo {
       throw new RuntimeException("Unknown pilot: " + value);
     }
     return pilots.get(value);
+  }
+
+  public Collection<Wc1Pilot> listAll() {
+    return pilots.values();
   }
 
   public static Wc1PilotRepo getInstance() {

@@ -1,44 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-<div class="scrollablePane">
-<h2>
-  Campaign ${campaign}, <a href="javascript:openSeriesEditor('${campaign}', ${seriesIndex})">Series ${seriesIndex +1}</a>, Mission ${missionIndex +1}
-</h2>
+<div class="scrollablePane" id="missionDiv_${command.mission.id}">
 <div>
   <h3>Mission Parameters</h3>
-  <table>
-    <tr>
-      <th>Wing</th>
-      <td>${mission.wingName}</td>
-    </tr>
-    <tr>
-      <th>Stellar Backgrounds?</th>
-      <td>
-        <c:forEach items="${mission.unknown}" var="unknownPart">
-          0x${unknownPart}
-        </c:forEach>
-      </td>
-    </tr>
-    <tr>
-      <th>Conversation Partners</th>
-      <td>Left: ${pilotRepo.getPilot(mission.conversationPartners.leftSeat).name}, Right: ${pilotRepo.getPilot(mission.conversationPartners.rightSeat).name}</td>
-    </tr>
-    <tr>
-      <th>Medal</th>
-      <td>${medalRepo.getMedal(mission.medal).name}</td>
-    </tr>
-    <tr>
-      <th>Medal Killpoints</th>
-      <td>${mission.medalKillPoints}</td>
-    </tr>
-    <tr>
-      <th>Objective Victory Points</th>
-      <td>${objectiveVictoryPoints}</td>
-    </tr>
-  </table>
+  <form:form id="missionEditForm_${command.mission.id}" method="POST" action="saveMission.html">
+    <table>
+      <tr>
+        <th>Wing</th>
+        <td><form:input path="mission.wingName" /></td>
+      </tr>
+      <%-- tr>
+        <th>Stellar Backgrounds?</th>
+        <td>
+          <c:forEach items="${mission.unknown}" var="unknownPart">
+            0x${unknownPart}
+          </c:forEach>
+        </td>
+      </tr --%>
+      <tr>
+        <th>Left Bar Seat</th>
+        <td>
+          <form:select path="mission.leftPilot">
+            <form:options items="${pilots}" itemLabel="name" itemValue="value"/>
+          </form:select>
+        </td>
+      </tr>
+      <tr>
+        <th>Right Bar Seat</th>
+        <td>
+          <form:select path="mission.rightPilot">
+            <form:options items="${pilots}" itemLabel="name" itemValue="value"/>
+          </form:select>
+        </td>
+      </tr>
+      <tr>
+        <th>Medal</th>
+        <td>
+          <form:select path="mission.medal">
+            <form:options items="${medals}" itemLabel="name" itemValue="value" />
+          </form:select>
+        </td>
+      </tr>
+      <tr>
+        <th>Required Killpoints for Medal</th>
+        <td>
+          <form:input path="mission.requiredMedalPoints" />
+        </td>
+      </tr>
+      <%-- tr>
+        <th>Objective Victory Points</th>
+        <td>
+          <form:input path="mission.victoryPointsPerObjective" />
+        </td>
+      </tr --%>
+    </table>
+  </form:form>
+  <button onclick="submitMissionEditForm('#missionEditForm_${command.mission.id}')">Save</button>
 </div>
-
+<%--
 <div>
   <h3>Ships</h3>
   <table>
@@ -104,4 +125,5 @@
     </tr>
   </table>
 </div>
+ --%>
 </div>

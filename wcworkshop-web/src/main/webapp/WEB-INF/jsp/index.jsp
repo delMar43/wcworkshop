@@ -78,7 +78,7 @@
               } else if (type == "series") {
                 openSeriesEditor(infoMap["project"], infoMap["series"],  infoMap["label"]);
               } else if (type == "mission") {
-                
+                openMissionEditor(infoMap["project"], infoMap["mission"], infoMap["label"]);
               } else if (type == "cutscene") {
                 openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"], infoMap["label"])
               }
@@ -128,10 +128,9 @@
         addTab(key, label, "<%=request.getContextPath()%>/seriesEditor.html?projectId=" + projectId + "&seriesId=" + seriesId, editorTabs, "editorTab");
       };
       
-      var openMissionEditor = function(campaign, seriesIndex, missionIndex) {
-    	var key = "C" + campaign + "S" + (seriesIndex+1) + "M" + (missionIndex+1);
-    	var label = campaign + " S" + (seriesIndex+1) + " M" + (missionIndex+1);
-        addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?campaign=" + campaign + "&seriesIndex=" + seriesIndex + "&missionIndex=" + missionIndex, editorTabs, "editorTab");
+      var openMissionEditor = function(projectId, missionId, label) {
+    	var key = missionId;
+        addTab(key, label, "<%=request.getContextPath()%>/missionEditor.html?projectId=" + projectId + "&missionId=" + missionId, editorTabs, "editorTab");
       };
       
       var openCutsceneEditor = function(projectId, missionId, cutsceneIndex, label) {
@@ -224,6 +223,19 @@
       }
       
       var submitSeriesEditForm = function(formId) {
+        var ajaxUrl = $(formId).attr("action");
+        var ajaxData = $(formId).serialize();
+        $.ajax({
+          type: "POST",
+          url: ajaxUrl,
+          data: ajaxData,
+          success: function(response) {
+            alert("done");
+          }
+        });
+      }
+      
+      var submitMissionEditForm = function(formId) {
         var ajaxUrl = $(formId).attr("action");
         var ajaxData = $(formId).serialize();
         $.ajax({
