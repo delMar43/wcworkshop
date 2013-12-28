@@ -74,40 +74,40 @@
       });
       
       var loadProjectTree = function() {
-        $("#tab-projects").html("");
-        $("#tab-projects").load("<%=request.getContextPath()%>/projectTree.html", function() {
-          $("#tab-projects").fancytree({
-            click: function(event, data) {
-              var extraClass = data.node.extraClasses;
-              var infoArray = extraClass.split(" ");
-              var infoMap = {};
+        $("#tab-projects").fancytree({
+          source: {
+            url: "<%=request.getContextPath()%>/projectTree.json"
+          }/*,
+          click: function(event, data) {
+            var extraClass = data.node.extraClasses;
+            var infoArray = extraClass.split(" ");
+            var infoMap = {};
 
-              var type;
+            var type;
+            
+            var infoIndex = 0;
+            infoArray.forEach(function(keyValue) {
+              var keyValueArray = keyValue.split("=");
+              var key = keyValueArray[0];
+              var value = keyValueArray[1];
               
-              var infoIndex = 0;
-              infoArray.forEach(function(keyValue) {
-                var keyValueArray = keyValue.split("=");
-                var key = keyValueArray[0];
-                var value = keyValueArray[1];
-                
-                if (infoIndex++ == 0) {
-                  type = key;
-                }
-                
-                infoMap[key] = value;
-              });
-              
-              if (type == "project") {
-                
-              } else if (type == "series") {
-                openSeriesEditor(infoMap["project"], infoMap["series"],  infoMap["label"]);
-              } else if (type == "mission") {
-                //openMissionEditor(infoMap["project"], infoMap["mission"], infoMap["label"]);
-              } else if (type == "cutscene") {
-                openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"], infoMap["label"])
+              if (infoIndex++ == 0) {
+                type = key;
               }
+              
+              infoMap[key] = value;
+            });
+            
+            if (type == "project") {
+              
+            } else if (type == "series") {
+              openSeriesEditor(infoMap["project"], infoMap["series"],  infoMap["label"]);
+            } else if (type == "mission") {
+              //openMissionEditor(infoMap["project"], infoMap["mission"], infoMap["label"]);
+            } else if (type == "cutscene") {
+              openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"], infoMap["label"])
             }
-          });
+          }*/
         });
       };
 

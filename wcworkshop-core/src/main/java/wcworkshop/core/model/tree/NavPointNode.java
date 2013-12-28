@@ -8,7 +8,7 @@ public class NavPointNode extends AbstractNode {
   private List<NavPointNode> navPointNodes = new ArrayList<>();
 
   public NavPointNode(String id, String label) {
-    super(id, label);
+    super(id, label, false);
   }
 
   public void addNavPointNode(NavPointNode node) {

@@ -23,6 +23,7 @@
   <servlet-mapping>
     <servlet-name>wcworkshop</servlet-name>
     <url-pattern>*.html</url-pattern>
+    <url-pattern>*.json</url-pattern>
     <url-pattern>*.wld</url-pattern>
     <url-pattern>*.bin</url-pattern>
   </servlet-mapping>
@@ -38,6 +39,7 @@
   <filter-mapping>
     <filter-name>shiroFilter</filter-name>
     <url-pattern>*.html</url-pattern>
+    <url-pattern>*.json</url-pattern>
     <url-pattern>*.bin</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>

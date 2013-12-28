@@ -10,14 +10,15 @@ public class ProjectNode extends AbstractNode {
   private Map<String, SeriesNode> seriesNodes = new LinkedHashMap<>();
 
   public ProjectNode(String id, String label) {
-    super(id, label);
+    super(id, label, true);
   }
 
   public void addSeriesNode(String id, SeriesNode seriesNode) {
     seriesNodes.put(id, seriesNode);
   }
 
-  public Collection<SeriesNode> getSeriesNodes() {
+  @Override
+  public Collection<SeriesNode> getChildren() {
     return Collections.unmodifiableCollection(seriesNodes.values());
   }
 }
