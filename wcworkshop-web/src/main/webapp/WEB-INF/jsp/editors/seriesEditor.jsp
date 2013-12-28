@@ -15,7 +15,11 @@
       </tr>
       <tr>
         <th>Wingman</th>
-        <td><form:input path="series.wingman" /></td>
+        <td>
+          <form:select path="series.wingman">
+            <form:options items="${pilots}" itemLabel="name" itemValue="value"/>
+          </form:select>
+        </td>
       </tr>
       <tr>
         <th>Victory Points</th>
@@ -27,19 +31,35 @@
       </tr>
       <tr>
         <th>Victory Destination</th>
-        <td><form:input path="series.victoryDestination" /></td>
+        <td>
+          <form:select path="series.victoryDestination">
+            <form:options items="${allSeries}" itemLabel="label" itemValue="seriesNr" />
+          </form:select>
+        </td>
       </tr>
       <tr>
         <th>Victory Ship</th>
-        <td><form:input path="series.victoryShip" /></td>
+        <td>
+          <form:select path="series.victoryShip">
+            <form:options items="${flyableShips}" itemLabel="name" itemValue="value"/>
+          </form:select>
+        </td>
       </tr>
       <tr>
         <th>Loss Destination</th>
-        <td><form:input path="series.lossDestination" /></td>
+        <td>
+          <form:select path="series.lossDestination">
+            <form:options items="${allSeries}" itemLabel="label" itemValue="seriesNr" />
+          </form:select>
+        </td>
       </tr>
       <tr>
         <th>Loss Ship</th>
-        <td><form:input path="series.lossShip" /></td>
+        <td>
+          <form:select path="series.lossShip">
+            <form:options items="${flyableShips}" itemLabel="name" itemValue="value"/>
+          </form:select>
+        </td>
       </tr>
     </tbody>
   </table>

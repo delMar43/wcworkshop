@@ -1,5 +1,6 @@
 package wcworkshop.core.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import wcworkshop.core.dto.Wc1Campaign;
 import wcworkshop.core.dto.Wc1Cutscene;
 import wcworkshop.core.dto.Wc1Mission;
 import wcworkshop.core.dto.Wc1Series;
+import wcworkshop.core.model.SeriesModel;
 import wcworkshop.core.reader.Wc1BriefingReader;
 import wcworkshop.core.reader.Wc1CampReader;
 import wcworkshop.core.reader.Wc1ModuleReader;
@@ -121,6 +123,18 @@ public class ProjectService {
     newProject.setCampaign(campaign);
 
     saveProject(newProject);
+  }
+
+  public List<SeriesModel> listAllSeries(String username, String projectId, String campaignId) {
+    Project project = loadProject(username, projectId);
+
+    List<SeriesModel> result = new ArrayList<>();
+    result.add(new SeriesModel(-1, "none"));
+    for (Wc1Series series : project.getCampaign().getSeries()) {
+      result.add(new SeriesModel(series.getSeriesNr(), series.getSystemName()));
+    }
+
+    return result;
   }
 
   public static ProjectService getInstance() {

@@ -7,8 +7,7 @@
       url: $("#editProjectForm").attr("action"),
       data: $("#editProjectForm").serialize(),
       success: function(response) {
-        var respObj = $.parseJSON(response);
-        loadProject(respObj.projectId);
+        loadProjectTree();
       }
     });
   }

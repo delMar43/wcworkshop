@@ -5,13 +5,15 @@ public class Wc1Ship {
 
   private byte value;
   private String name;
+  private boolean flyable;
 
   public Wc1Ship() {
   }
 
-  public Wc1Ship(byte value, String name) {
+  public Wc1Ship(byte value, String name, boolean flyable) {
     this.value = value;
     this.name = name;
+    this.flyable = flyable;
   }
 
   public byte getValue() {
@@ -30,4 +32,11 @@ public class Wc1Ship {
     this.name = name;
   }
 
+  public void setFlyable(boolean flyable) {
+    this.flyable = flyable;
+  }
+
+  public boolean isFlyable() {
+    return flyable;
+  }
 }

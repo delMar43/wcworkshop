@@ -46,6 +46,11 @@
           delete openProjectTabs[li.attr("id")];
         });
   
+        loadProjectTree();
+      });
+      
+      var loadProjectTree = function() {
+        $("#tab-projects").html("");
         $("#tab-projects").load("<%=request.getContextPath()%>/projectTree.html", function() {
           $("#tab-projects").fancytree({
             click: function(event, data) {
@@ -77,11 +82,10 @@
               } else if (type == "cutscene") {
                 openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"], infoMap["label"])
               }
-              
             }
           });
         });
-      });
+      };
 
       // actual addTab function: adds new tab using the input from the form above
       var addStaticTab = function(key, label, content, tabContainer, tabClass) {
@@ -230,8 +234,8 @@
     </div>
     <div class="ui-layout-west">
       <div id="projectViewToolbar">
-        <!-- button onclick="openProjectEditDialog()" id="newCampaignButton" title="Start a new campaign">New</button>
-        <button id="openCampaignButton" title="Open an existing campaign">Open</button>
+        <button onclick="openProjectEditDialog()" id="newCampaignButton" title="Start a new campaign">New</button>
+        <!-- button id="openCampaignButton" title="Open an existing campaign">Open</button>
         <button id="closeCampaignButton" title="Close current campaign">Close</button>
         <button onclick="openProjectUploadDialog()" id="uploadCampaignButton" title="Upload campaign files from filesystem">Upload</button>
         <button id="importCampaignButton" title="Import campaign shared by another user">Import</button>
