@@ -31,9 +31,7 @@
           </table>
         </c:when>
         <c:otherwise>
-          You did not generate any files for this project yet.<br/>
-          To do this, please select the project in the project tree to the left and click the "Generate" button.<br/>
-          Finally, close this tab and re-open it to show the generated files. 
+          You did not generate any files for this project yet.
         </c:otherwise>
       </c:choose>
     </fieldset>
