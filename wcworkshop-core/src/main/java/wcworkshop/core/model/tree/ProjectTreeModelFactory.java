@@ -1,5 +1,8 @@
 package wcworkshop.core.model.tree;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import wcworkshop.core.dto.Project;
 import wcworkshop.core.dto.Wc1Campaign;
 import wcworkshop.core.dto.Wc1Mission;
@@ -18,7 +21,10 @@ public class ProjectTreeModelFactory {
     Wc1Campaign campaign = project.getCampaign();
 
     for (Wc1Series series : campaign.getSeries()) {
-      SeriesNode seriesNode = new SeriesNode(series.getId(), "Ser " + series.getSeriesNr() + " [" + series.getSystemName() + "]");
+      Map<String, String> data = new HashMap<>();
+      data.put("projectId", project.getId());
+
+      SeriesNode seriesNode = new SeriesNode(series.getId(), "Ser " + series.getSeriesNr() + " [" + series.getSystemName() + "]", data);
       projectNode.addSeriesNode(series.getId(), seriesNode);
 
       int missionCount = 1;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,11 +14,17 @@ public abstract class AbstractNode {
   private String id;
   private String label;
   private boolean folder;
+  private Map<String, String> data;
 
   public AbstractNode(String id, String label, boolean folder) {
+    this(id, label, folder, Collections.EMPTY_MAP);
+  }
+
+  public AbstractNode(String id, String label, boolean folder, Map<String, String> data) {
     this.id = id;
     this.label = label;
     this.folder = folder;
+    this.data = data;
   }
 
   public String toFancyJson() {
@@ -25,6 +33,14 @@ public abstract class AbstractNode {
     result.append(create("title", label));
     result.append(",");
     result.append(create("key", id));
+
+    result.append(",");
+    result.append("\"data\":[");
+    for (Entry<String, String> entry : data.entrySet()) {
+      result.append("{" + create(entry.getKey(), entry.getValue()) + "}");
+    }
+    result.append("]");
+
     if (folder) {
       result.append(",");
       result.append(createBoolean("folder", folder));

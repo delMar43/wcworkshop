@@ -77,10 +77,10 @@
         $("#tab-projects").fancytree({
           source: {
             url: "<%=request.getContextPath()%>/projectTree.json"
-          }/*,
+          },
           click: function(event, data) {
             var extraClass = data.node.extraClasses;
-            var infoArray = extraClass.split(" ");
+            /*var infoArray = extraClass.split(" ");
             var infoMap = {};
 
             var type;
@@ -106,8 +106,8 @@
               //openMissionEditor(infoMap["project"], infoMap["mission"], infoMap["label"]);
             } else if (type == "cutscene") {
               openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"], infoMap["label"])
-            }
-          }*/
+            }*/
+          }
         });
       };
 
@@ -242,6 +242,10 @@
       
       var removeScreen = function(screenId) {
         $('.' + screenId).remove();
+      }
+      
+      var reloadProjectTree = function() {
+        loadProjectTree();
       }
     </script>
   </head>
