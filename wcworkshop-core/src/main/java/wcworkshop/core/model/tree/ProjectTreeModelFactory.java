@@ -20,23 +20,30 @@ public class ProjectTreeModelFactory {
     ProjectNode projectNode = new ProjectNode(project.getId(), project.getTitle());
     Wc1Campaign campaign = project.getCampaign();
 
+    Map<String, String> data = new HashMap<>();
+    data.put("projectId", project.getId());
+
     for (Wc1Series series : campaign.getSeries()) {
-      Map<String, String> data = new HashMap<>();
-      data.put("projectId", project.getId());
+      data.put("seriesId", series.getId());
 
       SeriesNode seriesNode = new SeriesNode(series.getId(), "Ser " + series.getSeriesNr() + " [" + series.getSystemName() + "]", data);
       projectNode.addSeriesNode(series.getId(), seriesNode);
 
       int missionCount = 1;
       for (Wc1Mission mission : series.getMissions()) {
-        MissionNode missionNode = new MissionNode(mission.getId(), "Mis " + missionCount + " [" + mission.getWingName() + "]");
+        data.put("missionId", mission.getId());
+
+        MissionNode missionNode = new MissionNode(mission.getId(), "Mis " + missionCount + " [" + mission.getWingName() + "]", data);
+        NavPointsNode navPointsNode = missionNode.getNavPointsNode();
         seriesNode.addMissionNode(series.getId() + "_" + missionCount, missionNode);
         ++missionCount;
 
         int navPointIdx = 0;
         for (Wc1NavPoint navPoint : mission.getNavPoints()) {
-          NavPointNode navPointNode = new NavPointNode(navPoint.getId(), navPointIdx++ + " [" + navPoint.getId() + "]");
-          missionNode.addNavPointNode(navPointNode);
+          data.put("navPointId", navPoint.getId());
+
+          NavPointNode navPointNode = new NavPointNode(navPoint.getId(), navPointIdx++ + " [" + navPoint.getId() + "]", data);
+          navPointsNode.addNavPointNode(navPointNode);
         }
       }
     }

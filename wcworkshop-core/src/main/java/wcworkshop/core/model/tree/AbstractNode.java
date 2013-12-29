@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 public abstract class AbstractNode {
 
@@ -34,12 +35,19 @@ public abstract class AbstractNode {
     result.append(",");
     result.append(create("key", id));
 
-    result.append(",");
-    result.append("\"data\":[");
-    for (Entry<String, String> entry : data.entrySet()) {
-      result.append("{" + create(entry.getKey(), entry.getValue()) + "}");
+    if (!CollectionUtils.isEmpty(data)) {
+      result.append(",");
+      result.append("\"data\":[");
+      int entryIdx = 0;
+      int nrEntries = data.size();
+      for (Entry<String, String> entry : data.entrySet()) {
+        result.append("{" + create(entry.getKey(), entry.getValue()) + "}");
+        if (!isLastNode(entryIdx++, nrEntries)) {
+          result.append(",");
+        }
+      }
+      result.append("]");
     }
-    result.append("]");
 
     if (folder) {
       result.append(",");

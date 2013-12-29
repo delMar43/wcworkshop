@@ -80,6 +80,8 @@
           },
           click: function(event, data) {
             var extraClass = data.node.extraClasses;
+            var nodeData = data.node.data;
+            //alert(nodeData);
             /*var infoArray = extraClass.split(" ");
             var infoMap = {};
 
