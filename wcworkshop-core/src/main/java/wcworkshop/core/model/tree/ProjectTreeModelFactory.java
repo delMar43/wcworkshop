@@ -27,7 +27,8 @@ public class ProjectTreeModelFactory {
       data.put("seriesId", series.getId());
       data.put("type", "series");
 
-      SeriesNode seriesNode = new SeriesNode(series.getId(), "Ser " + series.getSeriesNr() + " [" + series.getSystemName() + "]", data);
+      String seriesLabel = "Ser " + series.getSeriesNr() + " [" + series.getSystemName() + "]";
+      SeriesNode seriesNode = new SeriesNode(series.getId(), seriesLabel, data);
       projectNode.addSeriesNode(series.getId(), seriesNode);
 
       int missionCount = 1;
@@ -35,11 +36,12 @@ public class ProjectTreeModelFactory {
         data.put("missionId", mission.getId());
         data.put("type", "mission");
 
-        MissionNode missionNode = new MissionNode(mission.getId(), "Mis " + missionCount + " [" + mission.getWingName() + "]", data);
+        String missionLabel = "Mis " + missionCount + " [" + mission.getWingName() + "]";
+        MissionNode missionNode = new MissionNode(mission.getId(), missionLabel, data);
         seriesNode.addMissionNode(series.getId() + "_" + missionCount, missionNode);
         ++missionCount;
 
-        missionNode.setCutscenesNode(createCutscenesNode(data, mission));
+        missionNode.setCutscenesNode(createCutscenesNode(data, mission, seriesLabel + "/" + missionLabel + "/"));
         missionNode.setNavPointsNode(createNavPointsNode(data, mission));
       }
     }
@@ -47,20 +49,20 @@ public class ProjectTreeModelFactory {
     return projectNode;
   }
 
-  private CutscenesNode createCutscenesNode(Map<String, String> data, Wc1Mission mission) {
+  private CutscenesNode createCutscenesNode(Map<String, String> data, Wc1Mission mission, String titlePrefix) {
     CutscenesNode result = new CutscenesNode(mission.getId() + "_cut", data);
     data.put("type", "cutscene");
 
     data.put("cutsceneType", "BRIEFING");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_briefing", "Briefing", data));
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_briefing", "Briefing", titlePrefix + "Briefing", data));
     data.put("cutsceneType", "DEBRIEFING");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_debriefing", "Debriefing", data));
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_debriefing", "Debriefing", titlePrefix + "Debriefing", data));
     data.put("cutsceneType", "SHOTGLASS");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_shotglass", "Shotglass", data));
-    data.put("cutsceneType", "LEFT");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_left", "Left", data));
-    data.put("cutsceneType", "RIGHT");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_right", "Right", data));
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_shotglass", "Shotglass", titlePrefix + "Shotglass", data));
+    data.put("cutsceneType", "LEFT_SEAT");
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_left", "Left", titlePrefix + "Left", data));
+    data.put("cutsceneType", "RIGHT_SEAT");
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_right", "Right", titlePrefix + "Right", data));
 
     return result;
   }

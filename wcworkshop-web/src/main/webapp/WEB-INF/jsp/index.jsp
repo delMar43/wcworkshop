@@ -104,7 +104,7 @@
             } else if (type == "mission") {
               //openMissionEditor(infoMap["projectId"], infoMap["missionId"], infoMap["title"]);
             } else if (type == "cutscene") {
-              openCutsceneEditor(infoMap["projectId"], infoMap["missionId"], infoMap["cutsceneType"], infoMap["title"])
+              openCutsceneEditor(infoMap["projectId"], infoMap["missionId"], infoMap["cutsceneType"], infoMap["tabLabel"])
             }
           }
         });
