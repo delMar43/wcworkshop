@@ -24,16 +24,8 @@ public class MissionNode extends AbstractNode {
     return result;
   };
 
-  public NavPointsNode getNavPointsNode() {
-    return navPointsNode;
-  }
-
   public void setNavPointsNode(NavPointsNode navPointsNode) {
     this.navPointsNode = navPointsNode;
-  }
-
-  public CutscenesNode getCutscenesNode() {
-    return cutscenesNode;
   }
 
   public void setCutscenesNode(CutscenesNode cutscenesNode) {

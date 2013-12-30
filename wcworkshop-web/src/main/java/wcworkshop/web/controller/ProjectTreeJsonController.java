@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import wcworkshop.core.factory.UiFactory;
 import wcworkshop.core.model.tree.ProjectNode;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Controller
 public class ProjectTreeJsonController {
   private UiFactory uiFactory = UiFactory.getInstance();
+  private static final ObjectMapper mapper = new ObjectMapper();
 
   @ResponseBody
   @RequestMapping("/projectTree.json")
@@ -24,19 +28,13 @@ public class ProjectTreeJsonController {
     String username = (String) subject.getPrincipal();
     List<ProjectNode> projectNodes = uiFactory.loadProjectTree(username);
 
-    StringBuilder result = new StringBuilder("[");
-    int nrNodes = projectNodes.size();
-    for (int nodeIdx = 0; nodeIdx < nrNodes; ++nodeIdx) {
-      ProjectNode node = projectNodes.get(nodeIdx);
-      result.append(node.toFancyJson());
-
-      if (!isLastNode(nodeIdx, nrNodes)) {
-        result.append(",");
-      }
+    String json;
+    try {
+      json = mapper.writeValueAsString(projectNodes);
+    } catch (JsonProcessingException e) {
+      json = "[]";
     }
-    result.append("]");
-
-    return result.toString();
+    return json;
   }
 
   private boolean isLastNode(int curNode, int nrNodes) {

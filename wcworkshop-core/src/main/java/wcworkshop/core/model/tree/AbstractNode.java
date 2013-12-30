@@ -3,6 +3,7 @@ package wcworkshop.core.model.tree;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,30 +11,34 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public abstract class AbstractNode {
 
-  private String id;
-  private String label;
+  private String key;
+  private String title;
   private boolean folder;
   private Map<String, String> data;
 
   public AbstractNode(String id, String label, boolean folder) {
-    this(id, label, folder, Collections.EMPTY_MAP);
+    this(id, label, folder, new HashMap<String, String>());
   }
 
-  public AbstractNode(String id, String label, boolean folder, Map<String, String> data) {
-    this.id = id;
-    this.label = label;
+  public AbstractNode(String key, String title, boolean folder, Map<String, String> data) {
+    this.key = key;
+    this.title = title;
     this.folder = folder;
-    this.data = data;
+    this.data = new HashMap<>(data);
+    this.data.put("title", title);
   }
 
+  @JsonIgnore
   public String toFancyJson() {
     StringBuilder result = new StringBuilder("{");
 
-    result.append(create("title", label));
+    result.append(create("title", title));
     result.append(",");
-    result.append(create("key", id));
+    result.append(create("key", key));
 
     if (!CollectionUtils.isEmpty(data)) {
       result.append(",");
@@ -86,19 +91,24 @@ public abstract class AbstractNode {
     return Collections.EMPTY_LIST;
   }
 
-  public String getId() {
-    return id;
+  public String getKey() {
+    return key;
   }
 
-  public String getLabel() {
-    return label;
+  public String getTitle() {
+    return title;
   }
 
+  @JsonIgnore
   public String getTabLabel() {
-    return StringUtils.replace(label, " ", "_");
+    return StringUtils.replace(title, " ", "_");
   }
 
   public boolean isFolder() {
     return folder;
+  }
+
+  public Map<String, String> getData() {
+    return data;
   }
 }

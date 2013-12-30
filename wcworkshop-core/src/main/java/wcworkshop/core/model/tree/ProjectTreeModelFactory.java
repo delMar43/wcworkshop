@@ -39,8 +39,8 @@ public class ProjectTreeModelFactory {
         seriesNode.addMissionNode(series.getId() + "_" + missionCount, missionNode);
         ++missionCount;
 
-        missionNode.setCutscenesNode(createCutscenesNode(new HashMap<String, String>(data), mission));
-        missionNode.setNavPointsNode(createNavPointsNode(new HashMap<String, String>(data), mission));
+        missionNode.setCutscenesNode(createCutscenesNode(data, mission));
+        missionNode.setNavPointsNode(createNavPointsNode(data, mission));
       }
     }
 
@@ -49,17 +49,18 @@ public class ProjectTreeModelFactory {
 
   private CutscenesNode createCutscenesNode(Map<String, String> data, Wc1Mission mission) {
     CutscenesNode result = new CutscenesNode(mission.getId() + "_cut", data);
+    data.put("type", "cutscene");
 
     data.put("cutsceneType", "BRIEFING");
-    result.addCutsceneNode(new CutsceneNode(result.getId() + "_briefing", "Briefing", new HashMap<String, String>(data)));
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_briefing", "Briefing", data));
     data.put("cutsceneType", "DEBRIEFING");
-    result.addCutsceneNode(new CutsceneNode(result.getId() + "_debriefing", "Debriefing", new HashMap<String, String>(data)));
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_debriefing", "Debriefing", data));
     data.put("cutsceneType", "SHOTGLASS");
-    result.addCutsceneNode(new CutsceneNode(result.getId() + "_shotglass", "Shotglass", new HashMap<String, String>(data)));
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_shotglass", "Shotglass", data));
     data.put("cutsceneType", "LEFT");
-    result.addCutsceneNode(new CutsceneNode(result.getId() + "_left", "Left", new HashMap<String, String>(data)));
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_left", "Left", data));
     data.put("cutsceneType", "RIGHT");
-    result.addCutsceneNode(new CutsceneNode(result.getId() + "_right", "Right", new HashMap<String, String>(data)));
+    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_right", "Right", data));
 
     return result;
   }

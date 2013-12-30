@@ -80,13 +80,9 @@
           },
           click: function(event, data) {
             var extraClass = data.node.extraClasses;
-            var nodeData = data.node.data;
-            //alert(nodeData);
-            /*var infoArray = extraClass.split(" ");
-            var infoMap = {};
-
-            var type;
-            
+            var infoMap = data.node.data;
+			var type = infoMap["type"];
+            /*
             var infoIndex = 0;
             infoArray.forEach(function(keyValue) {
               var keyValueArray = keyValue.split("=");
@@ -99,16 +95,17 @@
               
               infoMap[key] = value;
             });
+            */
             
             if (type == "project") {
               
             } else if (type == "series") {
-              openSeriesEditor(infoMap["project"], infoMap["series"],  infoMap["label"]);
+              openSeriesEditor(infoMap["projectId"], infoMap["seriesId"],  infoMap["title"]);
             } else if (type == "mission") {
-              //openMissionEditor(infoMap["project"], infoMap["mission"], infoMap["label"]);
+              //openMissionEditor(infoMap["projectId"], infoMap["missionId"], infoMap["title"]);
             } else if (type == "cutscene") {
-              openCutsceneEditor(infoMap["project"], infoMap["mission"], infoMap["cutscene"], infoMap["label"])
-            }*/
+              openCutsceneEditor(infoMap["projectId"], infoMap["missionId"], infoMap["cutsceneType"], infoMap["title"])
+            }
           }
         });
       };
