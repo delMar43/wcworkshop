@@ -82,20 +82,6 @@
             var extraClass = data.node.extraClasses;
             var infoMap = data.node.data;
 			var type = infoMap["type"];
-            /*
-            var infoIndex = 0;
-            infoArray.forEach(function(keyValue) {
-              var keyValueArray = keyValue.split("=");
-              var key = keyValueArray[0];
-              var value = keyValueArray[1];
-              
-              if (infoIndex++ == 0) {
-                type = key;
-              }
-              
-              infoMap[key] = value;
-            });
-            */
             
             if (type == "project") {
               
@@ -244,7 +230,11 @@
       }
       
       var reloadProjectTree = function() {
-        loadProjectTree();
+        $("div:ui-fancytree").data("fancytree").getTree().reload({
+          source: {
+            url: "<%=request.getContextPath()%>/projectTree.json"
+          }
+        });
       }
     </script>
   </head>

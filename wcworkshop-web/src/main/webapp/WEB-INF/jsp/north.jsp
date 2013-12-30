@@ -1,8 +1,9 @@
 <div id="headLeft">
   <h1 class="heading">World Creator's Workshop</h1>
-  <button style="font-family: Orbitron; font-weight: 700" onclick="openCredits();">Credits</button>
   <!-- button style="font-family: Orbitron; font-weight: 700" onclick="openSavegameEditor();">Open Savegame Editor</button -->
+  <button style="font-family: Orbitron; font-weight: 700" onclick="reloadProjectTree();">Reload</button>
   <button style="font-family: Orbitron; font-weight: 700" onclick="openDownloadTab();">Download</button>
+  <button style="font-family: Orbitron; font-weight: 700" onclick="openCredits();">Credits</button>
 </div>
 <div id="headCenter">&nbsp;</div>
 <div id="headRight">
