@@ -25,6 +25,7 @@ public class ProjectTreeModelFactory {
 
     for (Wc1Series series : campaign.getSeries()) {
       data.put("seriesId", series.getId());
+      data.put("type", "series");
 
       SeriesNode seriesNode = new SeriesNode(series.getId(), "Ser " + series.getSeriesNr() + " [" + series.getSystemName() + "]", data);
       projectNode.addSeriesNode(series.getId(), seriesNode);
@@ -32,23 +33,50 @@ public class ProjectTreeModelFactory {
       int missionCount = 1;
       for (Wc1Mission mission : series.getMissions()) {
         data.put("missionId", mission.getId());
+        data.put("type", "mission");
 
         MissionNode missionNode = new MissionNode(mission.getId(), "Mis " + missionCount + " [" + mission.getWingName() + "]", data);
-        NavPointsNode navPointsNode = missionNode.getNavPointsNode();
         seriesNode.addMissionNode(series.getId() + "_" + missionCount, missionNode);
         ++missionCount;
 
-        int navPointIdx = 0;
-        for (Wc1NavPoint navPoint : mission.getNavPoints()) {
-          data.put("navPointId", navPoint.getId());
-
-          NavPointNode navPointNode = new NavPointNode(navPoint.getId(), navPointIdx++ + " [" + navPoint.getId() + "]", data);
-          navPointsNode.addNavPointNode(navPointNode);
-        }
+        missionNode.setCutscenesNode(createCutscenesNode(new HashMap<String, String>(data), mission));
+        missionNode.setNavPointsNode(createNavPointsNode(new HashMap<String, String>(data), mission));
       }
     }
 
     return projectNode;
+  }
+
+  private CutscenesNode createCutscenesNode(Map<String, String> data, Wc1Mission mission) {
+    CutscenesNode result = new CutscenesNode(mission.getId() + "_cut", data);
+
+    data.put("cutsceneType", "BRIEFING");
+    result.addCutsceneNode(new CutsceneNode(result.getId() + "_briefing", "Briefing", new HashMap<String, String>(data)));
+    data.put("cutsceneType", "DEBRIEFING");
+    result.addCutsceneNode(new CutsceneNode(result.getId() + "_debriefing", "Debriefing", new HashMap<String, String>(data)));
+    data.put("cutsceneType", "SHOTGLASS");
+    result.addCutsceneNode(new CutsceneNode(result.getId() + "_shotglass", "Shotglass", new HashMap<String, String>(data)));
+    data.put("cutsceneType", "LEFT");
+    result.addCutsceneNode(new CutsceneNode(result.getId() + "_left", "Left", new HashMap<String, String>(data)));
+    data.put("cutsceneType", "RIGHT");
+    result.addCutsceneNode(new CutsceneNode(result.getId() + "_right", "Right", new HashMap<String, String>(data)));
+
+    return result;
+  }
+
+  private NavPointsNode createNavPointsNode(Map<String, String> data, Wc1Mission mission) {
+    NavPointsNode navPointsNode = new NavPointsNode(mission.getId() + "_nav");
+
+    int navPointIdx = 0;
+    for (Wc1NavPoint navPoint : mission.getNavPoints()) {
+      data.put("navPointId", navPoint.getId());
+      data.put("type", "navPoint");
+
+      NavPointNode navPointNode = new NavPointNode(navPoint.getId(), navPointIdx++ + " [" + navPoint.getId() + "]", data);
+      navPointsNode.addNavPointNode(navPointNode);
+    }
+
+    return navPointsNode;
   }
 
   public static ProjectTreeModelFactory getInstance() {

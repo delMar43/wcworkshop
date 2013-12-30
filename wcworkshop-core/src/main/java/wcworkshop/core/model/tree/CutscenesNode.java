@@ -3,23 +3,22 @@ package wcworkshop.core.model.tree;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class CutscenesNode extends AbstractNode {
 
-  public CutscenesNode(String id) {
-    super(id, "Cutscenes", true);
+  private List<CutsceneNode> children = new ArrayList<>();
+
+  public CutscenesNode(String id, Map<String, String> data) {
+    super(id, "Cutscenes", true, data);
+  }
+
+  public void addCutsceneNode(CutsceneNode cutsceneNode) {
+    children.add(cutsceneNode);
   }
 
   @Override
   public Collection<? extends AbstractNode> getChildren() {
-    List<CutsceneNode> children = new ArrayList<>();
-
-    children.add(new CutsceneNode("1", "Briefing"));
-    children.add(new CutsceneNode("2", "Debriefing"));
-    children.add(new CutsceneNode("3", "Shotglass"));
-    children.add(new CutsceneNode("4", "Left"));
-    children.add(new CutsceneNode("5", "Right"));
-
     return children;
   }
 }

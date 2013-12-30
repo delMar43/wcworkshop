@@ -12,8 +12,6 @@ public class MissionNode extends AbstractNode {
 
   public MissionNode(String id, String label, Map<String, String> data) {
     super(id, label, true, data);
-    navPointsNode = new NavPointsNode(id + "_nav");
-    cutscenesNode = new CutscenesNode(id + "_cut");
   }
 
   @Override
@@ -30,7 +28,15 @@ public class MissionNode extends AbstractNode {
     return navPointsNode;
   }
 
+  public void setNavPointsNode(NavPointsNode navPointsNode) {
+    this.navPointsNode = navPointsNode;
+  }
+
   public CutscenesNode getCutscenesNode() {
     return cutscenesNode;
+  }
+
+  public void setCutscenesNode(CutscenesNode cutscenesNode) {
+    this.cutscenesNode = cutscenesNode;
   }
 }
