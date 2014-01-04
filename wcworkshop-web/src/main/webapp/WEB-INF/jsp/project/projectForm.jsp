@@ -7,13 +7,13 @@
       url: $("#editProjectForm").attr("action"),
       data: $("#editProjectForm").serialize(),
       success: function(response) {
-        loadProjectTree();
+        addProjectNode(response);
       }
     });
   }
 </script>
 
-<form:form id="editProjectForm" action="editProject.html" method="POST">
+<form:form id="editProjectForm" action="editProject.json" method="POST">
   <table>
     <tr>
       <th>Title</th>

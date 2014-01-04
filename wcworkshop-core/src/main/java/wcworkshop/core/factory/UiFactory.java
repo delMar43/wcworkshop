@@ -19,11 +19,15 @@ public class UiFactory {
 
     List<ProjectNode> result = new ArrayList<>();
     for (Project project : projects) {
-      ProjectNode projectNode = projectTreeFactory.createProjectNode(project);
-      result.add(projectNode);
+      result.add(createProjectNode(project));
     }
 
     return result;
+  }
+
+  public ProjectNode createProjectNode(Project project) {
+    ProjectNode projectNode = projectTreeFactory.createProjectNode(project);
+    return projectNode;
   }
 
   private UiFactory() {

@@ -16,6 +16,7 @@
       var projectTabs;
       var openTabs = {};
       var openProjectTabs = {};
+      var projectTree;
       
       $(function() {
         var layout = $("body").layout({ applyDefaultStyles: true });
@@ -74,7 +75,8 @@
       });
       
       var loadProjectTree = function() {
-        $("#tab-projects").fancytree({
+        projectTree = $("#tab-projects");
+        projectTree.fancytree({
           source: {
             url: "<%=request.getContextPath()%>/projectTree.json"
           },
@@ -229,12 +231,21 @@
         $('.' + screenId).remove();
       }
       
+      var addProjectNode = function(projectNode) {
+        var rootNode = projectTree.fancytree("getRootNode");
+        var childNode = rootNode.addChildren(projectNode);
+      }
+      
       var reloadProjectTree = function() {
-        $("div:ui-fancytree").data("fancytree").getTree().reload({
-          source: {
+        alert("not implemented yet");
+        <%--
+        var ft = projectTree.fancytree("getTree");
+        ft.reload({
+          source: [{
             url: "<%=request.getContextPath()%>/projectTree.json"
-          }
+          }]
         });
+        --%>
       }
     </script>
   </head>

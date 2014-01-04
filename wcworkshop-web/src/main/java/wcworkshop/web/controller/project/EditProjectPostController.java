@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import wcworkshop.core.dto.EngineType;
 import wcworkshop.core.dto.Project;
 import wcworkshop.core.dto.ProjectFactory;
+import wcworkshop.core.factory.UiFactory;
+import wcworkshop.core.model.tree.ProjectNode;
 import wcworkshop.core.service.ProjectService;
 import wcworkshop.web.command.ProjectCommand;
 
@@ -24,17 +26,20 @@ public class EditProjectPostController {
 
   private ProjectService projectService = ProjectService.getInstance();
   private ProjectFactory projectFactory = ProjectFactory.getInstance();
+  private UiFactory uiFactory = UiFactory.getInstance();
 
   @ResponseBody
   @RequestMapping(value = "/editProject", method = RequestMethod.POST)
-  public String createProject(@ModelAttribute ProjectCommand command) {
+  public ProjectNode createProject(@ModelAttribute ProjectCommand command) {
     logger.info("createProject called");
 
     Project project = commandToProject(command);
 
     projectService.saveProject(project);
 
-    return "{\"success\":true,\"projectId\":\"" + project.getTitle() + "\"}";
+    ProjectNode node = uiFactory.createProjectNode(project);
+
+    return node;
   }
 
   private Project commandToProject(ProjectCommand command) {
