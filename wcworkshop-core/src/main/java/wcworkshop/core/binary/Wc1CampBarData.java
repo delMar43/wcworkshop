@@ -1,6 +1,7 @@
 package wcworkshop.core.binary;
 
 public class Wc1CampBarData {
+  public static final Wc1CampBarData EMPTY = new Wc1CampBarData((byte) 0, (byte) 0);
 
   private byte leftSeat;
   private byte rightSeat;

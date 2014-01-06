@@ -290,6 +290,8 @@ public class CampaignTransformer {
   private Wc1CampFile generateCampFile(Wc1Campaign source) {
     Wc1CampFile sink = new Wc1CampFile();
     Wc1CampSeriesBlock[] seriesBlocks = new Wc1CampSeriesBlock[13];
+    Wc1CampBarData[] barDataArray = new Wc1CampBarData[52];
+
     for (int seriesIdx = 0; seriesIdx < 13; ++seriesIdx) {
       Wc1Series series = source.getSeries().get(seriesIdx);
 
@@ -303,14 +305,20 @@ public class CampaignTransformer {
 
       Wc1CampMissionData[] missionDataArray = new Wc1CampMissionData[4];
       for (int missionIdx = 0; missionIdx < 4; ++missionIdx) {
+        int totalIdx = seriesIdx * 4 + missionIdx;
+
         Wc1CampMissionData missionData;
+        Wc1CampBarData barData;
         if (missionIdx < series.getMissions().size()) {
           Wc1Mission mission = series.getMissions().get(missionIdx);
           missionData = dozer.map(mission, Wc1CampMissionData.class);
+          barData = new Wc1CampBarData(mission.getLeftPilot(), mission.getRightPilot());
         } else {
           missionData = Wc1CampMissionData.EMPTY;
+          barData = Wc1CampBarData.EMPTY;
         }
         missionDataArray[missionIdx] = missionData;
+        barDataArray[totalIdx] = barData;
       }
       seriesBlock.setMissionData(missionDataArray);
 
@@ -318,6 +326,7 @@ public class CampaignTransformer {
     }
 
     sink.setSeriesBlocks(seriesBlocks);
+    sink.setBarData(barDataArray);
 
     return sink;
   }

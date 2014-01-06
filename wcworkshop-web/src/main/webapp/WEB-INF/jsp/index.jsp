@@ -90,7 +90,7 @@
             } else if (type == "series") {
               openSeriesEditor(infoMap["projectId"], infoMap["seriesId"],  infoMap["title"]);
             } else if (type == "mission") {
-              //openMissionEditor(infoMap["projectId"], infoMap["missionId"], infoMap["title"]);
+              openMissionEditor(infoMap["projectId"], infoMap["missionId"], infoMap["title"]);
             } else if (type == "cutscene") {
               openCutsceneEditor(infoMap["projectId"], infoMap["missionId"], infoMap["cutsceneType"], infoMap["tabLabel"])
             }

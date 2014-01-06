@@ -89,6 +89,19 @@ public class ProjectService {
     throw new RuntimeException("Unable to find index of id " + idToFind);
   }
 
+  public void updateMission(String username, String projectId, Wc1Mission mission) {
+    Project project = loadProject(username, projectId);
+
+    Wc1Mission oldMission = findMission(project, mission.getId());
+    oldMission.setWingName(mission.getWingName());
+    oldMission.setLeftPilot(mission.getLeftPilot());
+    oldMission.setRightPilot(mission.getRightPilot());
+    oldMission.setMedal(mission.getMedal());
+    oldMission.setRequiredMedalPoints(mission.getRequiredMedalPoints());
+
+    saveProject(project);
+  }
+
   public void updateCutscene(String username, String projectId, String missionId, Wc1Cutscene cutscene, Wc1CutsceneType cutsceneType) {
     Project project = loadProject(username, projectId);
 

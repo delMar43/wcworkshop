@@ -53,7 +53,6 @@ public class GenerateProjectTriggerController {
     Wc1CampFile wc1CampFile = campReader.read("000");
     Wc1CampFile newCampFile = gameFiles.getCampFile();
 
-    newCampFile.setBarData(wc1CampFile.getBarData());
     newCampFile.setStellarBackgrounds(wc1CampFile.getStellarBackgrounds());
 
     Wc1BriefingFile wc1BriefingFile = briefingReader.read("000");
