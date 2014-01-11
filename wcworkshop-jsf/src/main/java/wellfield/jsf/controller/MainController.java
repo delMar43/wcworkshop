@@ -5,7 +5,9 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.primefaces.component.tabview.Tab;
 import org.primefaces.component.tabview.TabView;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.TreeNode;
 
@@ -25,7 +27,11 @@ public class MainController implements Serializable {
   }
 
   public void onNodeSelect(NodeSelectEvent event) {
-    System.out.println("hih");
+    Tab tab = new Tab();
+    tab.setTitle("source " + event.getSource());
+    editorTabs.getChildren().add(tab);
+
+    RequestContext.getCurrentInstance().update("editorTabs");
   }
 
   public TabView getEditorTabs() {
