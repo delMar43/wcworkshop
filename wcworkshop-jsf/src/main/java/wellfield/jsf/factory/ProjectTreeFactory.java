@@ -40,11 +40,11 @@ public class ProjectTreeFactory {
           TreeNode missionNode = createMissionNode(mission, ++missionIdx, seriesNode);
 
           TreeNode cutscenesNode = createCutscenesNode(mission, missionNode);
-          appendCutsceneNode(mission.getId() + "_briefing", "Briefing", cutscenesNode);
-          appendCutsceneNode(mission.getId() + "Debriefing", "Debriefing", cutscenesNode);
-          appendCutsceneNode(mission.getId() + "Shotglass", "Shotglass", cutscenesNode);
-          appendCutsceneNode(mission.getId() + "Left", "Left", cutscenesNode);
-          appendCutsceneNode(mission.getId() + "Right", "Right", cutscenesNode);
+          appendCutsceneNode(mission.getId() + "_Briefing", "Briefing", cutscenesNode);
+          appendCutsceneNode(mission.getId() + "_Debriefing", "Debriefing", cutscenesNode);
+          appendCutsceneNode(mission.getId() + "_Shotglass", "Shotglass", cutscenesNode);
+          appendCutsceneNode(mission.getId() + "_Left", "Left", cutscenesNode);
+          appendCutsceneNode(mission.getId() + "_Right", "Right", cutscenesNode);
 
           TreeNode navPointsNode = createNavPointsNode(mission, missionNode);
           appendNavPointNodes(mission, navPointsNode);

@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import wcworkshop.core.dto.EngineType;
 import wcworkshop.core.dto.Project;
 import wcworkshop.core.dto.ProjectFactory;
-import wcworkshop.core.factory.UiFactory;
 import wcworkshop.core.model.tree.ProjectNode;
 import wcworkshop.core.service.ProjectService;
 import wcworkshop.web.command.ProjectCommand;
+import wcworkshop.web.factory.UiFactory;
 
 @Controller
 public class EditProjectPostController {
