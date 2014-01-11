@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.component.tabview.TabView;
@@ -29,12 +30,15 @@ public class MainController implements Serializable {
   public void onNodeSelect(NodeSelectEvent event) {
     Tab tab = new Tab();
     tab.setTitle("source " + event.getSource());
+    tab.setClosable(true);
     editorTabs.getChildren().add(tab);
 
     RequestContext.getCurrentInstance().update("editorTabs");
+
   }
 
   public TabView getEditorTabs() {
+    editorTabs = (TabView) FacesContext.getCurrentInstance().getApplication().createComponent("org.primefaces.component.TabView");
     return editorTabs;
   }
 
