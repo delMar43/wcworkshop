@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import wcworkshop.core.factory.UiFactory;
 import wcworkshop.core.model.tree.ProjectNode;
+import wcworkshop.web.factory.UiFactory;
 
 @Controller
 public class ProjectTreeController {

@@ -7,30 +7,32 @@
   <form:hidden path="missionId" />
   <form:hidden path="cutsceneType" />
   <div>
-    <h4>Notes</h4>
-    <ul>
-      <li>
-        Not all back- and foregrounds seem to be loaded for every cutscene type.<br/>
-        ie briefing backgrounds will not work in Shotglass'
-      </li>
-      <li>
-        The text length is limited. If too many characters are to be displayed on a page, the game will crash.<br/>
-        If you find out, how many are allowed exactly, please let us know.
-      </li>
-      <li>
-        If you find out, what the unknown values are intended for, please let us know.
-      </li>
-      <li>
-        To change the order, please update the values in the according fields.<br/>
-        If you enter invalid or ambiguous values, the result is unknown.
-      </li>
-      <li>
-        To remove a line, click the 'del' link.
-      </li>
-      <li>
-        Invalid facial expressions will freeze the game.
-      </li>
-    </ul>
+    <div id="cutsceneNotes" title="
+      <h4>Notes</h4>
+      <ul>
+        <li>
+          Not all back- and foregrounds seem to be loaded for every cutscene type.<br/>
+          ie briefing backgrounds will not work in Shotglass'
+        </li>
+        <li>
+          The text length is limited. If too many characters are to be displayed on a page, the game will crash.<br/>
+          If you find out, how many are allowed exactly, please let us know.
+        </li>
+        <li>
+          If you find out, what the unknown values are intended for, please let us know.
+        </li>
+        <li>
+          To change the order, please update the values in the according fields.<br/>
+          If you enter invalid or ambiguous values, the result is unknown.
+        </li>
+        <li>
+          To remove a line, click the 'del' link.
+        </li>
+        <li>
+          Invalid facial expressions will freeze the game.
+        </li>
+      </ul>">Notes</div>
+    
     <table id="cutsceneEditTable_${cutsceneId}">
       <tbody>
         <%-- tr>
@@ -65,5 +67,7 @@ var addScreen = function(nextScreen) {
       //alert(nextScreen);
     }
   });
+  
+  $("#cutsceneNotes").tooltip({html:true});
 }
 </script>

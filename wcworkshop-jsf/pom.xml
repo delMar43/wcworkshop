@@ -17,6 +17,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>wcworkshop</groupId>
+      <artifactId>wcworkshop-core</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.sun.faces</groupId>
       <artifactId>jsf-api</artifactId>
       <version>${jsf.version}</version>
