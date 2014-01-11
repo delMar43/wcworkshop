@@ -6,12 +6,19 @@
 <h:head>
 </h:head>
 <h:body>
+  <h:form>
+  
   <p:layout fullPage="true">
     <p:layoutUnit position="north" size="50">
+      
     </p:layoutUnit>
-    <p:layoutUnit position="west" size="150" resizable="true" collapsable="true" collapseTitle="collapse" resizeTitle="resize">
+    <p:layoutUnit position="west" size="250" resizable="true" collapsable="true" collapseTitle="collapse" resizeTitle="resize">
     
-      <p:tree id="projectTree" value="#{projectTreeController.projects}" var="node" animate="true" dynamic="true" cache="true">
+      <p:tree id="projectTree" value="#{mainController.projects}" var="node" animate="true" dynamic="true" cache="true"
+        selectionMode="single">
+        
+        <p:ajax event="select" listener="#{mainController.onNodeSelect}" />  
+        
         <p:treeNode>
           <h:outputText value="#{node.title}" />
         </p:treeNode>
@@ -39,18 +46,11 @@
     
     </p:layoutUnit>
     <p:layoutUnit position="center">
-      <p:tabView scrollable="true">
-        <p:tab title="hallo" closable="true">
-          #{index.word}
-        </p:tab>
-        <p:tab title="hallo2" closable="true">
-          #{index.word}
-        </p:tab>
-        <p:tab title="hallo3" closable="true">
-          #{index.word}
-        </p:tab>
+      <p:tabView id="editorTabs" scrollable="false" binding="#{mainController.editorTabs}">
       </p:tabView>
     </p:layoutUnit>
   </p:layout>
+  
+  </h:form>
 </h:body>
 </html>
