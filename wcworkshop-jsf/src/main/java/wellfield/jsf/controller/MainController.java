@@ -1,9 +1,11 @@
 package wellfield.jsf.controller;
 
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.tabview.Tab;
@@ -13,6 +15,7 @@ import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.event.TabCloseEvent;
 import org.primefaces.model.TreeNode;
 
+import wcworkshop.core.model.tree.AbstractNode;
 import wcworkshop.core.model.tree.CutsceneNodeData;
 import wcworkshop.core.model.tree.MissionNodeData;
 import wcworkshop.core.model.tree.NavPointNodeData;
@@ -35,7 +38,18 @@ public class MainController implements Serializable {
 
   public void onNodeSelect(NodeSelectEvent event) {
     Tab tab = new Tab();
-    Object data = event.getTreeNode().getData();
+    AbstractNode data = (AbstractNode) event.getTreeNode().getData();
+
+    int idx = -1;
+    for (UIComponent childTab : editorTabs.getChildren()) {
+      String childKey = (String) childTab.getAttributes().get("key");
+      ++idx;
+      if (childKey.equals(data.getKey())) {
+        editorTabs.setActiveIndex(idx);
+        RequestContext.getCurrentInstance().update(editorTabs.getClientId());
+        return;
+      }
+    }
 
     String title;
     if (data instanceof ProjectNodeData) {
@@ -60,11 +74,23 @@ public class MainController implements Serializable {
 
     tab.setTitle(title);
     tab.setClosable(true);
+    tab.getAttributes().put("key", data.getKey());
     editorTabs.getChildren().add(tab);
+    editorTabs.setActiveIndex(editorTabs.getChildCount() - 1);
 
-    String id = editorTabs.getClientId();
-    System.out.println(id);
-    RequestContext.getCurrentInstance().update(id);
+    RequestContext.getCurrentInstance().update(editorTabs.getClientId());
+  }
+
+  private int getTabIndex(String lookupKey, LinkedHashSet<String> editors) {
+    int result = -1;
+
+    for (String key : editors) {
+      ++result;
+      if (key.equals(lookupKey)) {
+        return result;
+      }
+    }
+    return -1;
   }
 
   public void onEditorTabClose(TabCloseEvent event) {
