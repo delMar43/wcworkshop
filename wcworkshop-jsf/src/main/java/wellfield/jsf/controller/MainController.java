@@ -1,7 +1,6 @@
 package wellfield.jsf.controller;
 
 import java.io.Serializable;
-import java.util.LinkedHashSet;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -45,6 +44,9 @@ public class MainController implements Serializable {
       String childKey = (String) childTab.getAttributes().get("key");
       ++idx;
       if (childKey.equals(data.getKey())) {
+        if (idx == editorTabs.getActiveIndex()) {
+          return;
+        }
         editorTabs.setActiveIndex(idx);
         RequestContext.getCurrentInstance().update(editorTabs.getClientId());
         return;
@@ -79,18 +81,6 @@ public class MainController implements Serializable {
     editorTabs.setActiveIndex(editorTabs.getChildCount() - 1);
 
     RequestContext.getCurrentInstance().update(editorTabs.getClientId());
-  }
-
-  private int getTabIndex(String lookupKey, LinkedHashSet<String> editors) {
-    int result = -1;
-
-    for (String key : editors) {
-      ++result;
-      if (key.equals(lookupKey)) {
-        return result;
-      }
-    }
-    return -1;
   }
 
   public void onEditorTabClose(TabCloseEvent event) {
