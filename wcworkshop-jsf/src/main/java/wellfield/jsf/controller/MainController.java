@@ -3,7 +3,7 @@ package wellfield.jsf.controller;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
@@ -22,7 +22,7 @@ import wcworkshop.core.model.tree.ProjectNodeData;
 import wcworkshop.core.model.tree.SeriesNodeData;
 import wellfield.jsf.factory.ProjectTreeFactory;
 
-@RequestScoped
+@SessionScoped
 @SuppressWarnings("serial")
 @ManagedBean(name = "mainController")
 public class MainController implements Serializable {
@@ -77,6 +77,7 @@ public class MainController implements Serializable {
     tab.setTitle(title);
     tab.setClosable(true);
     tab.getAttributes().put("key", data.getKey());
+
     editorTabs.getChildren().add(tab);
     editorTabs.setActiveIndex(editorTabs.getChildCount() - 1);
 
