@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import wcworkshop.core.model.tree.ProjectNode;
+import wcworkshop.core.model.tree.ProjectNodeData;
 import wcworkshop.web.factory.UiFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,7 +26,7 @@ public class ProjectTreeJsonController {
     Subject subject = SecurityUtils.getSubject();
 
     String username = (String) subject.getPrincipal();
-    List<ProjectNode> projectNodes = uiFactory.loadProjectTree(username);
+    List<ProjectNodeData> projectNodes = uiFactory.loadProjectTree(username);
 
     String json;
     try {

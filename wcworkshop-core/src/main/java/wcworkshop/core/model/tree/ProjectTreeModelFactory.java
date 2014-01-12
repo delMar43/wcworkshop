@@ -16,8 +16,8 @@ public class ProjectTreeModelFactory {
   private ProjectTreeModelFactory() {
   }
 
-  public ProjectNode createProjectNode(Project project) {
-    ProjectNode projectNode = new ProjectNode(project.getId(), project.getTitle());
+  public ProjectNodeData createProjectNode(Project project) {
+    ProjectNodeData projectNode = new ProjectNodeData(project.getId(), project.getTitle());
     Wc1Campaign campaign = project.getCampaign();
 
     Map<String, String> data = new HashMap<>();
@@ -28,7 +28,7 @@ public class ProjectTreeModelFactory {
       data.put("type", "series");
 
       String seriesLabel = "Ser " + series.getSeriesNr() + " [" + series.getSystemName() + "]";
-      SeriesNode seriesNode = new SeriesNode(series.getId(), seriesLabel, data);
+      SeriesNodeData seriesNode = new SeriesNodeData(series.getId(), seriesLabel, data);
       projectNode.addSeriesNode(series.getId(), seriesNode);
 
       int missionCount = 1;
@@ -37,7 +37,7 @@ public class ProjectTreeModelFactory {
         data.put("type", "mission");
 
         String missionLabel = "Mis " + missionCount + " [" + mission.getWingName() + "]";
-        MissionNode missionNode = new MissionNode(mission.getId(), missionLabel, data);
+        MissionNodeData missionNode = new MissionNodeData(mission.getId(), missionLabel, data);
         seriesNode.addMissionNode(series.getId() + "_" + missionCount, missionNode);
         ++missionCount;
 
@@ -49,33 +49,33 @@ public class ProjectTreeModelFactory {
     return projectNode;
   }
 
-  private CutscenesNode createCutscenesNode(Map<String, String> data, Wc1Mission mission, String titlePrefix) {
-    CutscenesNode result = new CutscenesNode(mission.getId() + "_cut", data);
+  private CutscenesNodeData createCutscenesNode(Map<String, String> data, Wc1Mission mission, String titlePrefix) {
+    CutscenesNodeData result = new CutscenesNodeData(mission.getId() + "_cut", data);
     data.put("type", "cutscene");
 
     data.put("cutsceneType", "BRIEFING");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_briefing", "Briefing", titlePrefix + "Briefing", data));
+    result.addCutsceneNode(new CutsceneNodeData(result.getKey() + "_briefing", "Briefing", titlePrefix + "Briefing", data));
     data.put("cutsceneType", "DEBRIEFING");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_debriefing", "Debriefing", titlePrefix + "Debriefing", data));
+    result.addCutsceneNode(new CutsceneNodeData(result.getKey() + "_debriefing", "Debriefing", titlePrefix + "Debriefing", data));
     data.put("cutsceneType", "SHOTGLASS");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_shotglass", "Shotglass", titlePrefix + "Shotglass", data));
+    result.addCutsceneNode(new CutsceneNodeData(result.getKey() + "_shotglass", "Shotglass", titlePrefix + "Shotglass", data));
     data.put("cutsceneType", "LEFT_SEAT");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_left", "Left", titlePrefix + "Left", data));
+    result.addCutsceneNode(new CutsceneNodeData(result.getKey() + "_left", "Left", titlePrefix + "Left", data));
     data.put("cutsceneType", "RIGHT_SEAT");
-    result.addCutsceneNode(new CutsceneNode(result.getKey() + "_right", "Right", titlePrefix + "Right", data));
+    result.addCutsceneNode(new CutsceneNodeData(result.getKey() + "_right", "Right", titlePrefix + "Right", data));
 
     return result;
   }
 
-  private NavPointsNode createNavPointsNode(Map<String, String> data, Wc1Mission mission) {
-    NavPointsNode navPointsNode = new NavPointsNode(mission.getId() + "_nav");
+  private NavPointsNodeData createNavPointsNode(Map<String, String> data, Wc1Mission mission) {
+    NavPointsNodeData navPointsNode = new NavPointsNodeData(mission.getId() + "_nav");
 
     int navPointIdx = 0;
     for (Wc1NavPoint navPoint : mission.getNavPoints()) {
       data.put("navPointId", navPoint.getId());
       data.put("type", "navPoint");
 
-      NavPointNode navPointNode = new NavPointNode(navPoint.getId(), navPointIdx++ + " [" + navPoint.getId() + "]", data);
+      NavPointNodeData navPointNode = new NavPointNodeData(navPoint.getId(), navPointIdx++ + " [" + navPoint.getId() + "]", data);
       navPointsNode.addNavPointNode(navPointNode);
     }
 

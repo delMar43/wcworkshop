@@ -17,7 +17,7 @@
       <p:tree id="projectTree" value="#{mainController.projects}" var="node" animate="true" dynamic="true" cache="true"
         selectionMode="single">
         
-        <p:ajax event="select" listener="#{mainController.onNodeSelect}" />  
+        <p:ajax event="select" listener="#{mainController.onNodeSelect}" />
         
         <p:treeNode>
           <h:outputText value="#{node.title}" />
@@ -47,6 +47,7 @@
     </p:layoutUnit>
     <p:layoutUnit position="center">
       <p:tabView id="editorTabs" scrollable="false" binding="#{mainController.editorTabs}">
+        <p:ajax event="tabClose" listener="#{mainController.onEditorTabClose}" />
       </p:tabView>
     </p:layoutUnit>
   </p:layout>

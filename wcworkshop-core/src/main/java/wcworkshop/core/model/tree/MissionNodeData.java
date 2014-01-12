@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class MissionNode extends AbstractNode {
+public class MissionNodeData extends AbstractNode {
 
-  private NavPointsNode navPointsNode;
-  private CutscenesNode cutscenesNode;
+  private NavPointsNodeData navPointsNode;
+  private CutscenesNodeData cutscenesNode;
 
-  public MissionNode(String id, String label, Map<String, String> data) {
+  public MissionNodeData(String id, String label, Map<String, String> data) {
     super(id, label, true, data);
   }
 
@@ -24,11 +24,11 @@ public class MissionNode extends AbstractNode {
     return result;
   };
 
-  public void setNavPointsNode(NavPointsNode navPointsNode) {
+  public void setNavPointsNode(NavPointsNodeData navPointsNode) {
     this.navPointsNode = navPointsNode;
   }
 
-  public void setCutscenesNode(CutscenesNode cutscenesNode) {
+  public void setCutscenesNode(CutscenesNodeData cutscenesNode) {
     this.cutscenesNode = cutscenesNode;
   }
 }

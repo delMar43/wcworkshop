@@ -1,5 +1,6 @@
 package wcworkshop.core.model.tree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +14,8 @@ import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public abstract class AbstractNode {
+@SuppressWarnings("serial")
+public abstract class AbstractNode implements Serializable {
 
   private String key;
   private String title;

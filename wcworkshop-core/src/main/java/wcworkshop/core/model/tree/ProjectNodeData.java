@@ -5,20 +5,20 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ProjectNode extends AbstractNode {
+public class ProjectNodeData extends AbstractNode {
 
-  private Map<String, SeriesNode> seriesNodes = new LinkedHashMap<>();
+  private Map<String, SeriesNodeData> seriesNodes = new LinkedHashMap<>();
 
-  public ProjectNode(String id, String label) {
+  public ProjectNodeData(String id, String label) {
     super(id, label, true);
   }
 
-  public void addSeriesNode(String id, SeriesNode seriesNode) {
+  public void addSeriesNode(String id, SeriesNodeData seriesNode) {
     seriesNodes.put(id, seriesNode);
   }
 
   @Override
-  public Collection<SeriesNode> getChildren() {
+  public Collection<SeriesNodeData> getChildren() {
     return Collections.unmodifiableCollection(seriesNodes.values());
   }
 }

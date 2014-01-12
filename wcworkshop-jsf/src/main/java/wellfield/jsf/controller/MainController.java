@@ -10,8 +10,14 @@ import org.primefaces.component.tabview.Tab;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.NodeSelectEvent;
+import org.primefaces.event.TabCloseEvent;
 import org.primefaces.model.TreeNode;
 
+import wcworkshop.core.model.tree.CutsceneNodeData;
+import wcworkshop.core.model.tree.MissionNodeData;
+import wcworkshop.core.model.tree.NavPointNodeData;
+import wcworkshop.core.model.tree.ProjectNodeData;
+import wcworkshop.core.model.tree.SeriesNodeData;
 import wellfield.jsf.factory.ProjectTreeFactory;
 
 @RequestScoped
@@ -29,12 +35,40 @@ public class MainController implements Serializable {
 
   public void onNodeSelect(NodeSelectEvent event) {
     Tab tab = new Tab();
-    tab.setTitle("source " + event.getSource());
+    Object data = event.getTreeNode().getData();
+
+    String title;
+    if (data instanceof ProjectNodeData) {
+      ProjectNodeData nodeData = (ProjectNodeData) data;
+      title = nodeData.getTabLabel();
+    } else if (data instanceof SeriesNodeData) {
+      SeriesNodeData nodeData = (SeriesNodeData) data;
+      title = nodeData.getTabLabel();
+    } else if (data instanceof MissionNodeData) {
+      MissionNodeData nodeData = (MissionNodeData) data;
+      title = nodeData.getTabLabel();
+    } else if (data instanceof CutsceneNodeData) {
+      CutsceneNodeData nodeData = (CutsceneNodeData) data;
+      title = nodeData.getTabLabel();
+    } else if (data instanceof NavPointNodeData) {
+      NavPointNodeData nodeData = (NavPointNodeData) data;
+      title = nodeData.getTabLabel();
+    } else {
+      //do nothing
+      return;
+    }
+
+    tab.setTitle(title);
     tab.setClosable(true);
     editorTabs.getChildren().add(tab);
 
-    RequestContext.getCurrentInstance().update("editorTabs");
+    String id = editorTabs.getClientId();
+    System.out.println(id);
+    RequestContext.getCurrentInstance().update(id);
+  }
 
+  public void onEditorTabClose(TabCloseEvent event) {
+    editorTabs.getChildren().remove(event.getTab());
   }
 
   public TabView getEditorTabs() {

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import wcworkshop.core.model.tree.ProjectNode;
+import wcworkshop.core.model.tree.ProjectNodeData;
 import wcworkshop.web.factory.UiFactory;
 
 @Controller
@@ -20,7 +20,7 @@ public class ProjectTreeController {
     Subject subject = SecurityUtils.getSubject();
 
     String username = (String) subject.getPrincipal();
-    List<ProjectNode> projectNodes = uiFactory.loadProjectTree(username);
+    List<ProjectNodeData> projectNodes = uiFactory.loadProjectTree(username);
 
     model.addAttribute("projectNodes", projectNodes);
 
