@@ -56,6 +56,6 @@
   <modules>
     <module>../binmap</module>
     <module>../wcworkshop-core</module>
-    <module>../wcworkshop-web</module>
+    <module>../wcworkshop-gwt</module>
   </modules>
 </project>
