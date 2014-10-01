@@ -1,8 +1,0 @@
-class=wcworkshop.core.binary.Wc1CampFile
-size=1706
-filesize=true
-offsetStart=4
-#property=filesize,offset=0
-property=stellarBackgrounds[],offset=16,mapping=wc1.camp.stellarBackground,times=52,createsOffset=true
-property=seriesBlocks[],offset=432,mapping=wc1.camp.seriesBlock,times=13,createsOffset=true
-property=barData[],offset=1602,mapping=wc1.camp.barData,times=52,createsOffset=true

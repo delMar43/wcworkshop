@@ -1,5 +1,0 @@
-class=wcworkshop.core.binary.Sm2ExeFile
-property=campaignId,offset=21107
-property=startDay,offset=83920
-property=startYear,offset=83922
-property=pilotEntries[],offset=85276,times=9,mapping=savegame_scoreboard_entry

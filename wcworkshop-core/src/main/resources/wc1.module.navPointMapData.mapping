@@ -1,5 +1,0 @@
-class=wcworkshop.core.binary.Wc1ModuleNavPointMapData
-size=64
-property=iconValue,offset=0
-property=shipOrPoint,offset=2
-property=text,offset=4,length=60

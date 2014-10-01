@@ -1,4 +1,0 @@
-class=wcworkshop.core.binary.Wc1CampBarData
-size=2
-property=leftSeat,offset=0
-property=rightSeat,offset=1

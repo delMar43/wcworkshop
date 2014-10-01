@@ -1,6 +1,0 @@
-class=wcworkshop.core.binary.Wc1PcShipFile
-size=dynamic
-offsetStart=4
-property=filesize,offset=0
-property=unknownDynamicBlocks[],offset={0},times=6,mapping=unknownDynamicBlock
-property=unknownBlocks[],offset={6},times=2,mapping=unknownBlock
