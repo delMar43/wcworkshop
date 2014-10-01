@@ -1,0 +1,5 @@
+# navpoint notes
+class=wcworkshop.core.binary.Wc1ModuleBlock4
+size=86016
+property=unknown1,offset=0,times=5376
+property=missionShipData[],offset=5376,times=1664,mapping=wc1.module.block4.missionShipData

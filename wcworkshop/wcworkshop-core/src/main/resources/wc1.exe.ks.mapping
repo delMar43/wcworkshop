@@ -1,0 +1,4 @@
+class=wcworkshop.core.binary.Wc1ExeFile
+property=startDay,offset=454904
+property=startYear,offset=454906
+property=pilotEntries[],offset=454920,times=9,mapping=savegame_scoreboard_entry

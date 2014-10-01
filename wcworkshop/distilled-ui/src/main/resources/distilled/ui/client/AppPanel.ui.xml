@@ -1,0 +1,39 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <g:DockLayoutPanel>
+    <g:north size="25">
+      <g:MenuBar ui:field="menuBar">
+        <g:MenuItem text="menu">
+          <g:MenuBar>
+            <g:MenuItem text="sub"></g:MenuItem>
+          </g:MenuBar>
+        </g:MenuItem>
+        <g:MenuItem text="two"></g:MenuItem>
+      </g:MenuBar>
+    </g:north>
+
+    <g:west size="120">
+      <g:Tree height="100%" ui:field="navTree">
+        <g:TreeItem text="root">
+          <g:Label text="Baum"></g:Label>
+        </g:TreeItem>
+        <g:TreeItem text="root2">
+          <g:Label text="Baum2"></g:Label>
+        </g:TreeItem>
+      </g:Tree>
+    </g:west>
+
+    <g:center>
+      <g:TabLayoutPanel barHeight="25" height="100%" ui:field="contentTabPanel">
+        <g:tab>
+          <g:header>Eins</g:header>
+          <g:HTMLPanel>hallo</g:HTMLPanel>
+        </g:tab>
+        <g:tab>
+          <g:header>Zwei</g:header>
+          <g:HTMLPanel>nochmal</g:HTMLPanel>
+        </g:tab>
+      </g:TabLayoutPanel>
+    </g:center>
+  </g:DockLayoutPanel>
+</ui:UiBinder> 

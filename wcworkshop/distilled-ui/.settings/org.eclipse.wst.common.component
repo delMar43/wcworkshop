@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="distilled-ui">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <property name="context-root" value="distilled-ui"/>
+        <property name="java-output-path" value="/distilled-ui/target/classes"/>
+    </wb-module>
+</project-modules>

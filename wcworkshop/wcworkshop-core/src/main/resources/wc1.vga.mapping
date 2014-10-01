@@ -1,0 +1,6 @@
+class=wcworkshop.core.binary.Wc1VgaFile
+size=dynamic
+offsetStart=4
+filesize=true
+#property=filesize,offset=0
+property=blocks[],offset={0},times={offsets},mapping=wc1.vga.block,createsOffset=true

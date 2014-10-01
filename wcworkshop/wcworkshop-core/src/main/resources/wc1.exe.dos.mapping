@@ -1,0 +1,10 @@
+class=wcworkshop.core.binary.Wc1ExeFile
+size=302384
+property=unknown1[],times=83620,offset=0
+property=startDay,offset=83620
+property=startYear,offset=83622
+property=unknown2[],times=12,offset=83624
+property=pilotEntries[],offset=83636,times=9,mapping=savegame_scoreboard_entry
+property=unknown3[],times=3697,offset=83978
+property=introText,offset=87675,length=700
+property=unknown4[],times=214009,offset=88375

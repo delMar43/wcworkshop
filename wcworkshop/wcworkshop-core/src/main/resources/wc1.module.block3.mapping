@@ -1,0 +1,5 @@
+# navpoints
+class=wcworkshop.core.binary.Wc1ModuleBlock3
+size=65536
+property=unknown1,offset=0,times=4096
+property=navPointMapData[],offset=4096,times=832,mapping=wc1.module.navPointMapData

@@ -1,0 +1,6 @@
+class=wcworkshop.core.binary.Wc1CampStellarBackground
+size=8
+property=unknown1,offset=0
+property=unknown2,offset=2
+property=unknown3,offset=4
+property=unknown4,offset=6

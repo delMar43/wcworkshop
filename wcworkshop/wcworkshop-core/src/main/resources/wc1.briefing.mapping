@@ -1,0 +1,10 @@
+class=wcworkshop.core.binary.Wc1BriefingFile
+size=dynamic
+offsetStart=4
+filesize=true
+#property=filesize,offset=0
+property=funeralData,offset={0},mapping=wc1.briefing.funeral,createsOffset=true
+property=halcyon,offset={1},mapping=wc1.briefing.halcyon,createsOffset=true
+property=medalCeremony,offset={2},mapping=wc1.briefing.medalCeremony,createsOffset=true
+property=empty,offset={3},times=0,createsOffset=true
+property=missionData[],offset={4},times={toTheEnd},mapping=wc1.briefing.missionData,createsOffset=true

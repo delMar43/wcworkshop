@@ -1,0 +1,16 @@
+class=wcworkshop.core.binary.Wc1ModuleFile
+size=235164
+property=filesize,offset=0
+property=block1,offset=28,mapping=wc1.module.block1
+property=block2,offset=1564,mapping=wc1.module.block2
+property=block3,offset=80412,mapping=wc1.module.block3
+property=block4,offset=145948,mapping=wc1.module.block4
+#block 5
+property=difficultyLevels[],offset=231964,length=40,times=4
+property=wingNames[],offset=232124,length=40,times=52
+property=zeroes[],offset=234204,times=320
+
+#block6
+property=projectTitle,offset=234524,length=40
+property=systemNames[],offset=234564,times=13,length=40
+property=hiddenSystems[],offset=235084,times=2,length=40

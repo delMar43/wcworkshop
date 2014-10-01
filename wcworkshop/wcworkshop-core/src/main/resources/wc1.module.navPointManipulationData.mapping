@@ -1,0 +1,4 @@
+class=wcworkshop.core.binary.Wc1ModuleNavPointManipulationData
+size=2
+property=enabled,offset=0
+property=navPoint,offset=1
