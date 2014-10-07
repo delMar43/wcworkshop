@@ -12,7 +12,7 @@ public class LzwExtractor {
   }
 
   /** Decompress a list of output ks to a string. */
-  public static String decompress(List<Integer> compressed) {
+  public String decompress(List<Byte> compressed) {
     // Build the dictionary.
     int dictSize = 256;
     Map<Integer, String> dictionary = new HashMap<Integer, String>();

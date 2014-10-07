@@ -7,9 +7,15 @@ import distilled.ui.client.AppPanel;
 
 public class Main implements EntryPoint {
 
+  private AppPanel rootPanel = new AppPanel();
+  
   @Override
   public void onModuleLoad() {
-    RootLayoutPanel.get().add(new AppPanel());
+    RootLayoutPanel.get().add(rootPanel);
+    
+    rootPanel.addProject("Wing Commander");
+    rootPanel.addFile("Wing Commander", "File 1");
+    
   }
 
 }

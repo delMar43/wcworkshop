@@ -22,6 +22,6 @@ public class Wc1VgaReaderTest {
     byte[] data = readerHelper.readFile(config.getResourcePath() + "ARROW.VGA");
     Wc1VgaFile file = binaryReader.toJava(data, mapper, Wc1VgaFile.class);
 
-    System.out.println("done with file " + readerHelper.byteArrayToHexString(file.getBlocks()[0].getData()));
+    System.out.println("size: " + file.getFilesize() + ", offsets: " + file.getOffsets());
   }
 }
