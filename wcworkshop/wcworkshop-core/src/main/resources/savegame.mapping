@@ -10,12 +10,13 @@ property=bronzeStars,offset=364
 property=silverStars,offset=365
 property=goldStars,offset=366
 property=goldenSun,offset=367
-property=pewterPlanet,offset=367
-property=unknownBlock1[],offset=368,times=13
+property=pewterPlanet,offset=368
+property=ribbons[],offset=369,times=12
 property=mission,offset=381
 property=series,offset=382
-property=unknownBlock4[],offset=383,times=9
-property=pilotStatus[],offset=392,times=9
+property=unknown6,offset=383
+property=unknownBlock4[],offset=384,times=8
+property=pilotStatus[],offset=392,times=8
 property=ace1,offset=408
 property=ace2,offset=409
 property=ace3,offset=410
