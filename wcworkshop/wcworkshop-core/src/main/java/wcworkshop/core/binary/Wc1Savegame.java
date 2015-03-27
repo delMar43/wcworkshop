@@ -15,7 +15,7 @@ public class Wc1Savegame {
   private byte goldStars;
   private byte goldenSun;
   private byte pewterPlanet;
-  private byte[] unknownBlock1;
+  private byte[] ribbons;
   private byte ace1;
   private byte ace2;
   private byte ace3;
@@ -33,6 +33,7 @@ public class Wc1Savegame {
   private byte[] unknownBlock4;
   private short unknown4;
   private short unknown5;
+  private byte unknown6;
 
   public boolean isEnabled() {
     return occupied == (byte) 1;
@@ -268,6 +269,14 @@ public class Wc1Savegame {
 
   public void setUnknown5(short unknown5) {
     this.unknown5 = unknown5;
+  }
+
+  public byte getUnknown6() {
+    return unknown6;
+  }
+
+  public void setUnknown6(byte unknown6) {
+    this.unknown6 = unknown6;
   }
 
   public byte[] getUnknownBlock4() {
