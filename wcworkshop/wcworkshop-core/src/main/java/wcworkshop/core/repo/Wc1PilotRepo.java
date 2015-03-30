@@ -21,8 +21,8 @@ public class Wc1PilotRepo {
     pilots.put((byte) 5, new Wc1Pilot((byte) 5, "Paladin"));
     pilots.put((byte) 6, new Wc1Pilot((byte) 6, "Maniac"));
     pilots.put((byte) 7, new Wc1Pilot((byte) 7, "Knight"));
-    pilots.put((byte) 11, new Wc1Pilot((byte) 11, "Unknown (11)"));
-    pilots.put((byte) 12, new Wc1Pilot((byte) 12, "Unknown (12)"));
+    pilots.put((byte) 11, new Wc1Pilot((byte) 11, "Doomsday"));
+    pilots.put((byte) 12, new Wc1Pilot((byte) 12, "Jazz"));
   }
 
   public Wc1Pilot getPilot(byte value) {
