@@ -6,6 +6,11 @@ import java.util.Map;
 
 import wcworkshop.core.data.Wc1Pilot;
 
+/**
+ * The values from this file are used for setting the pilots in conversations and for setting the bar scenes.
+ * For setting the pilots AI in missions, see @Wc1AiPilot
+ */
+ 
 public class Wc1PilotRepo {
   private static final Wc1PilotRepo instance = new Wc1PilotRepo();
 
