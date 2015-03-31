@@ -1,9 +1,9 @@
-class=wcworkshop.core.binary.Wc1Savegame
+class=wcworkshop.wc1.savegame.binary.Wc1Savegame
 size=828
 property=name,offset=0,length=16
 property=unknown1,offset=16
 property=occupied,offset=17
-property=scoreboardEntries[],mapping=savegame_scoreboard_entry,offset=18,times=9
+property=scoreboardEntries[],mapping=wc1_savegame_scoreboard_entry,offset=18,times=9
 property=unknown4,offset=360
 property=unknown5,offset=362
 property=bronzeStars,offset=364
