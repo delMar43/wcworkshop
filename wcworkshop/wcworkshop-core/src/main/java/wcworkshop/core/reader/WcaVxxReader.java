@@ -1,10 +1,8 @@
 package wcworkshop.core.reader;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import wcworkshop.core.util.LzwExtractor;
 import wcworkshop.core.workdata.Block;
 
 public class WcaVxxReader {
@@ -33,10 +31,8 @@ public class WcaVxxReader {
 
       System.out.println(blockIndex + ": starts at " + start + ", ends at " + end);
       byte[] compressed = Arrays.copyOfRange(blockData, start, end);
-      
-      
-      LzwExtractor.getInstance().decompress(Arrays.asList(compressed));
-//      extractBlockDataWithBlocksizeAtBeginning(blockData, start, file.length);
+
+      //      extractBlockDataWithBlocksizeAtBeginning(blockData, start, file.length);
 
     }
   }
@@ -52,7 +48,6 @@ public class WcaVxxReader {
     int blockLength = readerHelper.getInteger(Arrays.copyOfRange(blockData, 0, 4));
     System.out.println(" block length: " + blockLength);
 
-    
     byte[] blockOffsets = Arrays.copyOfRange(blockData, 4, blockData.length);
 
     List<Integer> secondaryTable = readerHelper.extractSecondaryTable(blockOffsets);
