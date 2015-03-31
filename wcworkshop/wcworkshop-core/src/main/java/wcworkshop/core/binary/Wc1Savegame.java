@@ -231,12 +231,12 @@ public class Wc1Savegame {
     this.seriesCount = seriesCount;
   }
 
-  public byte[] getUnknownBlock1() {
-    return unknownBlock1;
+  public byte[] getRibbons() {
+    return ribbons;
   }
 
-  public void setUnknownBlock1(byte[] unknownBlock1) {
-    this.unknownBlock1 = unknownBlock1;
+  public void setRibbons(byte[] ribbons) {
+    this.ribbons = ribbons;
   }
 
   public byte[] getUnknownBlock2() {
