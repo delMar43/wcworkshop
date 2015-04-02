@@ -165,10 +165,10 @@ public class Wc1CutsceneUtil {
         break;
       case (byte) 0xFE:
         result = "End conversation";
-        break;
+      break;
       case (byte) 0xFF:
         result = "Nobody";
-        break;
+      break;
       default:
         result = "Unknown";
     }
@@ -194,6 +194,12 @@ public class Wc1CutsceneUtil {
       case 4:
         result = "Right bar seat";
         break;
+      case 7:
+        result = "Halcyon's office door";
+        break;
+      case 9:
+        result = "Halcyon's office PC background";
+        break;
       case 10:
         result = "Halcyon background during debriefing";
         break;
@@ -202,7 +208,7 @@ public class Wc1CutsceneUtil {
         break;
       case (byte) 0xFF:
         result = "Nothing";
-        break;
+      break;
       default:
         result = "Unknown";
     }
