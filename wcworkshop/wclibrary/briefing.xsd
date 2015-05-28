@@ -1,0 +1,165 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="BriefingFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FuneralConversationBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Conversation" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                    <xs:element name="DialogSetting">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="BackgroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="ForegroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="TextColorIndex" use="optional"/>
+                            <xs:attribute type="xs:short" name="Delay" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Dialog">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="Commands" use="optional"/>
+                            <xs:attribute type="xs:string" name="FacialExpressions" use="optional"/>
+                            <xs:attribute type="xs:string" name="LipSyncText" use="optional"/>
+                            <xs:attribute type="xs:byte" name="BackgroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="ForegroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="TextColorIndex" use="optional"/>
+                            <xs:attribute type="xs:short" name="Delay" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="OfficeConversationBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Conversation">
+                <xs:complexType>
+                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                    <xs:element name="DialogSetting">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="BackgroundImageIndex"/>
+                            <xs:attribute type="xs:byte" name="ForegroundImageIndex"/>
+                            <xs:attribute type="xs:byte" name="TextColorIndex"/>
+                            <xs:attribute type="xs:short" name="Delay"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Dialog">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="Commands" use="optional"/>
+                            <xs:attribute type="xs:string" name="FacialExpressions" use="optional"/>
+                            <xs:attribute type="xs:string" name="LipSyncText" use="optional"/>
+                            <xs:attribute type="xs:byte" name="BackgroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="ForegroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="TextColorIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="Delay" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CeremonyConversationBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Conversation">
+                <xs:complexType>
+                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                    <xs:element name="DialogSetting">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="BackgroundImageIndex"/>
+                            <xs:attribute type="xs:byte" name="ForegroundImageIndex"/>
+                            <xs:attribute type="xs:byte" name="TextColorIndex"/>
+                            <xs:attribute type="xs:short" name="Delay"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Dialog">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="Commands" use="optional"/>
+                            <xs:attribute type="xs:string" name="FacialExpressions" use="optional"/>
+                            <xs:attribute type="xs:string" name="LipSyncText" use="optional"/>
+                            <xs:attribute type="xs:byte" name="BackgroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="ForegroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="TextColorIndex" use="optional"/>
+                            <xs:attribute type="xs:short" name="Delay" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="UnknownConversationBlock"/>
+        <xs:element name="MissionConversationBlock" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType mixed="true">
+            <xs:sequence>
+              <xs:element name="Conversation" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                    <xs:element name="DialogSetting">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="BackgroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="ForegroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="TextColorIndex" use="optional"/>
+                            <xs:attribute type="xs:short" name="Delay" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Dialog">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="Commands" use="optional"/>
+                            <xs:attribute type="xs:string" name="FacialExpressions" use="optional"/>
+                            <xs:attribute type="xs:string" name="LipSyncText" use="optional"/>
+                            <xs:attribute type="xs:byte" name="BackgroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="ForegroundImageIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="TextColorIndex" use="optional"/>
+                            <xs:attribute type="xs:short" name="Delay" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
