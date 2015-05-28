@@ -1,0 +1,71 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CampFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StellarBackgroundBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="StellarBackground" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:byte" name="ImageIndex" use="optional"/>
+                      <xs:attribute type="xs:string" name="Rotation" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SeriesBranchBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SeriesBranch" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="MissionScoring" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="MilitaryDecorationIndex" use="optional"/>
+                            <xs:attribute type="xs:short" name="MilitaryDecorationScore" use="optional"/>
+                            <xs:attribute type="xs:string" name="NavigationPointScoring" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:byte" name="WingmanPilotIndex" use="optional"/>
+                  <xs:attribute type="xs:byte" name="CutsceneIndex" use="optional"/>
+                  <xs:attribute type="xs:byte" name="MissionsActive" use="optional"/>
+                  <xs:attribute type="xs:byte" name="SuccessScore" use="optional"/>
+                  <xs:attribute type="xs:byte" name="SuccessSeriesIndex" use="optional"/>
+                  <xs:attribute type="xs:byte" name="SuccessShipIndex" use="optional"/>
+                  <xs:attribute type="xs:byte" name="FailureSeriesIndex" use="optional"/>
+                  <xs:attribute type="xs:byte" name="FailureShipIndex" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="BarSeatingArrangementBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="BarSeatingArrangement" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:byte" name="LeftSeatPilotIndex" use="optional"/>
+                      <xs:attribute type="xs:byte" name="RightSeatPilotIndex" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
