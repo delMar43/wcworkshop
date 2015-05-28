@@ -1,0 +1,133 @@
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ModuleFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="AutopilotBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Autopilot" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="Ships" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MissionNavigationPointBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MissionNavigationPoint" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="NavigationPoint" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Trigger" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:byte" name="Action" use="optional"/>
+                                  <xs:attribute type="xs:byte" name="NavigationPointIndex" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="Name" use="optional"/>
+                        <xs:attribute type="xs:byte" name="Format" use="optional"/>
+                        <xs:attribute type="xs:string" name="Point" use="optional"/>
+                        <xs:attribute type="xs:short" name="Radius" use="optional"/>
+                        <xs:attribute type="xs:string" name="ShipClasses" use="optional"/>
+                        <xs:attribute type="xs:string" name="Ships" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MissionMapPointBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MissionMapPoint" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="MapPoint" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="Format" use="optional"/>
+                            <xs:attribute type="xs:byte" name="TargetIndex" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MissionShipPointBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MissionShipPoint" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ShipPoint" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="ClassIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="Allegiance" use="optional"/>
+                            <xs:attribute type="xs:byte" name="LeadShipIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="OrdersIndex" use="optional"/>
+                            <xs:attribute type="xs:string" name="Location" use="optional"/>
+                            <xs:attribute type="xs:string" name="Orientation" use="optional"/>
+                            <xs:attribute type="xs:short" name="Speed" use="optional"/>
+                            <xs:attribute type="xs:byte" name="Size" use="optional"/>
+                            <xs:attribute type="xs:byte" name="PilotCharacteristicsIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="FormationIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="FormationPositionNumber" use="optional"/>
+                            <xs:attribute type="xs:byte" name="PrimaryTargetShipIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="SecondaryTargetShipIndex" use="optional"/>
+                            <xs:attribute type="xs:byte" name="Unknown1" use="optional"/>
+                            <xs:attribute type="xs:byte" name="Unknown2" use="optional"/>
+                            <xs:attribute type="xs:byte" name="Unknown3" use="optional"/>
+                            <xs:attribute type="xs:byte" name="Unknown4" use="optional"/>
+                            <xs:attribute type="xs:byte" name="Unknown5" use="optional"/>
+                            <xs:attribute type="xs:byte" name="Unknown6" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="WingNameBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="WingName" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SystemNameBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="SystemName" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
